@@ -31,6 +31,10 @@ public class CartItem {
 	
 	private int quantity;
 	
+//	@ManyToOne
+//	@JoinColumn(name = "user_id", nullable = false)
+//	private User user;
+	
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	@JsonBackReference

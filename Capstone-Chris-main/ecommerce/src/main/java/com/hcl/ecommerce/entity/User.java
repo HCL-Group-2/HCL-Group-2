@@ -86,6 +86,7 @@ public class User {
 			updatable = false),
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+	@JsonIgnore
 	private final List<Role> roles = new ArrayList<>();
 	
 	public void addRole(Role role) {
