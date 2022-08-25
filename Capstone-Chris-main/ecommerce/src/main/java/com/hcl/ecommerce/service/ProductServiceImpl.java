@@ -3,9 +3,11 @@ package com.hcl.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.dto.ProductDto;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.repository.ProductRepository;
 
@@ -24,6 +26,19 @@ public class ProductServiceImpl implements ProductService {
 			return true;
 		}
 	}
+	
+//	@Override
+//	public synchronized boolean addProduct(ProductDto productDto) {
+//		if (productRepository.findByName(productDto.getName()) != null) {
+//			return false;
+//		} else {
+//			Product product = new Product();
+//			BeanUtils.copyProperties(productDto, product);
+//			productRepository.save(product);
+//			productDto.setId(product.getId());
+//			return true;
+//		}
+//	}
 	
 	@Override
 	public Product getProductById(Integer productId) {

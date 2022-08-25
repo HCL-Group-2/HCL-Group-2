@@ -10,14 +10,13 @@ import lombok.Setter;
 @Setter
 public class ProductDto {
 	
+	private Integer id;
+	
 	@NotNull
 	private String name;
 	
 	@NotNull
 	private String description;
-	
-	@NotNull
-	private String category;
 	
 	@NotNull
 	@Size(min = 0)
@@ -27,7 +26,10 @@ public class ProductDto {
 	private String image;
 	
 	@NotNull
+	private String category;
+	
+	@NotNull
 	@Size(min = 0)
-	private String count;
+	private String inventory;
 	
 }
