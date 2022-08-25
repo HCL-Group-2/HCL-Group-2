@@ -1,0 +1,9 @@
+.spacer {
+  flex: 1 1 auto;
+}
+  bg {    
+    background: url('../assets/image/pexels-moose-photos-1037992.jpg') no-repeat center fixed; 
+    width: 100%;
+    height: auto;    
+    background-size: cover;
+}
