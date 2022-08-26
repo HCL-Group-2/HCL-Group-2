@@ -2,7 +2,6 @@ package com.hcl.ecommerce.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +10,9 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 	
-	@NotNull/*(message = "firstName should not be null")*/
-	/*@Size(min = 3, max = 16)*/
+	private Integer id;
+	
+	@NotNull
 	private String firstName;
 	
 	@NotNull

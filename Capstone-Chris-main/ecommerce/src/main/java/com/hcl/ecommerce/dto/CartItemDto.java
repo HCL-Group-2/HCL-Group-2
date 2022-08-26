@@ -3,33 +3,26 @@ package com.hcl.ecommerce.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.hcl.ecommerce.entity.Product;
+import com.hcl.ecommerce.entity.User;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductDto {
+public class CartItemDto {
 	
 	private Integer id;
 	
 	@NotNull
-	private String name;
-	
-	@NotNull
-	private String description;
-	
-	@NotNull
 	@Size(min = 0)
-	private double price;
+	private int quantity;
 	
 	@NotNull
-	private String image;
+	private User user;
 	
 	@NotNull
-	private String category;
-	
-	@NotNull
-	@Size(min = 0)
-	private int inventory;
-	
+	private Product product;
+
 }

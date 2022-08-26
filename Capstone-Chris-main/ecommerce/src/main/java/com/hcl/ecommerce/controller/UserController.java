@@ -3,6 +3,7 @@ package com.hcl.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.UserService;
@@ -30,11 +33,22 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+//	@PostMapping("/user")
+//	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder builder) {
+//		boolean flag = userService.addUser(user);
+//		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+//	}
+	
 	@PostMapping("/user")
-	public ResponseEntity<Void> addUser(@RequestBody User user) {
-		boolean flag = userService.addUser(user);
+	public ResponseEntity<Void> addUser(@RequestBody UserDto userDto, UriComponentsBuilder builder) {
+		boolean flag = userService.addUser(userDto);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/user/{id}")
