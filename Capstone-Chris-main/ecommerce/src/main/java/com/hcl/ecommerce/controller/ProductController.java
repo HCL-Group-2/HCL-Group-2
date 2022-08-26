@@ -25,23 +25,23 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@PostMapping("/product")
-	public ResponseEntity<Void> addProduct(@RequestBody Product product, UriComponentsBuilder builder) {
-		boolean flag = productService.addProduct(product);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/product/{id}").buildAndExpand(product.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-	
 //	@PostMapping("/product")
-//	public ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto, UriComponentsBuilder builder) {
-//		boolean flag = productService.addProduct(productDto);
+//	public ResponseEntity<Void> addProduct(@RequestBody Product product, UriComponentsBuilder builder) {
+//		boolean flag = productService.addProduct(product);
 //		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 //		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(builder.path("/product/{id}").buildAndExpand(productDto.getId()).toUri());
+//		headers.setLocation(builder.path("/product/{id}").buildAndExpand(product.getId()).toUri());
 //		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 //	}
+	
+	@PostMapping("/product")
+	public ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto, UriComponentsBuilder builder) {
+		boolean flag = productService.addProduct(productDto);
+		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/product/{id}").buildAndExpand(productDto.getId()).toUri());
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
 	
 	@GetMapping("/product/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable("id") Integer id) {

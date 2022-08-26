@@ -3,9 +3,11 @@ package com.hcl.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.dto.CartItemDto;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.repository.CartItemRepository;
 
@@ -15,9 +17,18 @@ public class CartItemServiceImpl implements CartItemService {
 	@Autowired
 	CartItemRepository cartItemRepository;
 	
+//	@Override
+//	public synchronized boolean addCartItem(CartItem cartItem) {
+//		cartItemRepository.save(cartItem);
+//		return true;
+//	}
+	
 	@Override
-	public synchronized boolean addCartItem(CartItem cartItem) {
+	public synchronized boolean addCartItem(CartItemDto cartItemDto) {
+		CartItem cartItem = new CartItem();
+		BeanUtils.copyProperties(cartItemDto, cartItem);
 		cartItemRepository.save(cartItem);
+		cartItemDto.setId(cartItem.getId());
 		return true;
 	}
 	

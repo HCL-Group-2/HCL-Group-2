@@ -7,9 +7,9 @@ import com.hcl.ecommerce.entity.Product;
 
 public interface ProductService {
 
-	boolean addProduct(Product product);
+//	boolean addProduct(Product product);
 	
-//	boolean addProduct(ProductDto productDto);
+	boolean addProduct(ProductDto productDto);
 	
 	Product getProductById(Integer productId);
 	

@@ -3,6 +3,7 @@ package com.hcl.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.hcl.ecommerce.dto.CartItemDto;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.service.CartItemService;
 
@@ -22,11 +25,22 @@ public class CartItemController {
 	@Autowired
 	CartItemService cartItemService;
 	
+//	@PostMapping("/cartitem")
+//	public ResponseEntity<Void> addCartItem(@RequestBody CartItem cartItem, UriComponentsBuilder builder) {
+//		boolean flag = cartItemService.addCartItem(cartItem);
+//		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(builder.path("/cartitem/{id}").buildAndExpand(cartItem.getId()).toUri());
+//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+//	}
+	
 	@PostMapping("/cartitem")
-	public ResponseEntity<Void> addCartItem(@RequestBody CartItem cartItem) {
-		boolean flag = cartItemService.addCartItem(cartItem);
+	public ResponseEntity<Void> addCartItem(@RequestBody CartItemDto cartItemDto, UriComponentsBuilder builder) {
+		boolean flag = cartItemService.addCartItem(cartItemDto);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/cartitem/{id}").buildAndExpand(cartItemDto.getId()).toUri());
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
 //	@GetMapping("/cartitem/{userid}/{prodid}")
@@ -48,7 +62,7 @@ public class CartItemController {
 //	}
 	
 	@PutMapping("/cartitem")
-	public ResponseEntity<CartItem> updateOrderItem(@RequestBody CartItem cartItem) {
+	public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
 		cartItemService.updateCartItem(cartItem);
 		return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
 	}

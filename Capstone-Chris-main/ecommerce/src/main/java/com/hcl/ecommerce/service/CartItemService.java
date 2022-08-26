@@ -2,11 +2,14 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
+import com.hcl.ecommerce.dto.CartItemDto;
 import com.hcl.ecommerce.entity.CartItem;
 
 public interface CartItemService {
 	
-	boolean addCartItem(CartItem cartItem);
+//	boolean addCartItem(CartItem cartItem);
+	
+	boolean addCartItem(CartItemDto cartItemDto);
 	
 //	CartItem getCartItemByUserIdAndProductId(Integer userId, Integer productId);
 	

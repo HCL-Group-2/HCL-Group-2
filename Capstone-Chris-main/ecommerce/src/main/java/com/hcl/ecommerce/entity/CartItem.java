@@ -47,6 +47,7 @@ public class CartItem {
 	@Column(name = "cart_item_id")
 	private Integer id;
 	
+	@Column(nullable = false)
 	private int quantity;
 	
 	@ManyToOne

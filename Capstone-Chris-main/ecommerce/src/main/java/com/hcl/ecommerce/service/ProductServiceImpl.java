@@ -17,28 +17,28 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductRepository productRepository;
 
-	@Override
-	public synchronized boolean addProduct(Product product) {
-		if (productRepository.findByName(product.getName()) != null) {
-			return false;
-		} else {
-			productRepository.save(product);
-			return true;
-		}
-	}
-	
 //	@Override
-//	public synchronized boolean addProduct(ProductDto productDto) {
-//		if (productRepository.findByName(productDto.getName()) != null) {
+//	public synchronized boolean addProduct(Product product) {
+//		if (productRepository.findByName(product.getName()) != null) {
 //			return false;
 //		} else {
-//			Product product = new Product();
-//			BeanUtils.copyProperties(productDto, product);
 //			productRepository.save(product);
-//			productDto.setId(product.getId());
 //			return true;
 //		}
 //	}
+	
+	@Override
+	public synchronized boolean addProduct(ProductDto productDto) {
+		if (productRepository.findByName(productDto.getName()) != null) {
+			return false;
+		} else {
+			Product product = new Product();
+			BeanUtils.copyProperties(productDto, product);
+			productRepository.save(product);
+			productDto.setId(product.getId());
+			return true;
+		}
+	}
 	
 	@Override
 	public Product getProductById(Integer productId) {
@@ -51,8 +51,11 @@ public class ProductServiceImpl implements ProductService {
 	public void updateProduct(Product product) {
 		Product prod = getProductById(product.getId());
 		prod.setName(product.getName());
+		prod.setDescription(product.getDescription());
 		prod.setPrice(product.getPrice());
 		prod.setImage(product.getImage());
+		prod.setCategory(product.getCategory());
+		prod.setInventory(product.getInventory());
 		productRepository.save(prod);
 	}
 	
