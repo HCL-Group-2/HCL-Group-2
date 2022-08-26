@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import javax.mail.MessagingException;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
@@ -39,9 +41,25 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+//	@Override
+//	public synchronized boolean addUser(User user) {
+//		if (userRepository.findByEmail(user.getEmail()) != null) {
+//			return false;
+//		} else {
+////			mailSenderService.sendEmail(user.getEmail());
+////			try {
+////				mailSenderService.sendEmailWithAttachment(user.getEmail());
+////			} catch (MessagingException e) {
+////			} catch (IOException e) {
+////			}
+//			userRepository.save(user);
+//			return true;
+//		}
+//	}
+	
 	@Override
-	public synchronized boolean addUser(User user) {
-		if (userRepository.findByEmail(user.getEmail()) != null) {
+	public synchronized boolean addUser(UserDto userDto) {
+		if (userRepository.findByEmail(userDto.getEmail()) != null) {
 			return false;
 		} else {
 //			mailSenderService.sendEmail(user.getEmail());
@@ -50,7 +68,10 @@ public class UserServiceImpl implements UserService {
 //			} catch (MessagingException e) {
 //			} catch (IOException e) {
 //			}
+			User user = new User();
+			BeanUtils.copyProperties(userDto, user);
 			userRepository.save(user);
+			userDto.setId(user.getId());
 			return true;
 		}
 	}
