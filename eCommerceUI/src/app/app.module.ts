@@ -14,7 +14,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTreeModule } from '@angular/cdk/tree';
@@ -61,10 +60,8 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     MatSelectModule,
     MatFormFieldModule,  
-    HttpClientModule ,
-
+    HttpClientModule,
     FlexLayoutModule,
-    BrowserAnimationsModule,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
