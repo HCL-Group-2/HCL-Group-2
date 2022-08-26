@@ -1,6 +1,6 @@
 # HCL-Group-2
 
-In order for the project to run, where you would normally expect the application.properties file to be, there is a file called "TEMPLATE application.properties". You will need to rename it and fill in your own MySQL server and mailtrap.io login credentials.
+In order for the project to run, where you would normally expect the application.properties file to be, there is a file called "TEMPLATE application.properties". You will need make a cpoy of this file and rename it and fill in your own MySQL server and mailtrap.io login credentials.
 
 https://docs.google.com/presentation/d/1FCb3vkPRjQYAz98KbZnBJw9jyV5xEpspjBh4GICx2-k/edit?usp=sharing
 
