@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../cart.service';
-import { CartItems } from '../model/CartItems';
+import { CartItems, ProductCart, UserCart } from '../model/CartItems';
+import { Product } from '../model/Product';
+import { User } from '../model/User';
 
 @Component({
   selector: 'app-cart',
@@ -10,29 +12,25 @@ import { CartItems } from '../model/CartItems';
 })
 export class CartComponent implements OnInit {
 
-  constructor( private route: ActivatedRoute,
-    private router: Router, private cartService: CartService  ) { }
-    
+  user !: UserCart;
+  product !: ProductCart;
+  constructor(private route: ActivatedRoute,
+    private router: Router, private cartService: CartService) { }
+
 
   ngOnInit(): void {
-    this.getOneCartItem(9,11);
-    this.addOneCartItem({cartItemsPKID:{userId:17, productId:17},count:1});
+    this.addOneCartItem({ quantity: 2, user: { id: 1 }, product: { id: 4 } });
   }
 
-  addOneCartItem(cartItem :CartItems){
+  addOneCartItem(cartItem: CartItems) {
 
     this.cartService.addOneCartItem(cartItem).subscribe();
 
   }
 
-  getOneCartItem(userId: number, productId: number){
-    this.cartService.getOneCartItem(userId,productId).subscribe(
-      data => {
-      console.log(JSON.stringify(data));
-    })
 
-  }
+}
 
   
 
-}
+

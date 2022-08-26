@@ -7,18 +7,14 @@ import { CartItems } from './model/CartItems';
   providedIn: 'root'
 })
 export class CartService {
-  private baseURL = 'http://localhost:8080/';
-  private cart = this.baseURL + 'cart';
+  private baseURL = 'http://localhost:8081/ecommerce/';
+
   constructor(private http: HttpClient) { }
   
   addOneCartItem(cartItem :CartItems): Observable<any> {
   
-    return this.http.post(this.cart + '/add',cartItem);
+    return this.http.post(this.baseURL + 'cartitem/',cartItem);
   }
 
-  getOneCartItem(userId:number, productId: number):  Observable<CartItems> {
-    
-    return this.http.get<CartItems>(this.cart+'/item/?userId='+userId+'&'+'productId='+productId);
 
-  }
 }

@@ -1,11 +1,19 @@
-import { CartItemsPKID } from "./CartItemsPKID";
+import { Product } from "./Product";
+import { User } from "./User";
 
 export class CartItems{
     
-	cartItemsPKID !: CartItemsPKID;
-	
-	
-     count !:number;
+     quantity !:number;
+     user !: UserCart;
+     product !: ProductCart;
 
    
+   
+}
+export class UserCart{
+     id !: number;
+}
+
+export class ProductCart{
+     id !: number;
 }
