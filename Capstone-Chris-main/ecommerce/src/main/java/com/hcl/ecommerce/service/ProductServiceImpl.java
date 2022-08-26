@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.dto.ProductDto;
@@ -67,6 +70,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProducts() {
 		return productRepository.getAllProducts();
+	}
+	
+	@Override
+	public List<Product> getAllProductsByName(String name) {
+		return productRepository.findByNameContains(name);
+	}
+	
+	@Override
+	public List<Product> getAllProductsByCategory(String category) {
+		return productRepository.findByCategoryContains(category);
 	}
 
 }
