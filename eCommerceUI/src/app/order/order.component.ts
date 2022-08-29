@@ -1,25 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  styleUrls: ['./order.component.css'],
 })
-export class OrderComponent implements OnInit{
+export class OrderComponent{
 
   name = 'Order Status';
 
-
-  //States the order can be in
-  public counts = ["Received", "In Progress", "Arriving", "Order Delivered"];
-  //Test for output
-  public orderStatus = "Arriving";
-
+  public status = ["Received","In Progress","Shipping","Arriving","Delivered"];
+  public orderStatus = "In Progress"
   //constructor() { }
-
-  ngOnInit(): void {
-
-  }
-
 
 }

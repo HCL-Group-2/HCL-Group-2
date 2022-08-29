@@ -48,7 +48,7 @@ import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { OrderComponent } from './order/order.component';
-import { HelloComponent } from './order/hello/hello.component';
+
 
 @NgModule({
   declarations: [
@@ -58,13 +58,12 @@ import { HelloComponent } from './order/hello/hello.component';
     CartComponent,
     HomeComponent,
     OrderComponent,
-    HelloComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule,  
+    MatFormFieldModule,
     HttpClientModule ,
 
     FlexLayoutModule,
@@ -81,8 +80,8 @@ import { HelloComponent } from './order/hello/hello.component';
     MatProgressSpinnerModule,
     AppRoutingModule
   ],
-  
+
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, OrderComponent]
 })
 export class AppModule { }
