@@ -40,38 +40,28 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
-
-//	@Override
-//	public synchronized boolean addUser(User user) {
-//		if (userRepository.findByEmail(user.getEmail()) != null) {
-//			return false;
-//		} else {
-////			mailSenderService.sendEmail(user.getEmail());
-////			try {
-////				mailSenderService.sendEmailWithAttachment(user.getEmail());
-////			} catch (MessagingException e) {
-////			} catch (IOException e) {
-////			}
-//			userRepository.save(user);
-//			return true;
-//		}
-//	}
 	
 	@Override
 	public synchronized boolean addUser(UserDto userDto) {
 		if (userRepository.findByEmail(userDto.getEmail()) != null) {
 			return false;
 		} else {
+			if (roleRepository.findByName("Customer") == null) {
+				Role role = new Role();
+				role.setName("Customer");
+				roleRepository.save(role);
+			}
+			User user = new User();
+			BeanUtils.copyProperties(userDto, user);
+			userRepository.save(user);
+			assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
+			userDto.setId(user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());
 //			} catch (MessagingException e) {
 //			} catch (IOException e) {
 //			}
-			User user = new User();
-			BeanUtils.copyProperties(userDto, user);
-			userRepository.save(user);
-			userDto.setId(user.getId());
 			return true;
 		}
 	}
@@ -103,13 +93,28 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return userRepository.getAllUsers();
 	}
+	
+	@Override
+	public List<User> getAllUsersByRoleId(Integer roleId) {
+		return userRepository.getUsersByRoleId(roleId);
+	}
 
 	@Override
-	public void addRole(Integer roleId, Integer userId) {
+	public void assignRoleToUser(Integer roleId, Integer userId) {
 		User user = getUserById(userId);
 		Role role = getRoleById(roleId);
 		user.addRole(role);
 		userRepository.save(user);
+	}
+	
+	@Override
+	public synchronized boolean addRole(Role role) {
+		if (roleRepository.findByName(role.getName()) != null) {
+			return false;
+		} else {
+			roleRepository.save(role);
+			return true;
+		}
 	}
 
 	@Override
