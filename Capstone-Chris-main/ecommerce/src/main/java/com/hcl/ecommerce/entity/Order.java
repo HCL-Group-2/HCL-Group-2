@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,7 +35,7 @@ import lombok.ToString;
 public class Order {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
 	private Integer id;
 	
@@ -48,6 +49,12 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private ShippingAddress shippingAddress;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference

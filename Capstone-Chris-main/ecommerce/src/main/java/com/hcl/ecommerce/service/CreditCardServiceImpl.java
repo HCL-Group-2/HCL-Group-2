@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,18 @@ public class CreditCardServiceImpl implements CreditCardService {
 		cc.setName(creditCard.getName());
 		cc.setCreditCardNumber(creditCard.getCreditCardNumber());
 		cc.setExpirationDate(creditCard.getExpirationDate());
-		cc.setSecurityCode(creditCard.getSecurityCode());
+		cc.setVerificationCode(creditCard.getVerificationCode());
 		creditCardRepository.save(cc);
 	}
 
 	@Override
 	public void deleteCreditCard(Integer creditCardId) {
 		creditCardRepository.deleteById(creditCardId);
+	}
+
+	@Override
+	public List<CreditCard> getAllCreditCardsByUserId(Integer userId) {
+		return creditCardRepository.getAllCreditCards(userId);
 	}
 
 }

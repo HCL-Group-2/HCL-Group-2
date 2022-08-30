@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
+import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.UserService;
-
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class UserController {
 
@@ -32,15 +34,6 @@ public class UserController {
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
-//	@PostMapping("/user")
-//	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder builder) {
-//		boolean flag = userService.addUser(user);
-//		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-//	}
 	
 	@PostMapping("/user")
 	public ResponseEntity<Void> addUser(@RequestBody UserDto userDto, UriComponentsBuilder builder) {
@@ -75,9 +68,15 @@ public class UserController {
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping("/users/{roleid}")
+	public ResponseEntity<List<User>> getAllUsersByRoleId(@PathVariable("roleid") Integer roleid) {
+		List<User> list = userService.getAllUsersByRoleId(roleid);
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
+	
 	@PutMapping("/user/{roleid}/{userid}")
-	public ResponseEntity<Void> addRoletoUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
-		userService.addRole(roleid, userid);
+	public ResponseEntity<Void> assignRoleToUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
+		userService.assignRoleToUser(roleid, userid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

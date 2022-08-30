@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,14 +42,20 @@ public class RoleController {
 	}
 	
 	@DeleteMapping("/role/{id}")
-	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
+	public ResponseEntity<Void> deleteRole(@PathVariable("id") Integer id) {
 		roleService.deleteRole(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/roles/{userid}")
+	public ResponseEntity<List<Role>> getAllRolesByUserId(@PathVariable("userid") Integer userid) {
+		List<Role> list = roleService.getAllRolesByUserId(userid);
+		return new ResponseEntity<List<Role>>(list, HttpStatus.OK);
+	}
+	
 	@PutMapping("/role/{userid}/{roleid}")
-	public ResponseEntity<Void> addUsertoRole(@PathVariable("userid") Integer userid, @PathVariable("roleid") Integer roleid) {
-		roleService.addUser(userid, roleid);
+	public ResponseEntity<Void> assignUserToRole(@PathVariable("userid") Integer userid, @PathVariable("roleid") Integer roleid) {
+		roleService.assignUserToRole(userid, roleid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

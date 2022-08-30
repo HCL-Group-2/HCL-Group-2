@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,18 @@ public class AddressServiceImpl implements AddressService {
 		addr.setAddress2(address.getAddress2());
 		addr.setCity(address.getCity());
 		addr.setState(address.getState());
-		addr.setZipcode(address.getZipcode());
+		addr.setZipCode(address.getZipCode());
 		addressRepository.save(addr);
 	}
 
 	@Override
 	public void deleteAddress(Integer addressId) {
 		addressRepository.deleteById(addressId);
+	}
+	
+	@Override
+	public List<Address> getAllAddressesByUserId(Integer userId) {
+		return addressRepository.getAllAddresses(userId);
 	}
 
 }

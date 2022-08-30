@@ -27,11 +27,15 @@ import lombok.ToString;
 public class OrderItem {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_item_id")
 	private Integer id;
 	
+	@Column(nullable = false)
 	private int quantity;
+	
+	@Column(nullable = false)
+	private double subtotal;
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id")

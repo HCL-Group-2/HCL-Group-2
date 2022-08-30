@@ -22,6 +22,10 @@ export class HeaderComponent implements OnInit {
 
   goToOrderStatus(){
     this.router.navigate(['/order']);
+
+  goToRegister(){
+    this.router.navigate(['/user']);
+
   }
 
 }

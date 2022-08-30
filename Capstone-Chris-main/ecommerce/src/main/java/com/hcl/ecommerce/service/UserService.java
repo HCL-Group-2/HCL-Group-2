@@ -10,8 +10,6 @@ import com.hcl.ecommerce.entity.User;
 public interface UserService {
 	
 	boolean login(UserLoginDto userLoginDto);
-
-//	boolean addUser(User user);
 	
 	boolean addUser(UserDto userDto);
 
@@ -22,8 +20,12 @@ public interface UserService {
 	void deleteUser(Integer userId);
 
 	List<User> getAllUsers();
+	
+	List<User> getAllUsersByRoleId(Integer roleId);
 
-	void addRole(Integer roleId, Integer userId);
+	void assignRoleToUser(Integer roleId, Integer userId);
+	
+	boolean addRole(Role role);
 
 	Role getRoleById(Integer roleId);
 

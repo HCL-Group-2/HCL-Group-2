@@ -14,7 +14,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkTreeModule } from '@angular/cdk/tree';
@@ -40,6 +39,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgMaterialModule } from './ng-material/ng-material.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +49,8 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { OrderComponent } from './order/order.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -58,16 +60,15 @@ import { OrderComponent } from './order/order.component';
     CartComponent,
     HomeComponent,
     OrderComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule,
-    HttpClientModule ,
-
+    MatFormFieldModule,  
+    HttpClientModule,
     FlexLayoutModule,
-    BrowserAnimationsModule,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
@@ -78,7 +79,12 @@ import { OrderComponent } from './order/order.component';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgMaterialModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+
   ],
 
   providers: [],
