@@ -17,6 +17,12 @@
 		<java.version>8</java.version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20220320</version>
+		</dependency>
 	
 		<dependency>
             <groupId>org.springdoc</groupId>

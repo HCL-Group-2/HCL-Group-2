@@ -50,7 +50,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void addUser(Integer userId, Integer roleId) {
+	public void assignUserToRole(Integer userId, Integer roleId) {
 		Role role = getRoleById(roleId);
 		User user = getUserById(userId);
 		role.addUser(user);

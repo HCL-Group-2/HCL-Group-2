@@ -33,15 +33,6 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-//	@PostMapping("/user")
-//	public ResponseEntity<Void> addUser(@RequestBody User user, UriComponentsBuilder builder) {
-//		boolean flag = userService.addUser(user);
-//		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-//		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-//	}
-	
 	@PostMapping("/user")
 	public ResponseEntity<Void> addUser(@RequestBody UserDto userDto, UriComponentsBuilder builder) {
 		boolean flag = userService.addUser(userDto);
@@ -76,8 +67,8 @@ public class UserController {
 	}
 	
 	@PutMapping("/user/{roleid}/{userid}")
-	public ResponseEntity<Void> addRoletoUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
-		userService.addRole(roleid, userid);
+	public ResponseEntity<Void> assignRoleToUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
+		userService.assignRoleToUser(roleid, userid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

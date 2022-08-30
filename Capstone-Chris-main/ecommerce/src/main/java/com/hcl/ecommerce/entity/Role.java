@@ -33,7 +33,7 @@ import lombok.ToString;
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private Integer id;
 
@@ -58,7 +58,7 @@ public class Role {
 			updatable = false),
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-	private final List<User> users = new ArrayList<>();
+	private List<User> users = new ArrayList<>();
 	
 	public void addUser(User user) {
 		this.users.add(user);

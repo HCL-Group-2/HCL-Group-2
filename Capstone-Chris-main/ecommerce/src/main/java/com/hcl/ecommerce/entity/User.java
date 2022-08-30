@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +38,7 @@ import lombok.ToString;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer id;
 
@@ -87,7 +89,7 @@ public class User {
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
 	@JsonIgnore
-	private final List<Role> roles = new ArrayList<>();
+	private List<Role> roles = new ArrayList<>();
 	
 	public void addRole(Role role) {
 		this.roles.add(role);

@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.service;
 
+import java.util.List;
+
 import com.hcl.ecommerce.entity.CreditCard;
 
 public interface CreditCardService {
@@ -11,5 +13,7 @@ public interface CreditCardService {
 	void updateCreditCard(CreditCard creditCard);
 
 	void deleteCreditCard(Integer creditCardId);
+
+	List<CreditCard> getAllCreditCardsByUserId(Integer userId);
 
 }

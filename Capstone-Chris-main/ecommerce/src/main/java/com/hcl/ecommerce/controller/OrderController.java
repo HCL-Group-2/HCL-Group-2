@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.OrderDto;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.service.OrderService;
 
@@ -21,8 +22,8 @@ public class OrderController {
 	OrderService orderService;
 	
 	@PostMapping("/order")
-	public ResponseEntity<Void> addOrder(@RequestBody Order order) {
-		boolean flag = orderService.addOrder(order);
+	public ResponseEntity<Void> addOrder(@RequestBody OrderDto orderDto) {
+		boolean flag = orderService.addOrder(orderDto);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}

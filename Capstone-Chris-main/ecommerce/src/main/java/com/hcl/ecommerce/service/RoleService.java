@@ -13,7 +13,7 @@ public interface RoleService {
 
 	void deleteRole(Integer roleId);
 
-	void addUser(Integer userid, Integer roleid);
+	void assignUserToRole(Integer userid, Integer roleid);
 
 	User getUserById(Integer userId);
 

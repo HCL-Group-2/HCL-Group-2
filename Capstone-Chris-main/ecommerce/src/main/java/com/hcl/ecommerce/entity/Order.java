@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,13 +42,19 @@ public class Order {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate orderDate;
 	
-	private double orderTotal;
-	
 	private String orderStatus;
+	
+	private double orderTotal;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private ShippingAddress shippingAddress;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Payment payment;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference

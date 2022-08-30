@@ -46,8 +46,8 @@ public class RoleController {
 	}
 	
 	@PutMapping("/role/{userid}/{roleid}")
-	public ResponseEntity<Void> addUsertoRole(@PathVariable("userid") Integer userid, @PathVariable("roleid") Integer roleid) {
-		roleService.addUser(userid, roleid);
+	public ResponseEntity<Void> assignUserToRole(@PathVariable("userid") Integer userid, @PathVariable("roleid") Integer roleid) {
+		roleService.assignUserToRole(userid, roleid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
