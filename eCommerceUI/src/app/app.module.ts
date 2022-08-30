@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule , APP_INITIALIZER } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +47,12 @@ import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { OktaService } from './authenticate/okta.service';
+import { AuthGuard } from './authenticate/auth.guard';
+
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +69,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
+    OAuthModule.forRoot(),
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -72,10 +79,11 @@ import { HomeComponent } from './home/home.component';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule
   ],
   
-  providers: [],
+  providers: [ OktaService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

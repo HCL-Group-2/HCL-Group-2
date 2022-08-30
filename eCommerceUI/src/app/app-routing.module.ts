@@ -6,12 +6,13 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './authenticate/auth.guard';
 
 const routes: Routes = [
   { path: 'signin', component: LoginComponent},
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'home', component: HomeComponent},
+  { path: 'cart', component: CartComponent,canActivate: [AuthGuard] }
 
 ];
 

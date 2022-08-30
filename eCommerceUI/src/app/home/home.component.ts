@@ -14,13 +14,13 @@ export class HomeComponent implements OnInit {
     private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.updateUser({
-      id: 1,
-      firstName: 'Ostrich',
-      lastName: 'Doe',
-      email:'ostrich.doe@hcl.com',
-      password: 'ostrich'
-    }) 
+    // this.updateUser({
+    //   id: 1,
+    //   firstName: 'Ostrich',
+    //   lastName: 'Doe',
+    //   email:'ostrich.doe@hcl.com',
+    //   password: 'ostrich'
+    // });
    }
   updateUser(user: User) {
 
