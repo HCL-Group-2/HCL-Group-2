@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OktaService } from '../authenticate/okta.service';
+// import { OktaService } from '../authenticate/okta.service';
 import { CartService } from '../cart.service';
 import { CartItems, ProductCart, UserCart } from '../model/CartItems';
 import { Product } from '../model/Product';
@@ -16,22 +16,25 @@ export class CartComponent implements OnInit {
   user !: UserCart;
   product !: ProductCart;
   constructor(private route: ActivatedRoute,
-    private router: Router, private cartService: CartService,private oktaService: OktaService) { }
+    private router: Router, private cartService: CartService) { }
 
 
   ngOnInit(): void {
-    // this.addOneCartItem({ quantity: 2, user: { id: 1 }, product: { id: 2 } });
-    const claims = this.oktaService.getClaims();
-    console.log("claims from cart component " + claims);
-    console.log("claims from cart component email" + claims['email']);
+   //this.addOneCartItem({ quantity: 2, user: { id: 1 }, product: { id: 2 } });
+    
+   
+   // testing purpose
+    // const claims = this.oktaService.getClaims();
+    // console.log("claims from cart component " + claims);
+    // console.log("claims from cart component email" + claims['email']);
 
-    if (claims) {
-      console.log(claims);
+    // if (claims) {
+    //   console.log(claims);
       
 
 
 
-    }
+    // }
   }
 
   addOneCartItem(cartItem: CartItems) {
