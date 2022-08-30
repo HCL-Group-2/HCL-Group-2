@@ -20,8 +20,13 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
+  goToOrderStatus(){
+    this.router.navigate(['/order']);
+  }
+
   goToRegister(){
     this.router.navigate(['/user']);
+
   }
 
 }
