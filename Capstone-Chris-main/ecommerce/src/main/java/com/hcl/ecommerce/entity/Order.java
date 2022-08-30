@@ -35,16 +35,16 @@ import lombok.ToString;
 public class Order {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
 	private Integer id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate orderDate;
 	
-	private String orderStatus;
-	
 	private double orderTotal;
+	
+	private String orderStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)

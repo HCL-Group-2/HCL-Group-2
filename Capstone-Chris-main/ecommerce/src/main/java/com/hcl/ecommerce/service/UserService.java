@@ -20,6 +20,8 @@ public interface UserService {
 	void deleteUser(Integer userId);
 
 	List<User> getAllUsers();
+	
+	List<User> getAllUsersByRoleId(Integer roleId);
 
 	void assignRoleToUser(Integer roleId, Integer userId);
 	

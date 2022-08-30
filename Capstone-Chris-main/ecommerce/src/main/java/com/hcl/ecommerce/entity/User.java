@@ -20,7 +20,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +34,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
+@JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
 public class User {
 
 	@Id
@@ -88,7 +88,6 @@ public class User {
 			updatable = false),
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-	@JsonIgnore
 	private List<Role> roles = new ArrayList<>();
 	
 	public void addRole(Role role) {

@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return userRepository.getAllUsers();
 	}
+	
+	@Override
+	public List<User> getAllUsersByRoleId(Integer roleId) {
+		return userRepository.getUsersByRoleId(roleId);
+	}
 
 	@Override
 	public void assignRoleToUser(Integer roleId, Integer userId) {

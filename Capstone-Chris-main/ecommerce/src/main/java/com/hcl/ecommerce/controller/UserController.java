@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
+import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.UserService;
 
@@ -63,6 +64,12 @@ public class UserController {
 	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> list = userService.getAllUsers();
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/users/{roleid}")
+	public ResponseEntity<List<User>> getAllUsersByRoleId(@PathVariable("roleid") Integer roleid) {
+		List<User> list = userService.getAllUsersByRoleId(roleid);
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
 	

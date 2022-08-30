@@ -63,12 +63,10 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	public void updateCartItem(CartItem cartItem) {
 		CartItem item = getCartItemById(cartItem.getId());
-		User user = getUserById(cartItem.getUser().getId());
 		Product product = getProductById(cartItem.getProduct().getId());
 		item.setQuantity(cartItem.getQuantity());
 		double subtotal = product.getPrice() * cartItem.getQuantity();
 		item.setSubtotal(subtotal);
-		item.setUser(user);
 		item.setProduct(product);
 		cartItemRepository.save(item);
 	}

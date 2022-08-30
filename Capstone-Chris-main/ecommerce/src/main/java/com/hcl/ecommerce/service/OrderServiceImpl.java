@@ -1,9 +1,12 @@
 package com.hcl.ecommerce.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,18 +53,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private MailSenderService mailSenderService;
 	
-//	@Override
-//	public synchronized boolean addOrder(Order order) {
-////		mailSenderService.sendEmail(order.getUser().getEmail());
-////		try {
-////			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
-////		} catch (MessagingException e) {
-////		} catch (IOException e) {
-////		}
-//		orderRepository.save(order);
-//		return true;
-//	}
-	
 	@Override
 	public synchronized boolean addOrder(OrderDto orderDto) {
 		Order order = new Order();
@@ -107,7 +98,23 @@ public class OrderServiceImpl implements OrderService {
 		
 		cartItemRepository.deleteAll(cartItems);
 		orderRepository.save(order);
+		orderDto.setId(order.getId());
+		
+//		mailSenderService.sendEmail(order.getUser().getEmail());
+//		try {
+//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
+//		} catch (MessagingException e) {
+//		} catch (IOException e) {
+//		}
 		return true;
+	}
+	
+	@Override
+	public Order getOrderById(Integer orderId) {
+		Optional<Order> order = orderRepository.findById(orderId);
+		if (order.isPresent())
+			return order.get();
+		return null;
 	}
 	
 	@Override
@@ -125,14 +132,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public CreditCard getCreditCardById(Integer creditCardId) {
-		Optional<CreditCard> creditCard = creditCardRepository.findById(creditCardId);
-		if (creditCard.isPresent())
-			return creditCard.get();
-		return null;
-	}
-	
-	@Override
 	public User getUserById(Integer userId) {
 		Optional<User> user = userRepository.findById(userId);
 		if (user.isPresent())
@@ -147,12 +146,12 @@ public class OrderServiceImpl implements OrderService {
 			return address.get();
 		return null;
 	}
-
+	
 	@Override
-	public Order getOrderById(Integer orderId) {
-		Optional<Order> order = orderRepository.findById(orderId);
-		if (order.isPresent())
-			return order.get();
+	public CreditCard getCreditCardById(Integer creditCardId) {
+		Optional<CreditCard> creditCard = creditCardRepository.findById(creditCardId);
+		if (creditCard.isPresent())
+			return creditCard.get();
 		return null;
 	}
 	
@@ -164,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public List<CartItem> getAllCartItems(Integer userId) {
+	public List<CartItem> getAllCartItemsByUserId(Integer userId) {
 		return cartItemRepository.getAllCartItemsByUserId(userId);
 	}
 

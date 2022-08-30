@@ -17,6 +17,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +33,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "roles")
+@JsonIgnoreProperties(value = { "users" }, allowSetters = true)
 public class Role {
 
 	@Id

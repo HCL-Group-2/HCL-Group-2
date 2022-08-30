@@ -21,13 +21,13 @@ public interface OrderService {
 	void deleteOrder(Integer orderId);
 	
 	User getUserById(Integer userId);
+	
+	Address getAddressById(Integer addressId);
 
 	CreditCard getCreditCardById(Integer creditCardId);
-
-	Address getAddressById(Integer addressId);
 	
 	Product getProductById(Integer productId);
 
-	List<CartItem> getAllCartItems(Integer userId);
+	List<CartItem> getAllCartItemsByUserId(Integer userId);
 
 }
