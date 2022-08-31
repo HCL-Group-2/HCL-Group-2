@@ -49,6 +49,8 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { RegisterComponent } from './register/register.component';
     CartComponent,
     HomeComponent,
     RegisterComponent,
+    AdminComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
