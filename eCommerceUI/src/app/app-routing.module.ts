@@ -5,13 +5,16 @@ import { CartComponent } from './cart/cart.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { CheckOut } from './model/Checkout';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: 'signin', component: LoginComponent},
   { path: 'user', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckOut }
+
 
 ];
 

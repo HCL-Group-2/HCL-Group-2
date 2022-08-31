@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckoutService } from '../checkout.service';
-import { UserCheckout, Address, CreditCard, Checkout } from '../model/Checkout';
+import { Checkout, Address, CreditCard, CheckOut, } from '../model/Checkout';
 
 @Component({
   selector: 'app-checkout',
@@ -10,7 +10,7 @@ import { UserCheckout, Address, CreditCard, Checkout } from '../model/Checkout';
 })
 export class CheckoutComponent implements OnInit {
 
-  user !: UserCheckout;
+  user !: CheckOut;
   address !: Address;
   creditCard!: CreditCard;
     
@@ -18,10 +18,10 @@ export class CheckoutComponent implements OnInit {
   private router: Router, private checkoutService: CheckoutService) { }
 
   ngOnInit(): void {
-    this.addOneOrder({ quantity: 1, user: { id: 1 }, address: { id: 1 }, creditCard: { id: 1 }  });
+    this.addOneCheckout({ quantity: 1, checkout: { id: 1 }, address: { id: 1 }, creditCard: { id: 1 }  });
   }
-  addOneOrder(checkoutOrder: Checkout) {
+  addOneCheckout(checkoutOrder: Checkout) {
 
-    this.checkoutService.addOneOrder(checkoutOrder).subscribe();
+    this.checkoutService.addOneCheckout(checkoutOrder).subscribe();
   }
 }
