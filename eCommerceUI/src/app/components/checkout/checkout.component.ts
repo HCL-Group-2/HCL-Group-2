@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CheckoutService } from 'src/app/checkout.service';
-import { Address, Checkout, CreditCard, OrderNumber } from 'src/app/model/Checkout';
+import { Address, Checkout, CreditCard } from 'src/app/model/Checkout';
 import { CheckoutOrder } from 'src/app/model/CheckoutOrder';
 
 @Component({

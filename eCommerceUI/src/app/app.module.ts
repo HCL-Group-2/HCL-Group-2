@@ -56,7 +56,7 @@ import { OrderComponent } from './order/order.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
-
+import {MatStepperModule} from '@angular/material/stepper'
 
 
 
@@ -100,6 +100,7 @@ import { SearchComponent } from './search/search.component';
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    MatStepperModule
 
 
   ],
