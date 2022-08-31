@@ -5,6 +5,10 @@
         </button>
       <!-- <h1>Ostrich's Mart</h1> -->
       <div fxFlex fxLayoutAlign="flex-end center">
+
+        <button mat-button (click)="goToAccount()">
+            Account
+        </button>
        
         <button mat-button (click)="goToCart()">
             <mat-icon>add_shopping_cart</mat-icon>
@@ -14,6 +18,7 @@
             <mat-icon>account_circle</mat-icon>
             Admin
         </button>
+
         
       
         <!-- <a mat-button [routerLink]="'/create-account'"> Create Account </a>
