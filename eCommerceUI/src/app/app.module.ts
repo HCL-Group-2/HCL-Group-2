@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule , APP_INITIALIZER } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -53,6 +53,12 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchComponent } from './search/search.component';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +70,8 @@ import { OrderComponent } from './order/order.component';
     AdminComponent,
     UserComponent,
     OrderComponent,
+    SearchComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -73,6 +81,7 @@ import { OrderComponent } from './order/order.component';
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -82,15 +91,17 @@ import { OrderComponent } from './order/order.component';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    NoopAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
 
+
   ],
   
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

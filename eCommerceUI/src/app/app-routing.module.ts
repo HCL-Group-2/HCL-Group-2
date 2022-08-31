@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
+
   { path: 'signin', component: LoginComponent},
   { path: 'user', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
