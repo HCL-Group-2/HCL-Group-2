@@ -47,11 +47,10 @@ import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { OktaService } from './authenticate/okta.service';
-import { AuthGuard } from './authenticate/auth.guard';
-
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
 
 @NgModule({
   declarations: [
@@ -59,7 +58,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     HeaderComponent,
     CartComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +68,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
-    OAuthModule.forRoot(),
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -79,11 +78,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    AppRoutingModule,
     NoopAnimationsModule
+
   ],
   
-  providers: [ OktaService, AuthGuard],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
