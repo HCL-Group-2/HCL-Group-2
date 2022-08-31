@@ -40,6 +40,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
+import {CloudinaryModule} from '@cloudinary/ng';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -100,8 +101,7 @@ import { SearchComponent } from './search/search.component';
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-
-
+    CloudinaryModule,
   ],
   
   providers: [ ],

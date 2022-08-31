@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import { User } from '../model/User';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
