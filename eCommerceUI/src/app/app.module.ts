@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule , APP_INITIALIZER } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -49,7 +49,15 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserComponent } from './user/user.component';
+import { OrderComponent } from './order/order.component';
+
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchComponent } from './search/search.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -59,7 +67,11 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     CartComponent,
     HomeComponent,
     RegisterComponent,
-    CheckoutComponent,
+    AdminComponent,
+    UserComponent,
+    OrderComponent,
+    SearchComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -69,6 +81,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -78,15 +91,17 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    NoopAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
 
+
   ],
   
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
