@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.getProducts();
    
     // this.updateUser({
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
     //   lastName: 'Doe',
     //   email:'ostrich.doe@hcl.com',
     //   password: 'ostrich'
-    // });
+    // }) 
    }
   updateUser(user: User) {
 

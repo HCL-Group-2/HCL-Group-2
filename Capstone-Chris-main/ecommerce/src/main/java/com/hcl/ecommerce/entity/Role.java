@@ -17,6 +17,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,10 +33,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "roles")
+@JsonIgnoreProperties(value = { "users" }, allowSetters = true)
 public class Role {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private Integer id;
 
@@ -58,7 +62,7 @@ public class Role {
 			updatable = false),
 		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
 		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-	private final List<User> users = new ArrayList<>();
+	private List<User> users = new ArrayList<>();
 	
 	public void addUser(User user) {
 		this.users.add(user);

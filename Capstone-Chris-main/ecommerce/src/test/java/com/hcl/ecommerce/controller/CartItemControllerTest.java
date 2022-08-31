@@ -31,7 +31,7 @@ public class CartItemControllerTest {
 		testAddProduct();
 		
 		String mockCartItemJson = 
-				"{\"quantity\": 1, \"user\": {\"id\": 1}, \"product\": {\"id\": 2}}";
+				"{\"quantity\":1,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
 		//Create a post request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -47,25 +47,23 @@ public class CartItemControllerTest {
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 		//Get the location from response header and assert that it contains the URI of the created resource
-		assertEquals("http://localhost/cartitem/3",
+		assertEquals("http://localhost/cartitem/1",
 				response.getHeader(HttpHeaders.LOCATION));
 		
 	}
 	
 	@Test
 	public void testGetCartItemById() throws Exception {
-		testAddUser();
-		testAddProduct();
 		testAddCartItem();
 		
 		//Create a request
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/cartitem/3")
+				.get("/cartitem/1")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":3,\"quantity\":1,\"user\":{\"id\":1,\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"email\":\"janedoe@gmail.com\",\"password\":\"jane\"},\"product\":{\"id\": 2,\"name\":\"Test Product A\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
+		String expected = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -77,7 +75,7 @@ public class CartItemControllerTest {
 		testAddCartItem();
 		
 		String mockCartItemJson = 
-				"{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -87,7 +85,7 @@ public class CartItemControllerTest {
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+		String expected = "{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null,\"password\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":0.0,\"image\":null,\"category\":null,\"inventory\":0}}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -99,7 +97,7 @@ public class CartItemControllerTest {
 		testAddCartItem();
 		
 		String mockCartItemJson = 
-				"{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null,\"password\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":0.0,\"image\":null,\"category\":null,\"inventory\":0}}";
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -118,7 +116,7 @@ public class CartItemControllerTest {
 	@Test
 	public void testAddUser() throws Exception {
 		String mockUserJson = 
-				"{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"email\":\"janedoe@gmail.com\",\"password\":\"jane\"}";
+				"{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Create a post request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -158,7 +156,7 @@ public class CartItemControllerTest {
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 		//Get the location from response header and assert that it contains the URI of the created resource
-		assertEquals("http://localhost/product/2",
+		assertEquals("http://localhost/product/1",
 				response.getHeader(HttpHeaders.LOCATION));
 		
 	}

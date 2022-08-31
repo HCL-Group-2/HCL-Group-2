@@ -28,7 +28,7 @@ public class UserControllerTest {
 	@Test
 	public void testAddUser() throws Exception {
 		String mockUserJson = 
-				"{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"email\":\"janedoe@gmail.com\",\"password\":\"jane\"}";
+				"{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Create a post request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -60,7 +60,7 @@ public class UserControllerTest {
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"email\":\"janedoe@gmail.com\",\"password\":\"jane\"}";
+		String expected = "{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -72,7 +72,7 @@ public class UserControllerTest {
 		testAddUser();
 		
 		String mockUserJson = 
-				"{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+				"{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -82,7 +82,7 @@ public class UserControllerTest {
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+		String expected = "{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -94,7 +94,7 @@ public class UserControllerTest {
 		testAddUser();
 		
 		String mockUserJson = 
-				"{\"id\":1,\"firstName\":\"John\",\"lastName\":\"Doe\",\"email\":\"johndoe@gmail.com\",\"password\":\"john\"}";
+				"{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
