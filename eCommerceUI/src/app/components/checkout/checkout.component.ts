@@ -9,6 +9,7 @@ import { CheckoutOrder } from 'src/app/model/CheckoutOrder';
 export class CheckoutComponent implements OnInit {
 
   checkoutOrder:CheckoutOrder = new CheckoutOrder(); 
+  
   constructor() { }
 
   ngOnInit(): void {
