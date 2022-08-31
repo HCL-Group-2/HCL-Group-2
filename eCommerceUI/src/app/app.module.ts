@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule , APP_INITIALIZER } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -52,6 +52,11 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +76,7 @@ import { UserComponent } from './user/user.component';
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -80,15 +86,17 @@ import { UserComponent } from './user/user.component';
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    NoopAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
 
+
   ],
   
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
