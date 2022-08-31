@@ -37,6 +37,7 @@ export class UserComponent implements OnInit {
     // this.addressService.saveAddress(this.form.value).subscribe();
     console.log("Address Saved");
     console.log(this.form.controls['address1'].value);
+    var user_id = 1;
   }
 
 }

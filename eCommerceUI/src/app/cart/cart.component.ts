@@ -42,6 +42,9 @@ export class CartComponent implements OnInit {
     this.cartService.addOneCartItem(cartItem).subscribe();
 
   }
+  checkoutPage(){
+    this.router.navigate(['/checkout']);
+  }
 
 
 }

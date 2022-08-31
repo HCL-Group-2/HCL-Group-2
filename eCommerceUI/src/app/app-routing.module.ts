@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'account', component: UserComponent },
-  { path: 'order', component: OrderComponent }
+  { path: 'order', component: OrderComponent },
+  { path: 'checkout', component: CheckoutComponent }
 
 
 ];
