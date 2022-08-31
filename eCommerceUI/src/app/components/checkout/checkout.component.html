@@ -1,40 +1,58 @@
-<p>checkout works!</p>
-
  <div class="text-center">
-    <h1>Checkout</h1>
- </div>
-<div class="row d-flex justify-content-center">
-    <div class="col-md-6">
-<div class="container">
-    
-    <form [formGroup]="form" (ngSubmit)="addOneCheckout(checkout)">
-        <mat-form-field appearance="standard">
-            <mat-label>First Name</mat-label>
-            <input matInput maxlength="15" inputmode="tel" placeholder="First name" formControlName="firstName" #nameInput>
-            <mat-error>Name is required</mat-error>
-        </mat-form-field> <br>
-        <mat-form-field appearance="standard">
-            <mat-label>Last Name</mat-label>
-            <input matInput maxlength="15" inputmode="tel" placeholder="Last Name" formControlName="lastName" #nameInput>
-            <mat-error>Name is required</mat-error>
-        </mat-form-field><br>
-        <mat-form-field appearance="standard">
-            <mat-label>Address Line 1</mat-label>
-            <input matInput maxlength="15" inputmode="tel" placeholder="Address" formControlName="address" #nameInput>
-            <mat-error>Address is required</mat-error>
-        </mat-form-field><br>
-        <mat-form-field appearance="legacy">
-            <mat-label>Email Address:</mat-label>
-            <input matInput type="email" formControlName="email" placeholder="Your email">
-            <mat-icon matSuffix>mail_outline</mat-icon>
-            <mat-hint>Input the fully qualified email address</mat-hint>
-            <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
-            <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid email</mat-error>
-        </mat-form-field>
-        <div mat-dialog-actions align="end">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    <h2 class="form-title">Checkout</h2>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="container">
+                <form [formGroup]="form" (ngSubmit)="addOneCheckout(checkout)">
+                <mat-form-field appearance="standard">
+                    <mat-label>First Name</mat-label>
+                    <input matInput maxlength="15" inputmode="tel" placeholder="First name" formControlName="firstName" #nameInput>
+                    <mat-error>Name is required</mat-error>
+                </mat-form-field> <br>
+                <mat-form-field appearance="standard">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput maxlength="15" inputmode="tel" placeholder="Last Name" formControlName="lastName" #nameInput>
+                    <mat-error>Name is required</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="standard">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput maxlength="15" inputmode="tel" placeholder="Address" formControlName="address" #nameInput>
+                    <mat-error>Address is required</mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email Address:</mat-label>
+                    <input matInput type="email" formControlName="email" placeholder="Your email">
+                    <mat-icon matSuffix>mail_outline</mat-icon>
+                    <mat-hint>Input the fully qualified email address</mat-hint>
+                    <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
+                    <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid email</mat-error> <br>
+                </mat-form-field>
+             </form>
+            <div class="form-container"><br>
+                 <h2 class="form-title">Payment Details</h2>
+                <form action="" class="checkout-form">
+                <div class="input-line">
+                    <label for="name">Name on card</label><br>
+                    <input type="text" name="name" id="name" placeholder="Your name and surname">
+                </div>
+                <div class="input-line">
+                    <label for="name">Card number</label><br>
+                    <input type="text" name="name" id="name" placeholder="1111-2222-3333-4444">
+                </div>
+                <div class="input-container">
+                    <div class="input-line">
+                        <label for="name">Expiring Date</label><br>
+                        <input type="text" name="name" id="name" placeholder="09-21">
+                    </div>
+                    <div class="input-line">
+                        <label for="name">CVC</label><br>
+                        <input type="text" name="name" id="name" placeholder="***">
+                    </div>
+                </div>
+                <input type="button" value="Complete purchase">
+            </form>
+            </div>
         </div>
-    </form>
-</div>
+        </div>
     </div>
-  </div>
+</div>
