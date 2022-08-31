@@ -47,8 +47,6 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
-import { OrderComponent } from './order/order.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
 
@@ -59,7 +57,6 @@ import { RegisterComponent } from './register/register.component';
     HeaderComponent,
     CartComponent,
     HomeComponent,
-    OrderComponent,
     RegisterComponent,
   ],
   imports: [
@@ -86,8 +83,8 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
 
   ],
-
+  
   providers: [],
-  bootstrap: [AppComponent, OrderComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
