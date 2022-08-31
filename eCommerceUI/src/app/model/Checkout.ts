@@ -3,7 +3,7 @@
 export class Checkout {
 
     quantity !: number;
-    checkout !: Checkout;
+    checkout !: CheckOut;
     address !: Address;
     creditCard!: CreditCard;
 
