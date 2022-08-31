@@ -7,3 +7,7 @@
     height: auto;    
     background-size: cover;
 }
+.center {
+  display: flex;
+  justify-content: center;
+}

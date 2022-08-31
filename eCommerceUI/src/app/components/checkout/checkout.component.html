@@ -1,12 +1,40 @@
 <p>checkout works!</p>
 
-<label for="title">First Name</label> 
-<input type="text"><br>
-<label for="title">Last Name</label> 
-<input type="text"><br>
-<label for="title">Address</label> 
-<input type="text"><br>
-
-
-<button [disabled]="isDisabled">Submit Order</button>
-
+ <div class="text-center">
+    <h1>Checkout</h1>
+ </div>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+<div class="container">
+    
+    <form [formGroup]="form" (ngSubmit)="addOneCheckout(checkout)">
+        <mat-form-field appearance="standard">
+            <mat-label>First Name</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="First name" formControlName="firstName" #nameInput>
+            <mat-error>Name is required</mat-error>
+        </mat-form-field> <br>
+        <mat-form-field appearance="standard">
+            <mat-label>Last Name</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Last Name" formControlName="lastName" #nameInput>
+            <mat-error>Name is required</mat-error>
+        </mat-form-field><br>
+        <mat-form-field appearance="standard">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Address" formControlName="address" #nameInput>
+            <mat-error>Address is required</mat-error>
+        </mat-form-field><br>
+        <mat-form-field appearance="legacy">
+            <mat-label>Email Address:</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Your email">
+            <mat-icon matSuffix>mail_outline</mat-icon>
+            <mat-hint>Input the fully qualified email address</mat-hint>
+            <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid email</mat-error>
+        </mat-form-field>
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </div>
+    </form>
+</div>
+    </div>
+  </div>

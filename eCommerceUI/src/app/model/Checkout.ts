@@ -3,12 +3,12 @@
 export class Checkout {
 
     quantity !: number;
-    checkout !: CheckOut;
+    orderNumber !: OrderNumber;
     address !: Address;
     creditCard!: CreditCard;
 
 }
-export class CheckOut {
+export class OrderNumber {
     id !: number;
 }
 
