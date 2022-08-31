@@ -1,4 +1,25 @@
-<p>home works!</p>
+<mat-card-header>
+    <mat-card-title>Welcome, {{name}}</mat-card-title>
+</mat-card-header>
+<mat-card  *ngFor="let p of products">
+    <mat-card-title>
+        <h5>{{p.name}}</h5>
+      </mat-card-title>
+
+    <mat-card-content>
+      <p>
+        {{p.name}}
+        {{p.description}}
+        {{p.price}}
+        {{p.image}}
+        {{p.category}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="openCartDialog()">Add To Cart</button>
+        <span class="flex-spacer"></span>
+      </mat-card-actions>
+    
+</mat-card>
 
 <router-outlet></router-outlet>
-

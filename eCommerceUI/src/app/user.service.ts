@@ -15,6 +15,11 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     return this.http.put<User>(this.baseURL + 'user', user);
   }
+
+
+  getUser(userId : number):Observable<User>{
+    return this.http.get<User>(this.baseURL + 'user/'+ userId);
+
   
 
   saveUser(user: User): Observable<User>{
@@ -23,5 +28,6 @@ export class UserService {
 
   saveAddress(address: Address): Observable<Address>{
     return this.http.post<Address>(this.baseURL+'address', address)
+
   }
 }

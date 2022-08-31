@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-
+;
+import { OktaService } from './authenticate/okta.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,5 +11,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'eCommerceUI';
 
-  //https://www.youtube.com/watch?v=rZCQiMdQsxE
+  constructor(private oAuthService: OAuthService, private router: Router, private oktaService: OktaService) {
+    oktaService.configure();
+   }
+
 }
