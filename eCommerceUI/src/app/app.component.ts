@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-;
-import { OktaService } from './authenticate/okta.service';
+
+//import { OktaService } from './authenticate/okta.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 @Component({
@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'eCommerceUI';
 
-  constructor(private oAuthService: OAuthService, private router: Router, private oktaService: OktaService) {
-    oktaService.configure();
+  constructor(private router: Router) {
+    
    }
 
 }

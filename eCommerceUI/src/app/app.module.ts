@@ -53,6 +53,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -67,6 +68,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     AdminComponent,
     UserComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,7 @@ export class UserService {
 
   getUser(userId : number):Observable<User>{
     return this.http.get<User>(this.baseURL + 'user/'+ userId);
+  }
 
   
 
