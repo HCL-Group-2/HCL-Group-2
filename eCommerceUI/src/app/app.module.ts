@@ -49,6 +49,7 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { RegisterComponent } from './register/register.component';
     CartComponent,
     HomeComponent,
     RegisterComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
