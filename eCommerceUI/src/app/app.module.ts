@@ -51,6 +51,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { UserComponent } from './user/user.component';
     RegisterComponent,
     AdminComponent,
     UserComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,

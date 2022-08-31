@@ -1,0 +1,15 @@
+<html>
+<body>
+<h3> Order Status</h3>
+
+  <div class="container">
+  <span *ngFor="let item of status;let i = index">
+    <span class="circle-desc" [class.circle-desc-active]="orderStatus == item">{{ item }}</span>
+    <span class="circles" [class.active]="orderStatus == item"></span>
+    <span class="bar" *ngIf="(i != status.length-1)"></span>
+  </span>
+  </div>
+
+  </body>
+  </html>
+
