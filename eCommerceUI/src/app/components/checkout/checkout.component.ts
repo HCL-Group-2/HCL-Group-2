@@ -10,6 +10,8 @@ export class CheckoutComponent implements OnInit {
 
   checkoutOrder:CheckoutOrder = new CheckoutOrder(); 
   
+  isDisabled:boolean=false;
+
   constructor() { }
 
   ngOnInit(): void {
