@@ -30,21 +30,30 @@
                 </mat-form-field>
                  <h2 class="form-title">Payment Details</h2>
                 <div class="input-line">
+                    <mat-form-field appearance="standard">
                     <label for="name">Name on card</label><br>
                     <input textInput maxlength="15" inputmode="tel" placeholder="First and Last Name" formControlName="Name" #nameInput>
+                    <mat-error>Name is required</mat-error>
+                </mat-form-field> <br>
                 </div>
                 <div class="input-line">
+                    <mat-form-field appearance="standard">
                     <label for="name">Card number</label><br>
                     <input type="text" name="name" id="name" placeholder="1111-2222-3333-4444">
+                </mat-form-field> <br>
                 </div>
                 <div class="input-container">
                     <div class="input-line">
+                        <mat-form-field appearance="standard">
                         <label for="name">Expiring Date</label><br>
                         <input type="text" name="name" id="name" placeholder="09-21">
+                    </mat-form-field> <br>
                     </div>
                     <div class="input-line">
+                        <mat-form-field appearance="standard">
                         <label for="name">CVC</label><br>
                         <input type="text" name="name" id="name" placeholder="***">
+                    </mat-form-field> <br>
                     </div>
                 </div>
                 <div mat-dialog-actions align="end">
