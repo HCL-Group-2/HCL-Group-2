@@ -1,4 +1,30 @@
-<div class="pt-5">
-  <div id="okta-sign-in-widget" class="pt-5"></div>
+<div class="text-center">
+    <main class="form-signin w-100 m-auto">
+        <ng-container *ngIf="(isAuthenticated$  | async) === false; else signoutOkta">
+
+
+            <button class="w-100 btn btn-lg btn-primary" (click)="oktaLogin()">Log in with Okta</button>
+
+
+        </ng-container>
+
+        <ng-template #signoutOkta>
+            <div class="profile-card">
+                <div class="shield"></div>
+                <h1 *ngIf="name$ | async as name">
+                    Hello {{name}}!
+                </h1>
+            </div>
+            <br/>
+
+            <button class="w-100 btn btn-lg btn-danger" (click)="oktaLogout()">Sign out from Okta</button>
+        </ng-template>
+
+
+
+        <br/>
+        <br/>
+        <br/>
+        <a href="/home"><button class="w-100 btn btn-lg btn-light">Back To Home</button></a>
+    </main>
 </div>
- 

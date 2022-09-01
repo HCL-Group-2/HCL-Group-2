@@ -16,6 +16,7 @@ import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent, canActivate: [OktaAuthGuard] },
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'user', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
@@ -23,12 +24,9 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'account', component: UserComponent },
   { path: 'order', component: OrderComponent },
-  { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent},
   { path: 'login', component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full"}
-
-
 ];
 
 // const routes: Routes = [
