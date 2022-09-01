@@ -16,7 +16,7 @@ import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 })
 export class AppComponent {
   title = 'eCommerceUI';
-  //img: CloudinaryImage;//Variable to hold the image object
+  img: CloudinaryImage;//Variable to hold the image object
 
 
 
@@ -25,11 +25,11 @@ export class AppComponent {
   constructor(private router: Router) {
       const cld = new Cloudinary({
         cloud:{
-          cloudName: 'demo'
+          cloudName: 'ecommercehcl'
         }
       });
     //This is a demo image on a public cloud
-    //this.img = cld.image('docs/models');
+    this.img = cld.image('docs/models');
    }
 
 
