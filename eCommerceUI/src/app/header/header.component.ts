@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
     private router: Router) {
       const cld = new Cloudinary({
         cloud:{
-          cloudName: 'demo'
+          cloudName: 'ecommercehcl'
         }
       });
       this.logo=cld.image('ostrichmart_qu5yud');
