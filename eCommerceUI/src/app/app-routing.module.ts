@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'account', component: UserComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent},
   { path: 'login', component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full"}
