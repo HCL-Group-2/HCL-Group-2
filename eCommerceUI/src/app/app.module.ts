@@ -93,6 +93,7 @@ import { SearchComponent } from './search/search.component';
     MatTableModule,
     MatMenuModule,
     MatIconModule,
+    MatAutocompleteModule,
     MatProgressSpinnerModule,
     NoopAnimationsModule,
     AppRoutingModule,
