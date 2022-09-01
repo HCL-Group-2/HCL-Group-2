@@ -1,6 +1,7 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,6 +50,7 @@ public class UserControllerTest {
 		assertEquals(testUser.getLastName(), "lname1");
 		assertEquals(testUser.getEmail(), "email1@email.com");
 		assertEquals(testUser.getPassword(), "pword1");
+		assertTrue(testUser.getId()>0);
 		
 	}
 	
