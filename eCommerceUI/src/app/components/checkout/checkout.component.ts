@@ -1,3 +1,4 @@
+import { group } from '@angular/animations';
 import { ElementRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,6 +16,8 @@ export class CheckoutComponent implements OnInit {
 
   checkoutOrder:CheckoutOrder = new CheckoutOrder(); 
   form: FormGroup = new FormGroup([]);
+  creditCardForm: FormGroup = new FormGroup([]);
+
   
   checkout!: Checkout;
   address!: Address;
@@ -37,6 +40,13 @@ export class CheckoutComponent implements OnInit {
       email:[null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       
     });
+    this.creditCardForm = this.fb.group({
+      name:[null, [Validators.required]],
+      creditCardNumber:[null, [Validators.required, Validators.pattern("[0-9]+")]],
+      expirationDate:[null, [Validators.required, Validators.pattern("[0-9]+")]],
+      verificationCode:[null,[Validators.required,Validators.pattern("[0-9]+")]]
+    });
+    
   }
   addOneCheckout(checkout: Checkout){
     this.checkoutService.addOneCheckout(this.form.value).subscribe();

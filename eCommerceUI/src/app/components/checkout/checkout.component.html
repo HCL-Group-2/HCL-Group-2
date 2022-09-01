@@ -27,13 +27,10 @@
                     <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
                     <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid email</mat-error> <br>
                 </mat-form-field>
-             </form>
-            <div class="form-container"><br>
                  <h2 class="form-title">Payment Details</h2>
-                <form action="" class="checkout-form">
                 <div class="input-line">
                     <label for="name">Name on card</label><br>
-                    <input type="text" name="name" id="name" placeholder="Your name and surname">
+                    <input textInput maxlength="15" inputmode="tel" placeholder="First and Last Name" formControlName="Name" #nameInput>
                 </div>
                 <div class="input-line">
                     <label for="name">Card number</label><br>
@@ -49,10 +46,7 @@
                         <input type="text" name="name" id="name" placeholder="***">
                     </div>
                 </div>
-                <input type="button" value="Complete purchase">
+                <div mat-dialog-actions align="end">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+                </div>
             </form>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
