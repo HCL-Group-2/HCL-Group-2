@@ -10,6 +10,7 @@ import { OktaAuth, AuthState } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
 import { User } from '../model/User';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   response : any;
   msg = '';
 
-  constructor(private http:HttpClient, private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  constructor(private userService: UserService, private http:HttpClient, private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
@@ -64,6 +65,8 @@ export class LoginComponent implements OnInit {
 
     this.http.post<any>(this.baseURL + 'login', loginRequest).subscribe((response: any) => {
       this.loggedIn = true;
+      this.userService.setLoggedIn("true");
+      this._router.navigate(['/home'])
     },
     (error) => {
       console.log(error);
@@ -73,11 +76,13 @@ export class LoginComponent implements OnInit {
 
   public logout() {
     this.loggedIn = false;
+    this.userService.clear();
     window.location.reload();
   }
 
   public isLoggedIn() {
-    return this.loggedIn;
+ 
+    return this.userService.getLoggedIn() === "true";
   }
 
 }

@@ -31,4 +31,17 @@ export class UserService {
     return this.http.post<Address>(this.baseURL+'address', address)
 
   }
+
+  public setLoggedIn(loggedIn : string) {
+    localStorage.setItem('loggedIn', loggedIn);
+  }
+
+  public getLoggedIn() : string {
+    return localStorage.getItem('loggedIn') as string;
+  }
+
+  public clear() {
+    localStorage.clear();
+  }
+
 }
