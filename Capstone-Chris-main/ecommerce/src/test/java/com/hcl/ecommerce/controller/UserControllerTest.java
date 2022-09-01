@@ -99,7 +99,7 @@ public class UserControllerTest {
 		String mockUserJson = 
 				"{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		//Create a put request with an accept header for application\json
+		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
 				.delete("/user/1")
 				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)

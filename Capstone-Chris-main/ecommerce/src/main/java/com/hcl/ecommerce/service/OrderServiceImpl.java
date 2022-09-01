@@ -99,7 +99,6 @@ public class OrderServiceImpl implements OrderService {
 		cartItemRepository.deleteAll(cartItems);
 		orderRepository.save(order);
 		orderDto.setId(order.getId());
-		
 //		mailSenderService.sendEmail(order.getUser().getEmail());
 //		try {
 //			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
