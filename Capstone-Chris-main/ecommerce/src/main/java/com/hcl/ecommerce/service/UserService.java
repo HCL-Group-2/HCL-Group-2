@@ -6,12 +6,13 @@ import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface UserService {
 	
 	boolean login(UserLoginDto userLoginDto);
 	
-	boolean addUser(UserDto userDto);
+	User addUser(UserDto userDto) throws AddEntityException;
 
 	User getUserById(Integer userId);
 
