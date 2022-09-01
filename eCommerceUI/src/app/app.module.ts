@@ -80,7 +80,7 @@ import { SearchComponent } from './search/search.component';
     BrowserModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule,  
+    MatFormFieldModule,
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
@@ -103,7 +103,7 @@ import { SearchComponent } from './search/search.component';
 
 
   ],
-  
+
   providers: [ ],
   bootstrap: [AppComponent]
 })
