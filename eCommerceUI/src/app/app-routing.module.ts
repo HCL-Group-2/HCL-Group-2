@@ -15,7 +15,7 @@ import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 
 const routes: Routes = [
 
-  { path: 'home', component: HomeComponent, canActivate: [OktaAuthGuard] },
+  { path: 'home', component: HomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'user', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
