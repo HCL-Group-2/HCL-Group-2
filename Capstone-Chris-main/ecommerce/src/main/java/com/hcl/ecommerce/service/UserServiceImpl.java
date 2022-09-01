@@ -14,6 +14,7 @@ import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
 
@@ -42,28 +43,28 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public synchronized boolean addUser(UserDto userDto) {
+	public synchronized User addUser(UserDto userDto) throws AddEntityException{
 		if (userRepository.findByEmail(userDto.getEmail()) != null) {
-			return false;
-		} else {
-			if (roleRepository.findByName("Customer") == null) {
-				Role role = new Role();
-				role.setName("Customer");
-				roleRepository.save(role);
-			}
-			User user = new User();
-			BeanUtils.copyProperties(userDto, user);
-			userRepository.save(user);
-			assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
-			userDto.setId(user.getId());
+			throw new AddEntityException("A User with the Email: " + userDto.getEmail() + " already exists in the database");
+		}
+		if (roleRepository.findByName("Customer") == null) {
+			Role role = new Role();
+			role.setName("Customer");
+			roleRepository.save(role);
+		}
+		User user = new User();
+		BeanUtils.copyProperties(userDto, user);
+		userRepository.save(user);
+		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
+		userDto.setId(user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());
 //			} catch (MessagingException e) {
 //			} catch (IOException e) {
 //			}
-			return true;
-		}
+		return user;
+		
 	}
 
 	@Override

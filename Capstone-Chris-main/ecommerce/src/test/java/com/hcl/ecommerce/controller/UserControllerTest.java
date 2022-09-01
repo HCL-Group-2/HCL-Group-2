@@ -3,13 +3,14 @@ package com.hcl.ecommerce.controller;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,7 +18,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.hcl.ecommerce.repository.UserRepository;
+import com.hcl.ecommerce.dto.UserDto;
+import com.hcl.ecommerce.entity.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,30 +30,25 @@ public class UserControllerTest {
 	private MockMvc mockMvc;
 	
 	@Autowired
-	UserRepository userRepository;
-	
-	@BeforeEach
-	public void prepTest() {
-		userRepository.deleteAll();
-	}
+	UserController userController;
 	
 	@Test
 	public void testAddUser() throws Exception {
-		String mockUserJson = 
-				"{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
+		//UserController userController = new UserController();
 		
-		//Create a post request with an accept header for application\json
-		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/user/")
-				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
-				.contentType(MediaType.APPLICATION_JSON);
+		UserDto testDto = new UserDto();
+		testDto.setFirstName("fname1");
+		testDto.setLastName("lname1");
+		testDto.setEmail("email1@email.com");
+		testDto.setPassword("pword1");
 		
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		ResponseEntity<User> response = userController.addUser(testDto);
 		
-		MockHttpServletResponse response = result.getResponse();
-		
-		//Assert that the return status is CREATED
-		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		User testUser = response.getBody();
+		assertEquals(testUser.getFirstName(), "fname1");
+		assertEquals(testUser.getLastName(), "lname1");
+		assertEquals(testUser.getEmail(), "email1@email.com");
+		assertEquals(testUser.getPassword(), "pword1");
 		
 	}
 	

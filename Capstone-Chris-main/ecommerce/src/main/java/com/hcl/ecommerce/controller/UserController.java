@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
@@ -35,12 +36,18 @@ public class UserController {
 	}
 	
 	@PostMapping("/user")
-	public ResponseEntity<Void> addUser(@RequestBody UserDto userDto, UriComponentsBuilder builder) {
-		boolean flag = userService.addUser(userDto);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
+		User user = null;
+		try {
+			user = userService.addUser(userDto);
+		} catch (AddEntityException e) {
+			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
+		}
+		//if (!flag) return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		//HttpHeaders headers = new HttpHeaders();
+		//headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
+		
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/user/{id}")
