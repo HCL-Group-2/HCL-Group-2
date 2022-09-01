@@ -12,7 +12,7 @@ import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 })
 export class AppComponent {
   title = 'eCommerceUI';
-  img: CloudinaryImage;//Variable to hold the image object
+  //img: CloudinaryImage;//Variable to hold the image object
 
 
 
@@ -24,7 +24,7 @@ export class AppComponent {
         }
       });
     //This is a demo image on a public cloud
-    this.img = cld.image('docs/models');
+    //this.img = cld.image('docs/models');
    }
 
 }
