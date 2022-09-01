@@ -41,6 +41,12 @@ export class CartComponent implements OnInit {
     );
   }
 
+  
+  checkoutPage(){
+    this.router.navigate(['/checkout']);
+  }
+
+
 }
 
 
