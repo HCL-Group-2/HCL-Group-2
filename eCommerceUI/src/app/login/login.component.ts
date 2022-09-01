@@ -48,9 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   public async oktaLogin() : Promise<void> {
-    await this._oktaAuth.signInWithRedirect({originalUri: "/loginSuccess"}).then(
-      _ => this._router.navigate(['/home'])
-    );
+    await this._oktaAuth.signInWithRedirect({originalUri: "/home"});
   }
 
   public async oktaLogout(): Promise<void> {
