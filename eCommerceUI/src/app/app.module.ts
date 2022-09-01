@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule , APP_INITIALIZER } from '@angular/core';
+import { NgModule , APP_INITIALIZER, Injector } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -41,6 +41,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
 import {CloudinaryModule} from '@cloudinary/ng';
+import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,18 +55,27 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
+import { NavComponent } from './nav/nav.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
+import { Router } from '@angular/router';
+import myAppConfig from './config/my-app-config';
 
 
 
+const oktaConfig = Object.assign({
+  onAuthRequired: (oktaAuth: any, injector: Injector) => {
+    const router = injector.get(Router);
+    router.navigate(['/login']);
+  }
+}, myAppConfig.oidc)
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HeaderComponent,
     CartComponent,
     HomeComponent,
@@ -75,6 +85,9 @@ import { SearchComponent } from './search/search.component';
     UserComponent,
     OrderComponent,
     SearchComponent,
+    LoginComponent,
+    NavComponent,
+    WelcomeComponent,
 
   ],
   imports: [
@@ -102,9 +115,13 @@ import { SearchComponent } from './search/search.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CloudinaryModule,
+    OktaAuthModule,
   ],
   
-  providers: [ ],
+  providers: [
+    {provide: OKTA_CONFIG, useValue: oktaConfig 
+    }
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
