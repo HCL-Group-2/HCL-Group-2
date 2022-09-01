@@ -1,15 +1,15 @@
 
 <mat-toolbar class="custom-toolbar">
     <mat-toolbar-row >
-        <advanced-image image [cldImg]="logo" mat-button (click)="goToHomePage()">
+      <button mat-button (click)="goToHomePage()">
+        <advanced-image class="logo" [cldImg]="logo" alt = "OstrichMart" width="70px" height="75px">
         </advanced-image>
+      </button>
       <!-- <h1>Ostrich's Mart</h1> -->
       <div fxFlex fxLayoutAlign="flex-end center">
 
-        <form class="navbar-form navbar-left" action="localhost:8081/ecommerce/products">
-          <div class="form">
-              <input type="text" class="form-control" placeholder="Search">
-          </div>
+        <form class="searchbar" action="localhost:8081/ecommerce/products">
+          <input type="text" placeholder="Search.." name="search">
           <button type="submit" class="btn btn-default bg-light">Submit</button>
       </form>
       <button mat-button (click)="goToOrderStatus()">
