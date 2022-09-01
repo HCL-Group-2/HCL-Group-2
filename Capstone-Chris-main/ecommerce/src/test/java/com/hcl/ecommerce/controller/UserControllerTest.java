@@ -3,11 +3,11 @@ package com.hcl.ecommerce.controller;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.hcl.ecommerce.repository.UserRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,6 +26,14 @@ public class UserControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@BeforeEach
+	public void prepTest() {
+		userRepository.deleteAll();
+	}
 	
 	@Test
 	public void testAddUser() throws Exception {
@@ -42,10 +52,6 @@ public class UserControllerTest {
 		
 		//Assert that the return status is CREATED
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-		
-		//Get the location from response header and assert that it contains the URI of the created resource
-		assertEquals("http://localhost/user/1",
-				response.getHeader(HttpHeaders.LOCATION));
 		
 	}
 	

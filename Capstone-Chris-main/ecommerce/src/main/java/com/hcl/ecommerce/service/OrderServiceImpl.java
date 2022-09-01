@@ -50,8 +50,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@Autowired
-	private MailSenderService mailSenderService;
+//	@Autowired
+//	private MailSenderService mailSenderService;
 	
 	@Override
 	public synchronized boolean addOrder(OrderDto orderDto) {

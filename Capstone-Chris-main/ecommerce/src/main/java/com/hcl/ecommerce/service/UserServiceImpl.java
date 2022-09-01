@@ -124,6 +124,11 @@ public class UserServiceImpl implements UserService {
 			return role.get();
 		return null;
 	}
+	
+	@Override
+	public void deleteAllUsers() {
+		userRepository.deleteAllUsers();
+	}
 
 //	@Override
 //	public User registerUser(UserDto userDto) {

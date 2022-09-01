@@ -21,5 +21,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query("select r.users from Role r where r.id = :roleId")
 	List<User> getUsersByRoleId(Integer roleId);
+
+	@Query("delete from User")
+	void deleteAllUsers();
 	
 }

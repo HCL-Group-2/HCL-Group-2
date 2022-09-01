@@ -29,6 +29,8 @@ public interface UserService {
 
 	Role getRoleById(Integer roleId);
 
+	void deleteAllUsers();
+
 //	User loginUser(String username, String password);
 
 //	User registerUser(UserDto userDto);
