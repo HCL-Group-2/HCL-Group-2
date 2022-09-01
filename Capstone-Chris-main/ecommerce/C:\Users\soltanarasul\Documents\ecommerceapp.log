@@ -2084,3 +2084,30 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'training.user_roles' doesn't
 2022-09-01 09:48:33.800  INFO 46650 --- [http-nio-8081-exec-2] o.a.c.c.C.[.[localhost].[/ecommerce]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-09-01 09:48:33.800  INFO 46650 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-09-01 09:48:33.804  INFO 46650 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2022-09-01 16:31:41.066  INFO 62140 --- [restartedMain] com.hcl.ecommerce.EcommerceApplication   : Starting EcommerceApplication using Java 18.0.2 on soltanas-mac.lan with PID 62140 (/Users/soltanarasul/Documents/GitHub/HCL-Group-2 /Capstone-Chris-main/ecommerce/target/classes started by soltanarasul in /Users/soltanarasul/Documents/GitHub/HCL-Group-2 /Capstone-Chris-main/ecommerce)
+2022-09-01 16:31:41.068  INFO 62140 --- [restartedMain] com.hcl.ecommerce.EcommerceApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-09-01 16:31:41.124  INFO 62140 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-09-01 16:31:41.124  INFO 62140 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-09-01 16:31:42.115  INFO 62140 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-09-01 16:31:42.180  INFO 62140 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 8 JPA repository interfaces.
+2022-09-01 16:31:42.784  INFO 62140 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2022-09-01 16:31:42.794  INFO 62140 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-09-01 16:31:42.795  INFO 62140 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-09-01 16:31:42.856  INFO 62140 --- [restartedMain] o.a.c.c.C.[.[localhost].[/ecommerce]     : Initializing Spring embedded WebApplicationContext
+2022-09-01 16:31:42.857  INFO 62140 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1732 ms
+2022-09-01 16:31:43.110  INFO 62140 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-09-01 16:31:43.165  INFO 62140 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.10.Final
+2022-09-01 16:31:43.319  INFO 62140 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-09-01 16:31:43.412  INFO 62140 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-09-01 16:31:43.781  INFO 62140 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-09-01 16:31:43.806  INFO 62140 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2022-09-01 16:31:45.758  INFO 62140 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-09-01 16:31:45.779  INFO 62140 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-09-01 16:31:46.812  WARN 62140 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-09-01 16:31:47.697  WARN 62140 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2022-09-01 16:31:47.704  INFO 62140 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2022-09-01 16:31:47.754  INFO 62140 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/ecommerce'
+2022-09-01 16:31:47.773  INFO 62140 --- [restartedMain] com.hcl.ecommerce.EcommerceApplication   : Started EcommerceApplication in 7.154 seconds (JVM running for 7.722)
+2022-09-01 16:32:14.141  INFO 62140 --- [http-nio-8081-exec-2] o.a.c.c.C.[.[localhost].[/ecommerce]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-09-01 16:32:14.141  INFO 62140 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-09-01 16:32:14.144  INFO 62140 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
