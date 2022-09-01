@@ -23,6 +23,7 @@ export class ProductCart {
 export class CartItems2 {
 
      quantity !: number;
+     subtotal ?: number;
      user !: User;
      product !: Product;
 

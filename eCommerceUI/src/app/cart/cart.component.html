@@ -14,18 +14,21 @@
                 {{c.product.image}}
                 {{c.product.description}}
                 {{c.quantity}}
-                {{c.product.price}}
+                ${{c.product.price}}
+                total:  ${{c.subtotal}}
             </p>
         </mat-card-content>
 
-        <mat-card-actions>
-            <button mat-raised-button color="primary">checkout</button>
-            <span class="flex-spacer"></span>
-        </mat-card-actions>
+    
 
     </mat-card>
 
+
 </div>
+<mat-card-actions>
+    <button mat-raised-button color="primary">checkout</button>
+    <span class="flex-spacer"></span>
+</mat-card-actions>
 
 
 
