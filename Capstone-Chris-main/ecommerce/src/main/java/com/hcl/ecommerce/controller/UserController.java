@@ -3,7 +3,6 @@ package com.hcl.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
@@ -43,10 +41,6 @@ public class UserController {
 		} catch (AddEntityException e) {
 			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
 		}
-		//if (!flag) return new ResponseEntity<User>(HttpStatus.CONFLICT);
-		//HttpHeaders headers = new HttpHeaders();
-		//headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
-		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	

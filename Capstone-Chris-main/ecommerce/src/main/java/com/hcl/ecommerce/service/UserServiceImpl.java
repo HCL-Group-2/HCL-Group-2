@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public synchronized User addUser(UserDto userDto) throws AddEntityException{
+	public synchronized User addUser(UserDto userDto) throws AddEntityException {
 		if (userRepository.findByEmail(userDto.getEmail()) != null) {
 			throw new AddEntityException("A User with the Email: " + userDto.getEmail() + " already exists in the database");
 		}
@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
 		BeanUtils.copyProperties(userDto, user);
 		userRepository.save(user);
 		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
-		userDto.setId(user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());

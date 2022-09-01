@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,8 +46,8 @@ public class Address {
 	@Column(nullable = false)
 	private String zipCode;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
-
+//	@ManyToOne
+//	@JoinColumn(name = "user_id", nullable = false)
+//	private User user;
+	
 }

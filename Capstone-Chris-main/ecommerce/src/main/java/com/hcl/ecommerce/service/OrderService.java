@@ -7,24 +7,19 @@ import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.CreditCard;
 import com.hcl.ecommerce.entity.Order;
+import com.hcl.ecommerce.entity.OrderItem;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.User;
 
 public interface OrderService {
 	
-	boolean addOrder(OrderDto orderDto);
+	boolean addOrder(Order order);
 
 	Order getOrderById(Integer orderId);
 
 	void updateOrder(Order order);
 
 	void deleteOrder(Integer orderId);
-	
-	User getUserById(Integer userId);
-	
-	Address getAddressById(Integer addressId);
-
-	CreditCard getCreditCardById(Integer creditCardId);
 	
 	Product getProductById(Integer productId);
 

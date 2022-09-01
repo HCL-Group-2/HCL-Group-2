@@ -51,16 +51,16 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(nullable = false)
+	
 	private String password;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Address> addresses = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<CreditCard> creditCards = new ArrayList<>();
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@JsonIgnore
+//	private List<Address> addresses = new ArrayList<>();
+//	
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@JsonIgnore
+//	private List<CreditCard> creditCards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore

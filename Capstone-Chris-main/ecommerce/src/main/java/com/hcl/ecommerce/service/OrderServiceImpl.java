@@ -12,19 +12,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hcl.ecommerce.dto.OrderDto;
-import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.CreditCard;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
 import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.repository.AddressRepository;
 import com.hcl.ecommerce.repository.CartItemRepository;
-import com.hcl.ecommerce.repository.CreditCardRepository;
 import com.hcl.ecommerce.repository.OrderRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
 import com.hcl.ecommerce.repository.UserRepository;
@@ -39,12 +34,6 @@ public class OrderServiceImpl implements OrderService {
 	UserRepository userRepository;
 	
 	@Autowired
-	AddressRepository addressRepository;
-	
-	@Autowired
-	CreditCardRepository creditCardRepository;
-	
-	@Autowired
 	CartItemRepository cartItemRepository;
 	
 	@Autowired
@@ -54,58 +43,41 @@ public class OrderServiceImpl implements OrderService {
 //	private MailSenderService mailSenderService;
 	
 	@Override
-	public synchronized boolean addOrder(OrderDto orderDto) {
-		Order order = new Order();
-		ShippingAddress shippingAddress = new ShippingAddress();
-		Payment payment = new Payment();
-		List<OrderItem> orderItems = new ArrayList<>();
-		
-		User user = getUserById(orderDto.getUser().getId());
-		Address address = getAddressById(orderDto.getAddress().getId());
-		CreditCard creditCard = getCreditCardById(orderDto.getCreditCard().getId());
-		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(orderDto.getUser().getId());
-		
-		BeanUtils.copyProperties(address, shippingAddress, "id");
-		BeanUtils.copyProperties(creditCard, payment, "id");
-		
-		double total = 0.0;
-		int inventory = 0;
-		int quantity = 0;
-		for (CartItem cartItem : cartItems) {
-			Product prod = getProductById(cartItem.getProduct().getId());
-			inventory = prod.getInventory();
-			quantity = cartItem.getQuantity();
-			if (inventory - quantity < 0) {
-				cartItemRepository.delete(cartItem);
-				continue;
+	public synchronized boolean addOrder(Order order) {
+		User user = userRepository.findByEmail(order.getUser().getEmail());
+		if (user != null) {			
+			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(order.getUser().getId());
+			List<OrderItem> orderItems = new ArrayList<>();
+			double total = 0.0;
+			for (CartItem cartItem : cartItems) {
+				Product prod = getProductById(cartItem.getProduct().getId());
+				prod.setInventory(prod.getInventory() - cartItem.getQuantity());
+				productRepository.save(prod);
+				OrderItem orderItem = new OrderItem();
+				BeanUtils.copyProperties(cartItem, orderItem, "id");
+				orderItem.setOrder(order);
+				orderItems.add(orderItem);
+				total += orderItem.getSubtotal();
 			}
-			prod.setInventory(inventory - quantity);
-			productRepository.save(prod);
-			OrderItem orderItem = new OrderItem();
-			BeanUtils.copyProperties(cartItem, orderItem, "id");
-			orderItem.setOrder(order);
-			orderItems.add(orderItem);
-			total += orderItem.getSubtotal();
+			
+			order.setUser(user);
+			order.setOrderItems(orderItems);
+			order.setOrderTotal(total);
+			order.setOrderDate(LocalDate.now());
+			order.setOrderStatus("In Progress");
+			
+			cartItemRepository.deleteAll(cartItems);
+			orderRepository.save(order);
+//			mailSenderService.sendEmail(order.getUser().getEmail());
+//			try {
+//				mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
+//			} catch (MessagingException e) {
+//			} catch (IOException e) {
+//			}
+			return true;
+		} else {
+			return false;
 		}
-		
-		order.setUser(user);
-		order.setShippingAddress(shippingAddress);
-		order.setPayment(payment);
-		order.setOrderItems(orderItems);
-		order.setOrderTotal(total);
-		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("Processing");
-		
-		cartItemRepository.deleteAll(cartItems);
-		orderRepository.save(order);
-		orderDto.setId(order.getId());
-//		mailSenderService.sendEmail(order.getUser().getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
-		return true;
 	}
 	
 	@Override
@@ -128,30 +100,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void deleteOrder(Integer orderId) {
 		orderRepository.deleteById(orderId);
-	}
-	
-	@Override
-	public User getUserById(Integer userId) {
-		Optional<User> user = userRepository.findById(userId);
-		if (user.isPresent())
-			return user.get();
-		return null;
-	}
-
-	@Override
-	public Address getAddressById(Integer addressId) {
-		Optional<Address> address = addressRepository.findById(addressId);
-		if (address.isPresent())
-			return address.get();
-		return null;
-	}
-	
-	@Override
-	public CreditCard getCreditCardById(Integer creditCardId) {
-		Optional<CreditCard> creditCard = creditCardRepository.findById(creditCardId);
-		if (creditCard.isPresent())
-			return creditCard.get();
-		return null;
 	}
 	
 	@Override

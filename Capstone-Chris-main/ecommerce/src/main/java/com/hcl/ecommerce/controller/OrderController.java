@@ -24,11 +24,11 @@ public class OrderController {
 	OrderService orderService;
 	
 	@PostMapping("/order")
-	public ResponseEntity<Void> addOrder(@RequestBody OrderDto orderDto, UriComponentsBuilder builder) {
-		boolean flag = orderService.addOrder(orderDto);
+	public ResponseEntity<Void> addOrder(@RequestBody Order order, UriComponentsBuilder builder) {
+		boolean flag = orderService.addOrder(order);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/order/{id}").buildAndExpand(orderDto.getId()).toUri());
+		headers.setLocation(builder.path("/order/{id}").buildAndExpand(order.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
