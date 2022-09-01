@@ -1,43 +1,69 @@
-<mat-toolbar class="custom-toolbar">
-    <mat-toolbar-row >
-        <button mat-button (click)="goToHomePage()">
-            Ostrich's Mart
-        </button>
-      <!-- <h1>Ostrich's Mart</h1> -->
-      <div fxFlex fxLayoutAlign="flex-end center">
-        
-        <form class="navbar-form navbar-left" action="localhost:8081/ecommerce/products">
-          <div class="form">
-              <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default bg-light">Submit</button>
-      </form>
-      <button mat-button (click)="goToOrderStatus()">
-        Order Status
-      </button>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
 
-        <button mat-button (click)="goToAccount()">
-            Account
-        </button>
-       
-        <button mat-button (click)="goToCart()">
-            <mat-icon>add_shopping_cart</mat-icon>
-            Cart 
-        </button>
-        <button mat-button (click)= "goToRegister()">
-            <mat-icon>account_circle</mat-icon>
-            Admin
-        </button>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand mt-2 mt-lg-0" href="/home">
+                  Ostrich's Mart
+                </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-        
-      
-        <!-- <a mat-button [routerLink]="'/create-account'"> Create Account </a>
-        <a mat-button [routerLink]="'/contacts'"> Contacts </a>
-        <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
-        <a mat-button [routerLink]="'/activities'"> Activities </a>
-        <a mat-button [routerLink]="'/create-activity'"> Create Activity </a> -->
-  
-      </div>
-    </mat-toolbar-row>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Us</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
 
-    
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            <button mat-button (click)="goToOrderStatus()">
+                Order Status
+              </button>
+
+            <button mat-button (click)="goToAccount()">
+                    Account
+                </button>
+
+            <!-- Icon -->
+            <div class="me-3">
+                <form class="d-flex input-group w-auto" action="localhost:8081/ecommerce/products">
+                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="input-group-text border-0" id="search-addon">
+                  Search
+                  </button>
+                </form>
+            </div>
+
+
+            <a class="text-reset me-3" href="#">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </a>
+
+            <!-- Avatar -->
+            <div>
+                <a class="d-flex align-items-center hidden-arrow" href="/login" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <mat-icon>account_circle</mat-icon>
+                </a>
+            </div>
+        </div>
+        <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

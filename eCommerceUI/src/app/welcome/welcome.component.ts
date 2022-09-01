@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OktaAuthService } from '@okta/okta-angular';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { AuthState } from '@okta/okta-auth-js';
+import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-welcome',
@@ -10,17 +12,14 @@ export class WelcomeComponent implements OnInit {
 
   isAuthenticated: boolean = false;
 
-  name: string = "";
+  public name$!: Observable<string>;
 
-  constructor(private authService: OktaAuthService) { }
+  constructor(private _oktaAuthStateService: OktaAuthStateService) { }
 
-  async ngOnInit() {
-    this.isAuthenticated = await this.authService.isAuthenticated();
-
-    if(this.isAuthenticated){
-      const userClaims = await this.authService.getUser();
-      this.name = userClaims.name || "";
-    }
+  ngOnInit() : void{
+    this.name$ = this._oktaAuthStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
   }
 
 }

@@ -62,15 +62,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 
 
-const oktaConfig = Object.assign({
-  onAuthRequired: (oktaAuth: any, injector: Injector) => {
-    const router = injector.get(Router);
-    router.navigate(['/login']);
-  }
-}, myAppConfig.oidc)
+const oktaAuth = new OktaAuth({
+  issuer: 'https://dev-06861319.okta.com/oauth2/default',
+  clientId: '0oa6b7ee0wwOnJzuz5d7',
+  redirectUri: window.location.origin + '/login/callback'
+});
 
 
 @NgModule({
@@ -120,8 +120,7 @@ const oktaConfig = Object.assign({
   ],
   
   providers: [
-    {provide: OKTA_CONFIG, useValue: oktaConfig 
-    }
+    {provide: OKTA_CONFIG, useValue: { oktaAuth } }
    ],
   bootstrap: [AppComponent]
 })
