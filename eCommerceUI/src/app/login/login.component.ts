@@ -8,6 +8,8 @@ import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { Router } from '@angular/router';
 import { OktaAuth, AuthState } from '@okta/okta-auth-js';
 import { filter, map, Observable } from 'rxjs';
+import { User } from '../model/User';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +18,18 @@ import { filter, map, Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
+  private baseURL = 'http://localhost:8081/ecommerce/';
+
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
 
-  constructor(private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
+  loggedIn = false;
+
+  user = new User();
+  response : any;
+  msg = '';
+
+  constructor(private http:HttpClient, private _router: Router, private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) { }
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
@@ -44,6 +54,30 @@ export class LoginComponent implements OnInit {
 
   public async oktaLogout(): Promise<void> {
     await this._oktaAuth.signOut();
+  }
+
+  public loginUser() {
+    let loginRequest : any = {
+      "email": this.user.email,
+      "password": this.user.password
+    }
+
+    this.http.post<any>(this.baseURL + 'login', loginRequest).subscribe((response: any) => {
+      this.loggedIn = true;
+    },
+    (error) => {
+      console.log(error);
+      this.msg = "Bad credentials! Please re-enter email and password.";
+    })
+  }
+
+  public logout() {
+    this.loggedIn = false;
+    window.location.reload();
+  }
+
+  public isLoggedIn() {
+    return this.loggedIn;
   }
 
 }
