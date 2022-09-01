@@ -1,6 +1,7 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,13 +109,9 @@ public class ProductControllerTest {
 		product.setCategory("Test Category");
 		product.setInventory(300);
 		
-//        Mockito.when(productService.deleteProduct(1));
+		productController.deleteProduct(1);
 		
-		ResponseEntity<Void> prod = productController.deleteProduct(1);
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), prod.getStatusCodeValue());
-		
-		assertEquals(product, prod.getBody());
+		Mockito.verify(productService, times(1)).deleteProduct(1);
 		
 	}
 

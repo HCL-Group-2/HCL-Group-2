@@ -5,21 +5,22 @@ import java.util.List;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface CartItemService {
 	
-	boolean addCartItem(CartItem cartItem);
-	
-	User getUserById(Integer userId);
-	
-	Product getProductById(Integer productId);
+	CartItem addCartItem(CartItem cartItem) throws AddEntityException;
 	
 	CartItem getCartItemById(Integer cartItemId);
 	
-	void updateCartItem(CartItem cartItem);
+	CartItem updateCartItem(CartItem cartItem);
 	
 	void deleteCartItem(Integer cartItemId);
 
 	List<CartItem> getAllCartItemsByUserId(Integer userId);
+
+	User getUserById(Integer userId);
+
+	Product getProductById(Integer productId);
 
 }

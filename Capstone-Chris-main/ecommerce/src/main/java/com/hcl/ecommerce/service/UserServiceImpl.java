@@ -43,17 +43,15 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public synchronized User addUser(UserDto userDto) throws AddEntityException {
-		if (userRepository.findByEmail(userDto.getEmail()) != null) {
-			throw new AddEntityException("A User with the Email: " + userDto.getEmail() + " already exists in the database");
+	public synchronized User addUser(User user) throws AddEntityException {
+		if (userRepository.findByEmail(user.getEmail()) != null) {
+			throw new AddEntityException("A User with the Email: " + user.getEmail() + " already exists in the database");
 		}
 		if (roleRepository.findByName("Customer") == null) {
 			Role role = new Role();
 			role.setName("Customer");
 			roleRepository.save(role);
 		}
-		User user = new User();
-		BeanUtils.copyProperties(userDto, user);
 		userRepository.save(user);
 		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
@@ -75,13 +73,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public User updateUser(User user) {
 		User usr = getUserById(user.getId());
 		usr.setFirstName(user.getFirstName());
 		usr.setLastName(user.getLastName());
 		usr.setEmail(user.getEmail());
 		usr.setPassword(user.getPassword());
-		userRepository.save(usr);
+		return userRepository.save(usr);
 	}
 
 	@Override
@@ -123,11 +121,6 @@ public class UserServiceImpl implements UserService {
 		if (role.isPresent())
 			return role.get();
 		return null;
-	}
-	
-	@Override
-	public void deleteAllUsers() {
-		userRepository.deleteAllUsers();
 	}
 
 //	@Override

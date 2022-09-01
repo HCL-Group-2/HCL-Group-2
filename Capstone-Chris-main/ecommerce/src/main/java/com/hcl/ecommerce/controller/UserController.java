@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
+
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class UserController {
@@ -34,10 +34,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/user")
-	public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
-		User user = null;
+	public ResponseEntity<User> addUser(@RequestBody User user) {
 		try {
-			user = userService.addUser(userDto);
+			user = userService.addUser(user);
 		} catch (AddEntityException e) {
 			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
 		}
@@ -52,7 +51,7 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		userService.updateUser(user);
+		user = userService.updateUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	

@@ -12,11 +12,11 @@ public interface UserService {
 	
 	boolean login(UserLoginDto userLoginDto);
 	
-	User addUser(UserDto userDto) throws AddEntityException;
+	User addUser(User user) throws AddEntityException;
 
 	User getUserById(Integer userId);
 
-	void updateUser(User user);
+	User updateUser(User user);
 
 	void deleteUser(Integer userId);
 
@@ -29,8 +29,6 @@ public interface UserService {
 	boolean addRole(Role role);
 
 	Role getRoleById(Integer roleId);
-
-	void deleteAllUsers();
 
 //	User loginUser(String username, String password);
 

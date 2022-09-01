@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.hcl.ecommerce.entity.CartItem;
+import com.hcl.ecommerce.entity.Product;
+import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.CartItemService;
 
 @CrossOrigin(origins="http://localhost:4200")
@@ -27,12 +30,13 @@ public class CartItemController {
 	CartItemService cartItemService;
 	
 	@PostMapping("/cartitem")
-	public ResponseEntity<Void> addCartItem(@RequestBody CartItem cartItem, UriComponentsBuilder builder) {
-		boolean flag = cartItemService.addCartItem(cartItem);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/cartitem/{id}").buildAndExpand(cartItem.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<CartItem> addCartItem(@RequestBody CartItem cartItem) {
+		try {
+			cartItem = cartItemService.addCartItem(cartItem);
+		} catch (AddEntityException e) {
+			return new ResponseEntity<CartItem>(cartItem, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<CartItem>(cartItem, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/cartitem/{id}")
@@ -43,7 +47,7 @@ public class CartItemController {
 	
 	@PutMapping("/cartitem")
 	public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
-		cartItemService.updateCartItem(cartItem);
+		cartItem = cartItemService.updateCartItem(cartItem);
 		return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
 	}
 	
