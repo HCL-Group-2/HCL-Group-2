@@ -10,11 +10,17 @@ export class CartService {
   private baseURL = 'http://localhost:8081/ecommerce/';
 
   constructor(private http: HttpClient) { }
-  
-  addOneCartItem(cartItem :CartItems): Observable<any> {
-  
-    return this.http.post(this.baseURL + 'cartitem/',cartItem);
+
+  addOneCartItem(cartItem: CartItems): Observable<any> {
+
+    return this.http.post(this.baseURL + 'cartitem/', cartItem);
   }
+
+  getCartItems(userId: number): Observable<any> {
+    return this.http.get(this.baseURL + 'cartitems/' + userId);
+
+  }
+
 
 
 }
