@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
 		BeanUtils.copyProperties(userDto, user);
 		userRepository.save(user);
 		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
-		userDto.setId(user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());
@@ -124,6 +123,11 @@ public class UserServiceImpl implements UserService {
 		if (role.isPresent())
 			return role.get();
 		return null;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 //	@Override

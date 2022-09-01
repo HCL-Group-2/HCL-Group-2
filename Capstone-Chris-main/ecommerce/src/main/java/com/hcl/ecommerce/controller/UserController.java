@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,13 +29,14 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+	/*//No longer needed with Okta
 	@GetMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
 		boolean flag = userService.login(userLoginDto);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	*/
 	
 	@PostMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
@@ -49,6 +51,10 @@ public class UserController {
 		//headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
 		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+	}
+	@GetMapping("/byEmail")
+	public User getUserByEmail(@RequestParam String email) {
+		return userService.getUserByEmail(email);
 	}
 	
 	@GetMapping("/user/{id}")
@@ -124,10 +130,6 @@ public class UserController {
 //		return userService.getAllUsers();
 //	}
 	
-//	@GetMapping("/byEmail")
-//	public User getUserByEmail(@RequestParam String email) {
-//		return userService.getUserByEmail(email);
-//	}
 //	
 //	@GetMapping("/byEmailAndPassword")
 //	public User getUserByEmail(@RequestParam String email, @RequestParam String password) {
