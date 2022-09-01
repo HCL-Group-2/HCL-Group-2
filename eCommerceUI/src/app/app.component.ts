@@ -17,6 +17,7 @@ import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 export class AppComponent {
   title = 'eCommerceUI';
   //img: CloudinaryImage;//Variable to hold the image object
+  logo: CloudinaryImage; //ostrichmart logo
 
 
 
@@ -30,6 +31,7 @@ export class AppComponent {
       });
     //This is a demo image on a public cloud
     //this.img = cld.image('docs/models');
+    this.logo=cld.image('ostrichmart_qu5yud');
    }
 
 

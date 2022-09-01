@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -7,8 +8,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  logo: CloudinaryImage; //ostrichmart logo
+
   constructor(private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+      const cld = new Cloudinary({
+        cloud:{
+          cloudName: 'demo'
+        }
+      });
+      this.logo=cld.image('ostrichmart_qu5yud');
+    }
 
   ngOnInit(): void {
   }
