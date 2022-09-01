@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent},
   { path: 'login', component: LoginComponent },
-  { path: "", redirectTo: "/home", pathMatch: "full"}
+  { path: "", redirectTo: "/login", pathMatch: "full"}
 
 
 ];
