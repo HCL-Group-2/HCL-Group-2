@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   getUserDetails(){
     this.name$ = this._oktaStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-      map((authState: AuthState) => authState.idToken?.claims.name ?? '')
+      map((authState: AuthState) => authState.idToken?.claims.name ?? '') 
     );
   }
 
