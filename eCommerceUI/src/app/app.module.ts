@@ -107,6 +107,7 @@ const oktaConfig = Object.assign({
     MatTableModule,
     MatMenuModule,
     MatIconModule,
+    MatAutocompleteModule,
     MatProgressSpinnerModule,
     NoopAnimationsModule,
     AppRoutingModule,
