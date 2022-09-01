@@ -85,6 +85,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatTableModule,
     MatMenuModule,
     MatIconModule,
+    MatAutocompleteModule,
     MatProgressSpinnerModule,
     NoopAnimationsModule,
     AppRoutingModule,

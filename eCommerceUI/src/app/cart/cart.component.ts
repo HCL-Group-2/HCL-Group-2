@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { OktaService } from '../authenticate/okta.service';
 import { CartService } from '../cart.service';
-import { CartItems, ProductCart, UserCart } from '../model/CartItems';
+import { CartItems, CartItems2, ProductCart, UserCart } from '../model/CartItems';
 import { Product } from '../model/Product';
 import { User } from '../model/User';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,40 +13,36 @@ import { User } from '../model/User';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-//https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
-  user !: UserCart;
-  product !: ProductCart;
+  //https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
+  // user !: User;
+  itemsInCart !: Array<CartItems2>;
+  userIdFromUser !: number;
   constructor(private route: ActivatedRoute,
-    private router: Router, private cartService: CartService) { }
+    private router: Router, private userService: UserService, private cartService: CartService) { }
 
 
   ngOnInit(): void {
-   //this.addOneCartItem({ quantity: 2, user: { id: 1 }, product: { id: 2 } });
-    
-   
-   // testing purpose
-    // const claims = this.oktaService.getClaims();
-    // console.log("claims from cart component " + claims);
-    // console.log("claims from cart component email" + claims['email']);
+    // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
 
-    // if (claims) {
-    //   console.log(claims);
-      
+    this.getCartItems(1);
 
 
-
-    // }
-  }
-
-  addOneCartItem(cartItem: CartItems) {
-
-    this.cartService.addOneCartItem(cartItem).subscribe();
 
   }
 
+
+  getCartItems(userId: number) {
+
+    this.cartService.getCartItems(userId).subscribe(data => {
+      this.itemsInCart = data;
+      console.log(JSON.stringify(this.itemsInCart ));
+    }
+
+    );
+  }
 
 }
 
-  
+
 
 

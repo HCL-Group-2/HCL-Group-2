@@ -1,25 +1,60 @@
 <mat-card-header>
-    <mat-card-title>Welcome, {{name}}</mat-card-title>
+  <mat-card-title>Welcome, {{name}}</mat-card-title>
 </mat-card-header>
-<mat-card  *ngFor="let p of products">
+
+<div *ngFor="let p of products; let i = index">
+  <mat-card>
     <mat-card-title>
-        <h5>{{p.name}}</h5>
-      </mat-card-title>
+      <h5>{{p.name}}</h5>
+    </mat-card-title>
 
     <mat-card-content>
       <p>
-        {{p.name}}
+        {{p.category}}
+        {{p.image}}
         {{p.description}}
         {{p.price}}
-        {{p.image}}
-        {{p.category}}
       </p>
     </mat-card-content>
+
     <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="openCartDialog()">Add To Cart</button>
-        <span class="flex-spacer"></span>
-      </mat-card-actions>
-    
-</mat-card>
+
+
+      <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Quantity</mat-label>
+          <input  type="text" inputmode="numeric"
+                 placeholder="Provide a quantity if it is not listed"
+                 aria-label="Quantity"
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of options" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+
+
+      </form>
+
+      <button mat-raised-button color="primary" value="p.id" (click)="openCartDialog($event, p.id!)">Add To
+        Cart</button>
+      <span class="flex-spacer"></span>
+
+
+
+   
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>
+
+
 
 <router-outlet></router-outlet>
