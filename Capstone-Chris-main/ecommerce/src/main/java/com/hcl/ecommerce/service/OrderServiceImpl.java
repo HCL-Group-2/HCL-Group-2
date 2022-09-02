@@ -12,19 +12,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hcl.ecommerce.dto.OrderDto;
-import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.CreditCard;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
 import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.repository.AddressRepository;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
-import com.hcl.ecommerce.repository.CreditCardRepository;
 import com.hcl.ecommerce.repository.OrderRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
 import com.hcl.ecommerce.repository.UserRepository;
@@ -39,47 +35,26 @@ public class OrderServiceImpl implements OrderService {
 	UserRepository userRepository;
 	
 	@Autowired
-	AddressRepository addressRepository;
-	
-	@Autowired
-	CreditCardRepository creditCardRepository;
-	
-	@Autowired
 	CartItemRepository cartItemRepository;
 	
 	@Autowired
 	ProductRepository productRepository;
 	
-	@Autowired
-	private MailSenderService mailSenderService;
+//	@Autowired
+//	private MailSenderService mailSenderService;
 	
 	@Override
-	public synchronized boolean addOrder(OrderDto orderDto) {
-		Order order = new Order();
-		ShippingAddress shippingAddress = new ShippingAddress();
-		Payment payment = new Payment();
+	public synchronized Order addOrder(Order order) throws AddEntityException {
+		User user = userRepository.findByEmail(order.getUser().getEmail());
+		if (user == null) {
+			throw new AddEntityException("The user doesn't exists");
+		}	
+		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
 		List<OrderItem> orderItems = new ArrayList<>();
-		
-		User user = getUserById(orderDto.getUser().getId());
-		Address address = getAddressById(orderDto.getAddress().getId());
-		CreditCard creditCard = getCreditCardById(orderDto.getCreditCard().getId());
-		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(orderDto.getUser().getId());
-		
-		BeanUtils.copyProperties(address, shippingAddress, "id");
-		BeanUtils.copyProperties(creditCard, payment, "id");
-		
 		double total = 0.0;
-		int inventory = 0;
-		int quantity = 0;
 		for (CartItem cartItem : cartItems) {
 			Product prod = getProductById(cartItem.getProduct().getId());
-			inventory = prod.getInventory();
-			quantity = cartItem.getQuantity();
-			if (inventory - quantity < 0) {
-				cartItemRepository.delete(cartItem);
-				continue;
-			}
-			prod.setInventory(inventory - quantity);
+			prod.setInventory(prod.getInventory() - cartItem.getQuantity());
 			productRepository.save(prod);
 			OrderItem orderItem = new OrderItem();
 			BeanUtils.copyProperties(cartItem, orderItem, "id");
@@ -89,16 +64,12 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		order.setUser(user);
-		order.setShippingAddress(shippingAddress);
-		order.setPayment(payment);
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("Recieved");
+		order.setOrderStatus("In Progress");
 		
 		cartItemRepository.deleteAll(cartItems);
-		orderRepository.save(order);
-		orderDto.setId(order.getId());
 		
 //		mailSenderService.sendEmail(order.getUser().getEmail());
 //		try {
@@ -106,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 //		} catch (MessagingException e) {
 //		} catch (IOException e) {
 //		}
-		return true;
+		return orderRepository.save(order);
 	}
 	
 	@Override
@@ -116,43 +87,10 @@ public class OrderServiceImpl implements OrderService {
 			return order.get();
 		return null;
 	}
-	
-	@Override
-	public void updateOrder(Order order) {
-		Order ord = getOrderById(order.getId());
-		ord.setOrderDate(order.getOrderDate());
-		ord.setOrderTotal(order.getOrderTotal());
-		ord.setOrderStatus(order.getOrderStatus());
-		orderRepository.save(ord);
-	}
 
 	@Override
 	public void deleteOrder(Integer orderId) {
 		orderRepository.deleteById(orderId);
-	}
-	
-	@Override
-	public User getUserById(Integer userId) {
-		Optional<User> user = userRepository.findById(userId);
-		if (user.isPresent())
-			return user.get();
-		return null;
-	}
-
-	@Override
-	public Address getAddressById(Integer addressId) {
-		Optional<Address> address = addressRepository.findById(addressId);
-		if (address.isPresent())
-			return address.get();
-		return null;
-	}
-	
-	@Override
-	public CreditCard getCreditCardById(Integer creditCardId) {
-		Optional<CreditCard> creditCard = creditCardRepository.findById(creditCardId);
-		if (creditCard.isPresent())
-			return creditCard.get();
-		return null;
 	}
 	
 	@Override

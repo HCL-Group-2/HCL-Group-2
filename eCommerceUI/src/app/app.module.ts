@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule , APP_INITIALIZER, Injector } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,8 +40,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
-import {CloudinaryModule} from '@cloudinary/ng';
-import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,44 +49,15 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
-import { AdminComponent } from './admin/admin.component';
-import { UserComponent } from './user/user.component';
-import { OrderComponent } from './order/order.component';
-import { NavComponent } from './nav/nav.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchComponent } from './search/search.component';
-import { Router } from '@angular/router';
-import myAppConfig from './config/my-app-config';
-import { OktaAuth } from '@okta/okta-auth-js';
-
-
-
-const oktaAuth = new OktaAuth({
-  issuer: 'https://dev-06861319.okta.com/oauth2/default',
-  clientId: '0oa6b7ee0wwOnJzuz5d7',
-  redirectUri: window.location.origin + '/login/callback'
-});
-
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     HeaderComponent,
     CartComponent,
     HomeComponent,
     RegisterComponent,
-    CheckoutComponent,
-    AdminComponent,
-    UserComponent,
-    OrderComponent,
-    SearchComponent,
-    LoginComponent,
-    NavComponent,
-    WelcomeComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -98,7 +67,6 @@ const oktaAuth = new OktaAuth({
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
-    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -107,21 +75,16 @@ const oktaAuth = new OktaAuth({
     MatTableModule,
     MatMenuModule,
     MatIconModule,
-    MatAutocompleteModule,
     MatProgressSpinnerModule,
-    NoopAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    CloudinaryModule,
-    OktaAuthModule,
+
   ],
   
-  providers: [
-    {provide: OKTA_CONFIG, useValue: { oktaAuth } }
-   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
