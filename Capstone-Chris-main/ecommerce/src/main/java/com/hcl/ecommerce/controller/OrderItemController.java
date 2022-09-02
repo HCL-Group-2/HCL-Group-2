@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.ecommerce.entity.OrderItem;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderItemService;
 
 @RestController
@@ -21,10 +22,14 @@ public class OrderItemController {
 	OrderItemService orderItemService;
 	
 	@PostMapping("/orderitem")
-	public ResponseEntity<Void> addOrderItem(@RequestBody OrderItem orderItem) {
-		boolean flag = orderItemService.addOrderItem(orderItem);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	public ResponseEntity<OrderItem> addOrderItem(@RequestBody OrderItem orderItem) {
+		OrderItem ordIte = null;
+		try {
+			ordIte = orderItemService.addOrderItem(orderItem);
+		} catch (AddEntityException e) {
+			return new ResponseEntity<OrderItem>(ordIte, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<OrderItem>(ordIte, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/orderitem/{id}")

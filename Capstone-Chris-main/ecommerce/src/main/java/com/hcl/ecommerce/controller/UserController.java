@@ -26,14 +26,6 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	/*//No longer needed with Okta
-	@GetMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
-		boolean flag = userService.login(userLoginDto);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	*/
 	
 	@PostMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
