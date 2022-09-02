@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OktaAuthStateService } from '@okta/okta-angular';
@@ -26,16 +26,21 @@ export class HomeComponent implements OnInit {
   user !: User;
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
+  myControl = new FormControl('');
+  options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  turnOnAddToCart : boolean = false;
+
+
+
   constructor(private route: ActivatedRoute,
     private router: Router, private userService: UserService,
+    private formBuilder: FormBuilder,
     private productService: ProductService,
     private cartService: CartService,
     public cartDialog: MatDialog,
     private _oktaAuthStateService: OktaAuthStateService
   ) { }
 
-  myControl = new FormControl('');
-  options: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
   ngOnInit(): void {
@@ -44,9 +49,12 @@ export class HomeComponent implements OnInit {
     this.getUser(1);
     this.getProducts();
 
+
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
+
+
 
 
   }
@@ -67,7 +75,12 @@ export class HomeComponent implements OnInit {
 
     );
   }
-
+  enableAddCart(event: any) {
+    console.log('fuck, ' + event.option.value);
+    if(event.option.value > 0){
+      this.turnOnAddToCart = true;
+    }
+  }
   openCartDialog(event: any, productID: number) {
 
     if (productID != undefined) {
@@ -78,10 +91,11 @@ export class HomeComponent implements OnInit {
         },
       });
       console.log('selected item quantity ' + this.selectedQuantity);
-      
+
       let itemCount = this.myControl.value;
-      if(itemCount != null){
-        this.selectedProduct = { 'quantity': +itemCount  , 'user': { 'id': 1 }, 'product': { 'id': productID } };
+      if (itemCount != null) {
+
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': 1 }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
       }
@@ -97,5 +111,5 @@ export class HomeComponent implements OnInit {
   templateUrl: 'cartDialog-dialog.html',
 })
 export class CartDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {name: string}) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
 }
