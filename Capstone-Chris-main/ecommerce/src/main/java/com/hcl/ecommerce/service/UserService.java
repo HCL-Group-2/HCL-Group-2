@@ -28,6 +28,8 @@ public interface UserService {
 	boolean addRole(Role role);
 
 	Role getRoleById(Integer roleId);
+	
+	User getUserByEmail(String email);
 
 //	User loginUser(String username, String password);
 

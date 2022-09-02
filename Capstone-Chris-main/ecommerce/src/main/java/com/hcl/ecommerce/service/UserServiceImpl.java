@@ -123,6 +123,11 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
 //	@Override
 //	public User registerUser(UserDto userDto) {
 //		User user = new User();
