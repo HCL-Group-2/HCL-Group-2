@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule , APP_INITIALIZER } from '@angular/core';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -40,6 +40,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
+import { CloudinaryModule } from '@cloudinary/ng';
+import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,21 +54,30 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
+import { NavComponent } from './nav/nav.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 
 import { SearchComponent } from './search/search.component';
+import { Router } from '@angular/router';
+import myAppConfig from './config/my-app-config';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 
 
+const oktaAuth = new OktaAuth({
+  issuer: 'https://dev-06861319.okta.com/oauth2/default',
+  clientId: '0oa6b7ee0wwOnJzuz5d7',
+  redirectUri: window.location.origin + '/login/callback'
+});
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HeaderComponent,
     CartComponent,
     HomeComponent,
@@ -76,12 +87,17 @@ import { SearchComponent } from './search/search.component';
     UserComponent,
     OrderComponent,
     SearchComponent,
+    LoginComponent,
+    NavComponent,
+    WelcomeComponent,
+
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule,  
+    MatFormFieldModule,
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
@@ -102,11 +118,13 @@ import { SearchComponent } from './search/search.component';
     NgMaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-
-
+    CloudinaryModule,
+    OktaAuthModule,
   ],
-  
-  providers: [ ],
+
+  providers: [
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

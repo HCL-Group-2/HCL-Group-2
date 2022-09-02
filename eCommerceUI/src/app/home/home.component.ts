@@ -2,6 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { AuthState } from '@okta/okta-auth-js';
+import { Observable, filter, map } from 'rxjs';
 import { CartService } from '../cart.service';
 import { CartItems } from '../model/CartItems';
 import { Product } from '../model/Product';
@@ -16,6 +19,8 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent implements OnInit {
 
+  public name$!: Observable<string>;
+
   name: string = "";
   products !: Array<Product>;
   user !: User;
@@ -25,7 +30,8 @@ export class HomeComponent implements OnInit {
     private router: Router, private userService: UserService,
     private productService: ProductService,
     private cartService: CartService,
-    public cartDialog: MatDialog
+    public cartDialog: MatDialog,
+    private _oktaAuthStateService: OktaAuthStateService
   ) { }
 
   myControl = new FormControl('');
@@ -37,6 +43,10 @@ export class HomeComponent implements OnInit {
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     this.getUser(1);
     this.getProducts();
+
+    this.name$ = this._oktaAuthStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
 
 
   }
