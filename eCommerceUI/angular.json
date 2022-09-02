@@ -95,11 +95,6 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css",
-              "node_modules/material-design-icons/iconfont/material-icons.css"
-            ],
             "scripts": []
           }
         }

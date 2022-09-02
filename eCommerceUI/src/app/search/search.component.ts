@@ -20,5 +20,6 @@ export class SearchComponent implements OnInit {
 
   onSearchTextChanged(){
     this.searchTextChanged.emit(this.enteredSearchValue);
+    //Pass this result to the product catalog displayed on home
   }
 }

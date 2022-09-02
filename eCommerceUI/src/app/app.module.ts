@@ -51,9 +51,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
+import { OrderComponent } from './order/order.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { CheckoutComponent } from './cart/checkout/checkout.component';
+
+import { SearchComponent } from './search/search.component';
+
 
 
 
@@ -66,9 +71,11 @@ import { CheckoutComponent } from './cart/checkout/checkout.component';
     CartComponent,
     HomeComponent,
     RegisterComponent,
+    CheckoutComponent,
     AdminComponent,
     UserComponent,
-    CheckoutComponent,
+    OrderComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

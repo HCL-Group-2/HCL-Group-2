@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("Processing");
+		order.setOrderStatus("Recieved");
 		
 		cartItemRepository.deleteAll(cartItems);
 		orderRepository.save(order);

@@ -33,6 +33,7 @@ export class CartComponent implements OnInit {
 
   getCartItems(userId: number) {
 
+
     this.cartService.getCartItems(userId).subscribe(data => {
       this.itemsInCart = data;
       console.log(JSON.stringify(this.itemsInCart ));
