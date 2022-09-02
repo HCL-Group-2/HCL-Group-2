@@ -1,52 +1,53 @@
-<div class="profile-card">
-    <div class="shield"></div>
-    <h2 *ngIf="name$ | async as name">
-        Hello {{name}}!
-    </h2>
-</div>
-
-<div *ngFor="let p of products; let i = index">
-    <mat-card>
-        <mat-card-title>
-            <h5>{{p.name}}</h5>
-        </mat-card-title>
-
-        <mat-card-content>
-            <p>
-                {{p.category}} {{p.image}} {{p.description}} {{p.price}}
-            </p>
-        </mat-card-content>
-
-        <mat-card-actions>
-
-
-            <form class="example-form">
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Quantity</mat-label>
-                    <input type="text" inputmode="numeric" placeholder="Provide a quantity if it is not listed" aria-label="Quantity" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of options" [value]="option">
-                            {{option}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-
-            </form>
-
-            <button mat-raised-button color="primary" value="p.id" (click)="openCartDialog($event, p.id!)">Add To
-        Cart</button>
-            <span class="flex-spacer"></span>
-
-
-
-
-
-        </mat-card-actions>
-
-    </mat-card>
-
-</div>
-
-
-
-<router-outlet></router-outlet>
+<body>
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p>
+            </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+            *ngFor="let p of products; let i = index">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                    <!-- Product image-->
+                        <img class="card-img-top" src={{p.image}} alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{p.name}}</h5>
+                        <!-- Product price-->
+                        ${{p.price}}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" value="p.id" (click)="openCartDialog($event, p.id!)">Add to cart</a></div>
+                    </div>
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Quantity</mat-label>
+                                <input aria-label="Quantity" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of options" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+    </footer>
+    <router-outlet></router-outlet>
