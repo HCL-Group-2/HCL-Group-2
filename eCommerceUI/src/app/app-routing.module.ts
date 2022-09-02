@@ -13,10 +13,13 @@ import { LoginComponent } from './login/login.component';
 import { OrderComponent } from './order/order.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 
 const routes: Routes = [
 
-  { path: 'signin', component: LoginComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'user', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
@@ -24,7 +27,10 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'account', component: UserComponent },
   { path: 'order', component: OrderComponent },
-
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'login/callback', component: OktaCallbackComponent},
+  { path: 'login', component: LoginComponent },
+  { path: "", redirectTo: "/login", pathMatch: "full"}
 
 ];
 

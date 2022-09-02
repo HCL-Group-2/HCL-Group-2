@@ -1,43 +1,47 @@
-<mat-toolbar color="warm">
-    <mat-toolbar-row>
-        <button mat-button (click)="goToHomePage()">
-            Ostrich's Mart
-        </button>
-      <!-- <h1>Ostrich's Mart</h1> -->
-      <div fxFlex fxLayoutAlign="flex-end center">
-        
-        <form class="navbar-form navbar-left" action="localhost:8081/ecommerce/products">
-          <div class="form">
-              <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <button mat-button (click)="goToOrderStatus()">
-        Order Status
-      </button>
-
-        <button mat-button (click)="goToAccount()">
-            Account
-        </button>
-       
-        <button mat-button (click)="goToCart()">
-            <mat-icon>add_shopping_cart</mat-icon>
-            Cart 
-        </button>
-        <button mat-button (click)= "goToRegister()">
-            <mat-icon>account_circle</mat-icon>
-            Admin
-        </button>
-
-        
-      
-        <!-- <a mat-button [routerLink]="'/create-account'"> Create Account </a>
-        <a mat-button [routerLink]="'/contacts'"> Contacts </a>
-        <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
-        <a mat-button [routerLink]="'/activities'"> Activities </a>
-        <a mat-button [routerLink]="'/create-activity'"> Create Activity </a> -->
-  
-      </div>
-    </mat-toolbar-row>
-
-    
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="/home">Ostrich Mart</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/home">All Products</a></li>
+    <li><hr class="dropdown-divider" /></li>
+    <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+    <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+    </ul>
+    </li>
+    </ul>
+    <form class="navbar-form navbar-left" action="localhost:8081/ecommerce/products">
+    <div class="form">
+    <input type="text" class="form-control" placeholder="Search">
+    </div>
+   
+    </form>
+    <form class="d-flex">
+    <button class="btn btn-outline-dark" (click) ="goToCart()">
+    <i class="bi-cart-fill me-1"></i>
+    Cart
+    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+    <button mat-button (click)="goToAccount()">
+    Address
+    <mat-icon>account_circle</mat-icon>
+    </button> <br>
+    <button mat-button (click)= "goToRegister()">
+    User Details
+    </button><br>
+    <button mat-button (click)="goToOrderStatus()">
+    Order Status
+    </button>
+    </mat-menu>
+    </form>
+    </div>
+    </div>
+    </nav>

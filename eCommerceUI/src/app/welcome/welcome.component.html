@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="p-5 mt-3 bg-light rounded">
+
+        <h1>Login with Okta successful!</h1>
+
+        <h1>Welcome</h1>
+
+        <div class="profile-card">
+            <div class="shield"></div>
+            <h2 *ngIf="name$ | async as name">
+                Hello {{name$}}!
+            </h2>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,6 @@ package com.hcl.ecommerce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,14 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.dto.UserLoginDto;
-import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
+import com.hcl.ecommerce.dto.UserLoginDto;
+
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class UserController {
@@ -28,7 +27,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping("/login")
+
+	@PostMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
 		boolean flag = userService.login(userLoginDto);
 		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -36,12 +36,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/user")
-	public ResponseEntity<Void> addUser(@RequestBody UserDto userDto, UriComponentsBuilder builder) {
-		boolean flag = userService.addUser(userDto);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/user/{id}").buildAndExpand(userDto.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<User> addUser(@RequestBody User user) {
+		try {
+			user = userService.addUser(user);
+		} catch (AddEntityException e) {
+			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/user/{id}")
@@ -52,7 +53,7 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		userService.updateUser(user);
+		user = userService.updateUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
@@ -78,6 +79,11 @@ public class UserController {
 	public ResponseEntity<Void> assignRoleToUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
 		userService.assignRoleToUser(roleid, userid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/byEmail")
+	public User getUserByEmail(@RequestParam String email) {
+		return userService.getUserByEmail(email);
 	}
 
 //	@PostMapping("/register")
@@ -117,10 +123,6 @@ public class UserController {
 //		return userService.getAllUsers();
 //	}
 	
-//	@GetMapping("/byEmail")
-//	public User getUserByEmail(@RequestParam String email) {
-//		return userService.getUserByEmail(email);
-//	}
 //	
 //	@GetMapping("/byEmailAndPassword")
 //	public User getUserByEmail(@RequestParam String email, @RequestParam String password) {

@@ -1,19 +1,71 @@
-<!-- <div fxLayout="row" fxLayoutAlign="center center" class="login-main">
-    <mat-card >
-    <mat-card-header>
-      <mat-card-title>Login Page</mat-card-title>
-    </mat-card-header>
-    <mat-card-content fxLayout="column">
-      <mat-form-field>
-        <input matInput placeholder="Email">
-      </mat-form-field>
-      <mat-form-field>
-        <input type="password" matInput placeholder="password">
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="login()">Login</button>
-    </mat-card-actions>
-    </mat-card>
-    </div> -->
- 
+<div class="text-center">
+    <main class="form-signin w-100 m-auto">
+        <ng-container *ngIf="! isLoggedIn(), else signout">
+            <ng-container *ngIf="(isAuthenticated$  | async) === false; else signoutOkta">
+                <form #loginform="ngForm" (ngSubmit)="loginUser()">
+                    <small class="text-danger">{{ msg }}</small>
+                    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Email" name="email" [(ngModel)]="user.email" required #email="ngModel" [class.is-invalid]="email.invalid && email.touched">
+                        <label for="floatingInput">Email</label>
+                        <div *ngIf="email.errors && (email.invalid && email.touched)">
+                            <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required!</small>
+                        </div>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" [(ngModel)]="user.password" required #password="ngModel" [class.is-invalid]="password.invalid && password.touched">
+                        <label for="floatingPassword">Password</label>
+                        <small class="text-danger" [class.d-none]="password.valid || password.untouched">Password is required!</small>
+                    </div>
+
+                    <div class="checkbox mb-3">
+                        <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+                    </div>
+                    <button [disabled]="loginform.form.invalid" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                </form>
+                <br/>
+                <hr/>
+                <h5>Or</h5>
+
+                <br/>
+                <button class="w-100 btn btn-lg btn-primary" (click)="oktaLogin()">Log in with Okta</button>
+
+                <br/>
+                <br/>
+                <a class="w-100 btn btn-lg btn-info" [routerLink]="['/registration']">Create new account</a>
+            </ng-container>
+
+            <ng-template #signoutOkta>
+                <div class="profile-card">
+                    <div class="shield"></div>
+                    <h1 *ngIf="name$ | async as name">
+                        Hello {{name}}!
+                    </h1>
+                </div>
+                <br/>
+
+                <button class="w-100 btn btn-lg btn-danger" (click)="oktaLogout()">Sign out from Okta</button>
+            </ng-template>
+        </ng-container>
+
+        <ng-template #signout>
+            <div class="profile-card">
+                <div class="shield"></div>
+                <h1 *ngIf="name$ | async as name">
+                    Hello {{name}}!
+                </h1>
+            </div>
+            <br/>
+
+            <button class="w-100 btn btn-lg btn-danger" (click)="logout()">Sign out</button>
+        </ng-template>
+
+        <br/>
+        <br/>
+        <br/>
+        <a href="/home-page"><button class="w-100 btn btn-lg btn-light">Back To Home</button></a>
+    </main>
+</div>
