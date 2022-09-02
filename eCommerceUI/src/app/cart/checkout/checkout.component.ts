@@ -49,6 +49,9 @@ export class CheckoutComponent implements OnInit {
       this.cartItemsCheckout = data;
       for (let cc in this.cartItemsCheckout) { 
          this.checkoutTotal += (this.cartItemsCheckout[cc].quantity * this.cartItemsCheckout[cc].product.price);
+         //this.cartItemsCheckout[cc].subtotal = Math.round(this.cartItemsCheckout[cc].subtotal * 100) / 100;
+         this.checkoutTotal = Math.round(this.checkoutTotal * 100) / 100;
+
      }
      
 Source: https://www.holadevs.com/pregunta/107232/how-can-i-add-up-the-total-in-ngfor
