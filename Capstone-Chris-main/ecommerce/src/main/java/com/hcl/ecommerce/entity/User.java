@@ -123,7 +123,7 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Address> getAddresses() {
+/*	public List<Address> getAddresses() {
 		return addresses;
 	}
 
@@ -138,7 +138,7 @@ public class User {
 	public void setCreditCards(List<CreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
-
+*/
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
