@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,6 +44,23 @@ public class CartItem {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+	
+	@Override
+	public boolean equals(Object o) {
+		CartItem item = null;
+		if (o instanceof CartItem) {
+			item = (CartItem) o;
+		} else {
+			return false;
+		}
+		
+		if ((this.user.getId() == item.getUser().getId()) && (this.product.getId() == item.getProduct().getId())) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 
 	public Integer getId() {
 		return id;

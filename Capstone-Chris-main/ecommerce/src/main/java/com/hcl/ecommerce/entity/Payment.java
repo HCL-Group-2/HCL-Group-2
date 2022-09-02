@@ -26,15 +26,15 @@ public class Payment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(nullable = false)
+	private String name;
+	
 	@Column(nullable = false, unique = true)
 	private String creditCardNumber;
 	
 	@Column(nullable = false)
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String expirationDate;
-
-	@Column(nullable = false)
-	private String verificationCode;
 
 	public Integer getId() {
 		return id;
@@ -60,14 +60,7 @@ public class Payment {
 		this.expirationDate = expirationDate;
 	}
 
-	public String getVerificationCode() {
-		return verificationCode;
-	}
 
-	public void setVerificationCode(String verificationCode) {
-		this.verificationCode = verificationCode;
-	}
-	
 	
 
 }
