@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
-		if (user != null) {			
+		if (user != null) {		
 			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(order.getUser().getId());
 			List<OrderItem> orderItems = new ArrayList<>();
 			double total = 0.0;
