@@ -6,14 +6,12 @@ import java.util.Optional;
 
 import javax.mail.MessagingException;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
 
@@ -31,39 +29,27 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private MailSenderService mailSenderService;
-
-	@Override
-	public boolean login(UserLoginDto userLoginDto) {
-		if (userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword()) != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	@Override
-	public synchronized boolean addUser(UserDto userDto) {
-		if (userRepository.findByEmail(userDto.getEmail()) != null) {
-			return false;
-		} else {
-			if (roleRepository.findByName("Customer") == null) {
-				Role role = new Role();
-				role.setName("Customer");
-				roleRepository.save(role);
-			}
-			User user = new User();
-			BeanUtils.copyProperties(userDto, user);
-			userRepository.save(user);
-			assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
-			userDto.setId(user.getId());
+	public synchronized User addUser(User user) throws AddEntityException {
+		if (userRepository.findByEmail(user.getEmail()) != null) {
+			throw new AddEntityException("A User with the Email: " + user.getEmail() + " already exists in the database");
+		}
+		if (roleRepository.findByName("Customer") == null) {
+			Role role = new Role();
+			role.setName("Customer");
+			roleRepository.save(role);
+		}
+		userRepository.save(user);
+		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());
 //			} catch (MessagingException e) {
 //			} catch (IOException e) {
 //			}
-			return true;
-		}
+		return user;
+		
 	}
 
 	@Override
@@ -75,13 +61,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public User updateUser(User user) {
 		User usr = getUserById(user.getId());
 		usr.setFirstName(user.getFirstName());
 		usr.setLastName(user.getLastName());
 		usr.setEmail(user.getEmail());
 		usr.setPassword(user.getPassword());
-		userRepository.save(usr);
+		return userRepository.save(usr);
 	}
 
 	@Override
@@ -123,6 +109,11 @@ public class UserServiceImpl implements UserService {
 		if (role.isPresent())
 			return role.get();
 		return null;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 
 //	@Override

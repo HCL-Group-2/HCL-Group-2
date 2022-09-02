@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.ecommerce.entity.Role;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.RoleService;
 
 @RestController
@@ -23,10 +24,14 @@ public class RoleController {
 	RoleService roleService;
 	
 	@PostMapping("/role")
-	public ResponseEntity<Void> addRole(@RequestBody Role role) {
-		boolean flag = roleService.addRole(role);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	public ResponseEntity<Role> addRole(@RequestBody Role role) {
+		Role newRole = null;
+		try {
+			newRole = roleService.addRole(role);
+		} catch(AddEntityException e) {
+			return new ResponseEntity<Role>(newRole, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<Role>(newRole, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/role/{id}")
