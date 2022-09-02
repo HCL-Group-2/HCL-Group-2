@@ -1,1 +1,32 @@
-<p>cart works!</p>
+
+<mat-card-header>
+    <mat-card-title>Shopping Cart</mat-card-title>
+</mat-card-header>
+
+<div *ngFor="let c of itemsInCart; let i = index">
+    <mat-card>
+        <mat-card-title>
+            <h5>{{c.product.name}}</h5>
+        </mat-card-title>
+
+        <mat-card-content>
+            <p>
+                {{c.product.category}}
+                {{c.product.image}}
+                {{c.product.description}}
+                {{c.quantity}}
+                ${{c.product.price}}
+                total:  ${{c.subtotal}}
+            </p>
+        </mat-card-content>
+
+    
+
+    </mat-card>
+
+
+</div>
+<mat-card-actions>
+    <button mat-raised-button color="primary">checkout</button>
+    <span class="flex-spacer"></span>
+</mat-card-actions>
