@@ -46,39 +46,38 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
-		if (user != null) {		
-			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
-			List<OrderItem> orderItems = new ArrayList<>();
-			double total = 0.0;
-			for (CartItem cartItem : cartItems) {
-				Product prod = getProductById(cartItem.getProduct().getId());
-				prod.setInventory(prod.getInventory() - cartItem.getQuantity());
-				productRepository.save(prod);
-				OrderItem orderItem = new OrderItem();
-				BeanUtils.copyProperties(cartItem, orderItem, "id");
-				orderItem.setOrder(order);
-				orderItems.add(orderItem);
-				total += orderItem.getSubtotal();
-			}
-			
-			order.setUser(user);
-			order.setOrderItems(orderItems);
-			order.setOrderTotal(total);
-			order.setOrderDate(LocalDate.now());
-			order.setOrderStatus("In Progress");
-			
-			cartItemRepository.deleteAll(cartItems);
-			
-//			mailSenderService.sendEmail(order.getUser().getEmail());
-//			try {
-//				mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
-//			} catch (MessagingException e) {
-//			} catch (IOException e) {
-//			}
-			return orderRepository.save(order);
-		} else {
-			return null;
+		if (user == null) {
+			throw new AddEntityException("The user doesn't exists");
+		}	
+		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
+		List<OrderItem> orderItems = new ArrayList<>();
+		double total = 0.0;
+		for (CartItem cartItem : cartItems) {
+			Product prod = getProductById(cartItem.getProduct().getId());
+			prod.setInventory(prod.getInventory() - cartItem.getQuantity());
+			productRepository.save(prod);
+			OrderItem orderItem = new OrderItem();
+			BeanUtils.copyProperties(cartItem, orderItem, "id");
+			orderItem.setOrder(order);
+			orderItems.add(orderItem);
+			total += orderItem.getSubtotal();
 		}
+		
+		order.setUser(user);
+		order.setOrderItems(orderItems);
+		order.setOrderTotal(total);
+		order.setOrderDate(LocalDate.now());
+		order.setOrderStatus("In Progress");
+		
+		cartItemRepository.deleteAll(cartItems);
+		
+//		mailSenderService.sendEmail(order.getUser().getEmail());
+//		try {
+//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
+//		} catch (MessagingException e) {
+//		} catch (IOException e) {
+//		}
+		return orderRepository.save(order);
 	}
 	
 	@Override

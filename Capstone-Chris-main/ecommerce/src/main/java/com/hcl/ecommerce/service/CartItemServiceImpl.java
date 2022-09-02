@@ -31,7 +31,7 @@ public class CartItemServiceImpl implements CartItemService {
 		User user = getUserById(cartItem.getUser().getId());
 		Product product = getProductById(cartItem.getProduct().getId());
 		if (user == null) {
-			throw new AddEntityException("The user doesn't exist");
+			throw new AddEntityException("The user doesn't exists");
 		}
 		if (product == null) {
 			throw new AddEntityException("The product doesn't exist");
