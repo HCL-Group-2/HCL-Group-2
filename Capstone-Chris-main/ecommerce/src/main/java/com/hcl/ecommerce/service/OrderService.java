@@ -2,18 +2,14 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
-import com.hcl.ecommerce.dto.OrderDto;
-import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.CreditCard;
 import com.hcl.ecommerce.entity.Order;
-import com.hcl.ecommerce.entity.OrderItem;
 import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface OrderService {
 	
-	boolean addOrder(Order order);
+	Order addOrder(Order order) throws AddEntityException;
 
 	Order getOrderById(Integer orderId);
 

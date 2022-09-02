@@ -1,29 +1,20 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.service.ProductService;
 import com.hcl.ecommerce.service.UserService;
 
 @RunWith(SpringRunner.class)
@@ -99,7 +90,16 @@ public class UserControllerTest {
 	@Test
 	public void testDeleteUser() throws Exception {
 		
+		User user = new User();
+		user.setId(1);
+		user.setFirstName("Jane");
+		user.setLastName("Doe");
+		user.setEmail("janedoe@gmail.com");
+		user.setPassword("jane");
 		
+		userController.deleteUser(1);
+		
+		Mockito.verify(userService, times(1)).deleteUser(1);
 		
 	}
 

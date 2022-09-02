@@ -2,7 +2,6 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
-import com.hcl.ecommerce.dto.UserDto;
 import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;

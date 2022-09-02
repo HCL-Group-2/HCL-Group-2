@@ -19,6 +19,7 @@ import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
 import com.hcl.ecommerce.repository.OrderRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
@@ -43,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 //	private MailSenderService mailSenderService;
 	
 	@Override
-	public synchronized boolean addOrder(Order order) {
+	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
 		if (user != null) {			
 			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(order.getUser().getId());
@@ -67,16 +68,16 @@ public class OrderServiceImpl implements OrderService {
 			order.setOrderStatus("In Progress");
 			
 			cartItemRepository.deleteAll(cartItems);
-			orderRepository.save(order);
+			
 //			mailSenderService.sendEmail(order.getUser().getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
 //			} catch (MessagingException e) {
 //			} catch (IOException e) {
 //			}
-			return true;
+			return orderRepository.save(order);
 		} else {
-			return false;
+			return null;
 		}
 	}
 	

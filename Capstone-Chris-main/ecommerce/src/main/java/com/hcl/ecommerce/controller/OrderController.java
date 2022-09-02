@@ -1,7 +1,6 @@
 package com.hcl.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import com.hcl.ecommerce.dto.OrderDto;
 import com.hcl.ecommerce.entity.Order;
+import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
 
 @RestController
@@ -24,12 +23,13 @@ public class OrderController {
 	OrderService orderService;
 	
 	@PostMapping("/order")
-	public ResponseEntity<Void> addOrder(@RequestBody Order order, UriComponentsBuilder builder) {
-		boolean flag = orderService.addOrder(order);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/order/{id}").buildAndExpand(order.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	public ResponseEntity<Order> addOrder(@RequestBody Order order) {
+		try {
+			order = orderService.addOrder(order);
+		} catch (AddEntityException e) {
+			return new ResponseEntity<Order>(order, HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/order/{id}")

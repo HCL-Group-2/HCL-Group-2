@@ -1,6 +1,7 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,24 +9,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.service.CartItemService;
-import com.hcl.ecommerce.service.ProductService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,32 +43,61 @@ public class CartItemControllerTest {
 		
 		Mockito.when(cartItemService.addCartItem(cartItem)).thenReturn(cartItem);
 		
-		ResponseEntity<CartItem> cart = cartItemController.addCartItem(cartItem);
+		ResponseEntity<CartItem> item = cartItemController.addCartItem(cartItem);
 		
-		assertEquals(HttpStatus.CREATED.value(), cart.getStatusCodeValue());
+		assertEquals(HttpStatus.CREATED.value(), item.getStatusCodeValue());
 		
-		assertEquals(cartItem, cart.getBody());
+		assertEquals(cartItem, item.getBody());
 		
 	}
 	
 	@Test
 	public void testGetCartItemById() throws Exception {
 		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
 		
+		Mockito.when(cartItemService.getCartItemById(1)).thenReturn(cartItem);
+		
+		ResponseEntity<CartItem> item = cartItemController.getCartItemById(1);
+		
+		assertEquals(HttpStatus.OK.value(), item.getStatusCodeValue());
+		
+		assertEquals(cartItem, item.getBody());
 		
 	}
 	
 	@Test
 	public void testUpdateCartItem() throws Exception {
 		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
 		
+		Mockito.when(cartItemService.updateCartItem(cartItem)).thenReturn(cartItem);
+		
+		ResponseEntity<CartItem> item = cartItemController.updateCartItem(cartItem);
+		
+		assertEquals(HttpStatus.OK.value(), item.getStatusCodeValue());
+		
+		assertEquals(cartItem, item.getBody());
 		
 	}
 	
 	@Test
 	public void testDeleteCartItem() throws Exception {
 		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
 		
+		cartItemController.deleteCartItem(1);
+		
+		Mockito.verify(cartItemService, times(1)).deleteCartItem(1);
 		
 	}
 
