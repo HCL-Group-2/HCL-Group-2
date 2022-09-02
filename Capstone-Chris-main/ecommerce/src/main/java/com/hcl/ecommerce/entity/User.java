@@ -18,7 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +33,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
-@JsonIgnoreProperties(value = { "roles" }, allowSetters = true)
+@JsonIgnoreProperties(value = { "roles", "cartItems", "orders" }, allowSetters = true)
 public class User {
 
 	@Id
@@ -50,25 +49,9 @@ public class User {
 
 	@Column(nullable = false, unique = true)
 	private String email;
-
+	
 	
 	private String password;
-
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	private List<Address> addresses = new ArrayList<>();
-//	
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	private List<CreditCard> creditCards = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<CartItem> cartItems = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Order> orders = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade =
@@ -93,5 +76,11 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Order> orders = new ArrayList<>();
 
 }

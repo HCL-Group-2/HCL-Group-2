@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
 		if (user != null) {		
-			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(order.getUser().getId());
+			List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
 			List<OrderItem> orderItems = new ArrayList<>();
 			double total = 0.0;
 			for (CartItem cartItem : cartItems) {
@@ -87,15 +87,6 @@ public class OrderServiceImpl implements OrderService {
 		if (order.isPresent())
 			return order.get();
 		return null;
-	}
-	
-	@Override
-	public void updateOrder(Order order) {
-		Order ord = getOrderById(order.getId());
-		ord.setOrderDate(order.getOrderDate());
-		ord.setOrderTotal(order.getOrderTotal());
-		ord.setOrderStatus(order.getOrderStatus());
-		orderRepository.save(ord);
 	}
 
 	@Override

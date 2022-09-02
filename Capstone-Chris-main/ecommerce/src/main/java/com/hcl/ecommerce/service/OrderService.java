@@ -13,8 +13,6 @@ public interface OrderService {
 
 	Order getOrderById(Integer orderId);
 
-	void updateOrder(Order order);
-
 	void deleteOrder(Integer orderId);
 	
 	Product getProductById(Integer productId);

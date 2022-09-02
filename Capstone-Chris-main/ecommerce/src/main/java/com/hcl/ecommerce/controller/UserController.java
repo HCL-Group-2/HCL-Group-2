@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
@@ -26,14 +25,6 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	/*//No longer needed with Okta
-	@GetMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
-		boolean flag = userService.login(userLoginDto);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	*/
 	
 	@PostMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
@@ -43,10 +34,6 @@ public class UserController {
 			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
-	}
-	@GetMapping("/byEmail")
-	public User getUserByEmail(@RequestParam String email) {
-		return userService.getUserByEmail(email);
 	}
 	
 	@GetMapping("/user/{id}")
@@ -83,6 +70,11 @@ public class UserController {
 	public ResponseEntity<Void> assignRoleToUser(@PathVariable("roleid") Integer roleid, @PathVariable("userid") Integer userid) {
 		userService.assignRoleToUser(roleid, userid);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/byEmail")
+	public User getUserByEmail(@RequestParam String email) {
+		return userService.getUserByEmail(email);
 	}
 
 //	@PostMapping("/register")

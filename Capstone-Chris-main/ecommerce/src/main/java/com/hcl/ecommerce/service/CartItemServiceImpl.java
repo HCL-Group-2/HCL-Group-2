@@ -30,9 +30,25 @@ public class CartItemServiceImpl implements CartItemService {
 	public synchronized CartItem addCartItem(CartItem cartItem) throws AddEntityException {
 		User user = getUserById(cartItem.getUser().getId());
 		Product product = getProductById(cartItem.getProduct().getId());
-		if (user == null || product == null) {
-			throw new AddEntityException("The user or product doesn't exist");
+		if (user == null) {
+			throw new AddEntityException("The user doesn't exist");
 		}
+		if (product == null) {
+			throw new AddEntityException("The product doesn't exist");
+		}
+		
+		if (user.getCartItems().contains(cartItem)) {
+			List<CartItem> items = user.getCartItems();
+			Integer cartItemId = items.get(items.indexOf(cartItem)).getId();
+			CartItem item = getCartItemById(cartItemId);
+			int currentQuantity = item.getQuantity();
+			item.setQuantity(currentQuantity + cartItem.getQuantity());
+			double subtotal = product.getPrice() * item.getQuantity();
+			item.setSubtotal(subtotal);
+			item.setProduct(product);
+			return cartItemRepository.save(item);
+		}
+		
 		double subtotal = product.getPrice() * cartItem.getQuantity();
 		cartItem.setSubtotal(subtotal);
 		cartItem.setUser(user);
