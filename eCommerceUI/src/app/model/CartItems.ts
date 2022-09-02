@@ -8,8 +8,6 @@ export class CartItems {
      user !: UserCart;
      product !: ProductCart;
 
-
-
 }
 
 export class UserCart {

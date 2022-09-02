@@ -51,7 +51,6 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
@@ -59,6 +58,9 @@ import { NavComponent } from './nav/nav.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { CheckoutComponent } from './cart/checkout/checkout.component';
+
 import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
@@ -88,6 +90,7 @@ const oktaAuth = new OktaAuth({
     LoginComponent,
     NavComponent,
     WelcomeComponent,
+
 
   ],
   imports: [
