@@ -76,8 +76,6 @@ public class OrderServiceImpl implements OrderService {
 //			} catch (IOException e) {
 //			}
 			return orderRepository.save(order);
-		} else {
-			return null;
 		}
 	}
 	

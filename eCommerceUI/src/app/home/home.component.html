@@ -1,4 +1,52 @@
-<p>home works!</p>
+<div class="profile-card">
+    <div class="shield"></div>
+    <h2 *ngIf="name$ | async as name">
+        Hello {{name}}!
+    </h2>
+</div>
+
+<div *ngFor="let p of products; let i = index">
+    <mat-card>
+        <mat-card-title>
+            <h5>{{p.name}}</h5>
+        </mat-card-title>
+
+        <mat-card-content>
+            <p>
+                {{p.category}} {{p.image}} {{p.description}} {{p.price}}
+            </p>
+        </mat-card-content>
+
+        <mat-card-actions>
+
+
+            <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Quantity</mat-label>
+                    <input type="text" inputmode="numeric" placeholder="Provide a quantity if it is not listed" aria-label="Quantity" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+            </form>
+
+            <button mat-raised-button color="primary" value="p.id" (click)="openCartDialog($event, p.id!)">Add To
+        Cart</button>
+            <span class="flex-spacer"></span>
+
+
+
+
+
+        </mat-card-actions>
+
+    </mat-card>
+
+</div>
+
+
 
 <router-outlet></router-outlet>
-
