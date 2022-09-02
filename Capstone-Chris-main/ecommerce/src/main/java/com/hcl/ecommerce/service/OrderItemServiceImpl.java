@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.entity.OrderItem;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.OrderItemRepository;
 
 @Service
@@ -15,9 +16,10 @@ public class OrderItemServiceImpl implements OrderItemService {
 	OrderItemRepository orderItemRepository;
 	
 	@Override
-	public synchronized boolean addOrderItem(OrderItem orderItem) {
+	public synchronized OrderItem addOrderItem(OrderItem orderItem) throws AddEntityException{
 		orderItemRepository.save(orderItem);
-		return true;
+		
+		return orderItem;
 	}
 
 	@Override

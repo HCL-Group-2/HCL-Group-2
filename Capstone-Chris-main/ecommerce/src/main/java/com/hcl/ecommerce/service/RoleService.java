@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface RoleService {
 	
-	boolean addRole(Role role);
+	Role addRole(Role role) throws AddEntityException;
 
 	Role getRoleById(Integer roleId);
 
