@@ -50,8 +50,14 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	
+	@Column(nullable = false)
 	private String password;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Order> orders = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade =
@@ -76,11 +82,5 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
 
 }
