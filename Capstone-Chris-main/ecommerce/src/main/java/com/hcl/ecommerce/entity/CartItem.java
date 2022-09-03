@@ -35,12 +35,12 @@ public class CartItem {
 	private double subtotal;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id", nullable = false)
-	private Product product;
-	
-	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 	
 	@Override
 	public boolean equals(Object o) {
