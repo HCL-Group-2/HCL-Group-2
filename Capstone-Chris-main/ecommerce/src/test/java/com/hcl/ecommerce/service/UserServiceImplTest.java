@@ -110,6 +110,8 @@ public class UserServiceImplTest {
 		
 		User user = userServiceImpl.updateUser(mockUser);
 		
+		assertNotNull(user);
+		
 		assertEquals("Test", user.getFirstName());
 		assertEquals("User", user.getLastName());
 		assertEquals("testuser@gmail.com", user.getEmail());
