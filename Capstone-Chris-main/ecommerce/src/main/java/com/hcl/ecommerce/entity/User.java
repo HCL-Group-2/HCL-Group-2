@@ -33,7 +33,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
-@JsonIgnoreProperties(value = { "roles", "cartItems", "orders" }, allowSetters = true)
+@JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
 public class User {
 
 	@Id
@@ -52,6 +52,12 @@ public class User {
 	
 	@Column(nullable = false)
 	private String password;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Address> addresses = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<CreditCard> creditCards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
