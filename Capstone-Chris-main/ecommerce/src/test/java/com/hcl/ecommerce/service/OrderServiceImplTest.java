@@ -1,9 +1,14 @@
-package com.hcl.ecommerce.controller;
+package com.hcl.ecommerce.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,25 +16,37 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.Payment;
+import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.service.OrderService;
+import com.hcl.ecommerce.repository.CartItemRepository;
+import com.hcl.ecommerce.repository.OrderRepository;
+import com.hcl.ecommerce.repository.ProductRepository;
+import com.hcl.ecommerce.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OrderContollerTest {
+public class OrderServiceImplTest {
 	
 	@InjectMocks
-	OrderController orderController;
+	OrderServiceImpl orderServiceImpl;
+
+	@Mock
+	OrderRepository orderRepository;
 	
 	@Mock
-	OrderService orderService;
+	UserRepository userRepository;
+	
+	@Mock
+	ProductRepository productRepository;
+	
+	@Mock
+	CartItemRepository cartItemRepository;
 	
 	@Test
 	public void testAddOrder() throws Exception {
@@ -40,6 +57,26 @@ public class OrderContollerTest {
 		user.setLastName("User");
 		user.setEmail("testuser@gmail.com");
 		user.setPassword("test");
+		
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
+		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
+		cartItem.setUser(user);
+		cartItem.setProduct(product);
+		
+		List<CartItem> cartItems = new ArrayList<>();
+		cartItems.add(cartItem);
+		user.setCartItems(cartItems);
 		
 		ShippingAddress shippingAddress = new ShippingAddress();
 		shippingAddress.setId(1);
@@ -64,13 +101,19 @@ public class OrderContollerTest {
 		mockOrder.setShippingAddress(shippingAddress);
 		mockOrder.setPayment(payment);
 		
-		Mockito.when(orderService.addOrder(any(Order.class))).thenReturn(mockOrder);
+		Mockito.when(userRepository.findByEmail(mockOrder.getUser().getEmail())).thenReturn(user);
 		
-		ResponseEntity<Order> response = orderController.addOrder(mockOrder);
+		Mockito.when(cartItemRepository.getAllCartItemsByUserId(1)).thenReturn(cartItems);
 		
-		Order order = response.getBody();
+		Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(product));
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
+		
+		Mockito.when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
+		
+		Order order = orderServiceImpl.addOrder(mockOrder);
+		
+		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
 		assertEquals(50.0, order.getOrderTotal(), 0.001);
@@ -88,6 +131,26 @@ public class OrderContollerTest {
 		user.setEmail("testuser@gmail.com");
 		user.setPassword("test");
 		
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
+		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
+		cartItem.setUser(user);
+		cartItem.setProduct(product);
+		
+		List<CartItem> cartItems = new ArrayList<>();
+		cartItems.add(cartItem);
+		user.setCartItems(cartItems);
+		
 		ShippingAddress shippingAddress = new ShippingAddress();
 		shippingAddress.setId(1);
 		shippingAddress.setAddress1("123 Test Address");
@@ -111,13 +174,11 @@ public class OrderContollerTest {
 		mockOrder.setShippingAddress(shippingAddress);
 		mockOrder.setPayment(payment);
 		
-		Mockito.when(orderService.getOrderById(1)).thenReturn(mockOrder);
+		Mockito.when(orderRepository.findById(1)).thenReturn(Optional.of(mockOrder));
 		
-		ResponseEntity<Order> response = orderController.getOrderById(1);
+		Order order = orderServiceImpl.getOrderById(1);
 		
-		Order order = response.getBody();
-		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
 		assertEquals(50.0, order.getOrderTotal(), 0.001);
@@ -135,6 +196,26 @@ public class OrderContollerTest {
 		user.setEmail("testuser@gmail.com");
 		user.setPassword("test");
 		
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
+		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
+		cartItem.setUser(user);
+		cartItem.setProduct(product);
+		
+		List<CartItem> cartItems = new ArrayList<>();
+		cartItems.add(cartItem);
+		user.setCartItems(cartItems);
+		
 		ShippingAddress shippingAddress = new ShippingAddress();
 		shippingAddress.setId(1);
 		shippingAddress.setAddress1("123 Test Address");
@@ -158,13 +239,13 @@ public class OrderContollerTest {
 		mockOrder.setShippingAddress(shippingAddress);
 		mockOrder.setPayment(payment);
 		
-		Mockito.when(orderService.updateOrder(any(Order.class))).thenReturn(mockOrder);
+		Mockito.when(orderRepository.findById(1)).thenReturn(Optional.of(mockOrder));
 		
-		ResponseEntity<Order> response = orderController.updateOrder(mockOrder);
+		Mockito.when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
 		
-		Order order = response.getBody();
+		Order order = orderServiceImpl.updateOrder(mockOrder);
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
 		assertEquals(50.0, order.getOrderTotal(), 0.001);
@@ -182,6 +263,26 @@ public class OrderContollerTest {
 		user.setEmail("testuser@gmail.com");
 		user.setPassword("test");
 		
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
+		
+		CartItem cartItem = new CartItem();
+		cartItem.setId(1);
+		cartItem.setQuantity(1);
+		cartItem.setSubtotal(50.0);
+		cartItem.setUser(user);
+		cartItem.setProduct(product);
+		
+		List<CartItem> cartItems = new ArrayList<>();
+		cartItems.add(cartItem);
+		user.setCartItems(cartItems);
+		
 		ShippingAddress shippingAddress = new ShippingAddress();
 		shippingAddress.setId(1);
 		shippingAddress.setAddress1("123 Test Address");
@@ -205,15 +306,9 @@ public class OrderContollerTest {
 		mockOrder.setShippingAddress(shippingAddress);
 		mockOrder.setPayment(payment);
 		
-		Mockito.when(orderService.deleteOrder(1)).thenReturn("Success");
+		orderServiceImpl.deleteOrder(1);
 		
-		ResponseEntity<String> response = orderController.deleteOrder(1);
-		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		Mockito.verify(orderRepository, times(1)).deleteById(1);
 		
 	}
 

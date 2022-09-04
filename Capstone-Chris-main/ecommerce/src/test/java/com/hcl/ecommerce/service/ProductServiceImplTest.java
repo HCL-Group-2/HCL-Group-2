@@ -1,7 +1,11 @@
-package com.hcl.ecommerce.controller;
+package com.hcl.ecommerce.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,22 +13,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.service.ProductService;
+import com.hcl.ecommerce.repository.ProductRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProductControllerTest {
+public class ProductServiceImplTest {
 	
 	@InjectMocks
-	ProductController productController;
-	
+	ProductServiceImpl productServiceImpl;
+
 	@Mock
-	ProductService productService;
+	ProductRepository productRepository;
 	
 	@Test
 	public void testAddProduct() throws Exception {
@@ -38,13 +40,13 @@ public class ProductControllerTest {
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
 		
-		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(productRepository.findByName(mockProduct.getName())).thenReturn(null);
 		
-		ResponseEntity<Product> response = productController.addProduct(mockProduct);
+		Mockito.when(productRepository.save(any(Product.class))).thenReturn(mockProduct);
 		
-		Product product = response.getBody();
+		Product product = productServiceImpl.addProduct(mockProduct);
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		assertNotNull(product);
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
@@ -67,13 +69,11 @@ public class ProductControllerTest {
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
 		
-		Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
+		Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(mockProduct));
 		
-		ResponseEntity<Product> response = productController.getProductById(1);
+		Product product = productServiceImpl.getProductById(1);
 		
-		Product product = response.getBody();
-		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		assertNotNull(product);
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
@@ -96,13 +96,13 @@ public class ProductControllerTest {
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
 		
-		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(mockProduct));
 		
-		ResponseEntity<Product> response = productController.updateProduct(mockProduct);
+		Mockito.when(productRepository.save(any(Product.class))).thenReturn(mockProduct);
 		
-		Product product = response.getBody();
+		Product product = productServiceImpl.updateProduct(mockProduct);
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		assertNotNull(product);
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
@@ -125,15 +125,9 @@ public class ProductControllerTest {
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
 		
-		Mockito.when(productService.deleteProduct(1)).thenReturn("Success");
+		productServiceImpl.deleteProduct(1);
 		
-		ResponseEntity<String> response = productController.deleteProduct(1);
-		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		Mockito.verify(productRepository, times(1)).deleteById(1);
 		
 	}
 

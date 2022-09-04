@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
-import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
@@ -46,7 +44,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
-
 		if (user == null) {
 			throw new AddEntityException("The user doesn't exists");
 		}	
@@ -62,17 +59,13 @@ public class OrderServiceImpl implements OrderService {
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 			total += orderItem.getSubtotal();
-
 		}
-		
 		order.setUser(user);
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("In Progress");
-		
+		order.setOrderStatus("");
 		cartItemRepository.deleteAll(cartItems);
-		
 //		mailSenderService.sendEmail(order.getUser().getEmail());
 //		try {
 //			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
@@ -89,10 +82,20 @@ public class OrderServiceImpl implements OrderService {
 			return order.get();
 		return null;
 	}
+	
+	@Override
+	public Order updateOrder(Order order) {
+		Order ord = getOrderById(order.getId());
+		ord.setOrderDate(order.getOrderDate());
+		ord.setOrderTotal(order.getOrderTotal());
+		ord.setOrderStatus(order.getOrderStatus());
+		return orderRepository.save(ord);
+	}
 
 	@Override
-	public void deleteOrder(Integer orderId) {
+	public String deleteOrder(Integer orderId) {
 		orderRepository.deleteById(orderId);
+		return "Success";
 	}
 	
 	@Override

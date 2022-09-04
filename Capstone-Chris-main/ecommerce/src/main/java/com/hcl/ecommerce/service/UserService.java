@@ -15,15 +15,13 @@ public interface UserService {
 
 	User updateUser(User user);
 
-	void deleteUser(Integer userId);
+	String deleteUser(Integer userId);
 
 	List<User> getAllUsers();
 	
 	List<User> getAllUsersByRoleId(Integer roleId);
 
 	void assignRoleToUser(Integer roleId, Integer userId);
-	
-	boolean addRole(Role role);
 
 	Role getRoleById(Integer roleId);
 	

@@ -12,8 +12,10 @@ public interface OrderService {
 	Order addOrder(Order order) throws AddEntityException;
 
 	Order getOrderById(Integer orderId);
+	
+	Order updateOrder(Order order);
 
-	void deleteOrder(Integer orderId);
+	String deleteOrder(Integer orderId);
 	
 	Product getProductById(Integer productId);
 

@@ -1,15 +1,13 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
-
-import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,6 @@ import com.hcl.ecommerce.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
 public class UserControllerTest {
 	
 	@InjectMocks
@@ -32,75 +29,97 @@ public class UserControllerTest {
 	@Test
 	public void testAddUser() throws Exception {
 		
-		User user = new User();
-		user.setFirstName("Jane");
-		user.setLastName("Doe");
-		user.setEmail("janedoe@gmail.com");
-		user.setPassword("jane");
+		User mockUser = new User();
+		mockUser.setId(1);
+		mockUser.setFirstName("Test");
+		mockUser.setLastName("User");
+		mockUser.setEmail("testuser@gmail.com");
+		mockUser.setPassword("test");
 		
-		Mockito.when(userService.addUser(user)).thenReturn(user);
+		Mockito.when(userService.addUser(any(User.class))).thenReturn(mockUser);
 		
-		ResponseEntity<User> usr = userController.addUser(user);
+		ResponseEntity<User> response = userController.addUser(mockUser);
 		
-		assertEquals(HttpStatus.CREATED.value(), usr.getStatusCodeValue());
+		User user = response.getBody();
 		
-		assertEquals(user, usr.getBody());
+		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		
+		assertEquals("Test", user.getFirstName());
+		assertEquals("User", user.getLastName());
+		assertEquals("testuser@gmail.com", user.getEmail());
+		assertEquals("test", user.getPassword());
 		
 	}
 	
 	@Test
 	public void testGetUserById() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Jane");
-		user.setLastName("Doe");
-		user.setEmail("janedoe@gmail.com");
-		user.setPassword("jane");
+		User mockUser = new User();
+		mockUser.setId(1);
+		mockUser.setFirstName("Test");
+		mockUser.setLastName("User");
+		mockUser.setEmail("testuser@gmail.com");
+		mockUser.setPassword("test");
 		
-		Mockito.when(userService.getUserById(1)).thenReturn(user);
+		Mockito.when(userService.getUserById(1)).thenReturn(mockUser);
 		
-		ResponseEntity<User> usr = userController.getUserById(1);
+		ResponseEntity<User> response = userController.getUserById(1);
 		
-		assertEquals(HttpStatus.OK.value(), usr.getStatusCodeValue());
+		User user = response.getBody();
 		
-		assertEquals(user, usr.getBody());
+		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		
+		assertEquals("Test", user.getFirstName());
+		assertEquals("User", user.getLastName());
+		assertEquals("testuser@gmail.com", user.getEmail());
+		assertEquals("test", user.getPassword());
 		
 	}
 	
 	@Test
 	public void testUpdateUser() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Jane");
-		user.setLastName("Doe");
-		user.setEmail("janedoe@gmail.com");
-		user.setPassword("jane");
+		User mockUser = new User();
+		mockUser.setId(1);
+		mockUser.setFirstName("Test");
+		mockUser.setLastName("User");
+		mockUser.setEmail("testuser@gmail.com");
+		mockUser.setPassword("test");
 		
-		Mockito.when(userService.updateUser(user)).thenReturn(user);
+		Mockito.when(userService.updateUser(any(User.class))).thenReturn(mockUser);
 		
-		ResponseEntity<User> usr = userController.updateUser(user);
+		ResponseEntity<User> response = userController.updateUser(mockUser);
 		
-		assertEquals(HttpStatus.OK.value(), usr.getStatusCodeValue());
+		User user = response.getBody();
 		
-		assertEquals(user, usr.getBody());
+		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		
+		assertEquals("Test", user.getFirstName());
+		assertEquals("User", user.getLastName());
+		assertEquals("testuser@gmail.com", user.getEmail());
+		assertEquals("test", user.getPassword());
 		
 	}
 	
 	@Test
 	public void testDeleteUser() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Jane");
-		user.setLastName("Doe");
-		user.setEmail("janedoe@gmail.com");
-		user.setPassword("jane");
+		User mockUser = new User();
+		mockUser.setId(1);
+		mockUser.setFirstName("Test");
+		mockUser.setLastName("User");
+		mockUser.setEmail("testuser@gmail.com");
+		mockUser.setPassword("test");
 		
-		userController.deleteUser(1);
+		Mockito.when(userService.deleteUser(1)).thenReturn("Success");
 		
-		Mockito.verify(userService, times(1)).deleteUser(1);
+		ResponseEntity<String> response = userController.deleteUser(1);
+		
+		String str = response.getBody();
+		
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
+		
+		assertEquals("Success", str);
 		
 	}
 
