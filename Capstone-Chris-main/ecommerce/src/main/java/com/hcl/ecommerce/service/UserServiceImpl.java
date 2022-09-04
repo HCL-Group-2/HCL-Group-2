@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.dto.UserDto;
+import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
@@ -29,6 +31,15 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private MailSenderService mailSenderService;
+	
+	@Override
+	public boolean login(UserLoginDto userLoginDto) {
+		if (userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword()) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	@Override
 	public synchronized User addUser(User user) throws AddEntityException {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface UserService {
@@ -25,6 +26,8 @@ public interface UserService {
 	Role getRoleById(Integer roleId);
 	
 	User getUserByEmail(String email);
+	
+	boolean login(UserLoginDto userLoginDto);
 
 //	User loginUser(String username, String password);
 
