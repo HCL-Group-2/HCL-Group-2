@@ -126,7 +126,7 @@ public class OrderContollerTest {
 	}
 	
 	@Test
-	public void testUpdateCartItem() throws Exception {
+	public void testUpdateOrder() throws Exception {
 		
 		User user = new User();
 		user.setId(1);
