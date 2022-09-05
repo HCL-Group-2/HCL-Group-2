@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import { User } from '../model/User';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
     this.form = this.fb.group({
       firstName:[null, [Validators.required]],
       lastName:[null, [Validators.required]],
-      email:[null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      email:[null, [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,4}$")]],
       password:[null, [Validators.required]]
     });
   }
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
 
   saveUser(user: User){
     this.userService.saveUser(this.form.value).subscribe();
+    this.router.navigate(['/']);
   }
 
 }

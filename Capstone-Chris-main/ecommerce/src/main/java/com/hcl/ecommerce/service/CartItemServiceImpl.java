@@ -34,8 +34,9 @@ public class CartItemServiceImpl implements CartItemService {
 			throw new AddEntityException("The user doesn't exists");
 		}
 		if (product == null) {
-			throw new AddEntityException("The product doesn't exists");
+			throw new AddEntityException("The product doesn't exist");
 		}
+		
 		if (user.getCartItems().contains(cartItem)) {
 			List<CartItem> items = user.getCartItems();
 			Integer cartItemId = items.get(items.indexOf(cartItem)).getId();
@@ -47,6 +48,7 @@ public class CartItemServiceImpl implements CartItemService {
 			item.setProduct(product);
 			return cartItemRepository.save(item);
 		}
+		
 		double subtotal = product.getPrice() * cartItem.getQuantity();
 		cartItem.setSubtotal(subtotal);
 		cartItem.setUser(user);
@@ -65,15 +67,17 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	public CartItem updateCartItem(CartItem cartItem) {
 		CartItem item = getCartItemById(cartItem.getId());
+		Product product = getProductById(cartItem.getProduct().getId());
 		item.setQuantity(cartItem.getQuantity());
-		item.setSubtotal(cartItem.getSubtotal());
+		double subtotal = product.getPrice() * cartItem.getQuantity();
+		item.setSubtotal(subtotal);
+		item.setProduct(product);
 		return cartItemRepository.save(item);
 	}
 	
 	@Override
-	public String deleteCartItem(Integer cartItemId) {
+	public void deleteCartItem(Integer cartItemId) {
 		cartItemRepository.deleteById(cartItemId);
-		return "Success";
 	}
 	
 	@Override

@@ -48,15 +48,9 @@ public class CartItemController {
 	}
 	
 	@DeleteMapping("/cartitem/{id}")
-	public ResponseEntity<String> deleteCartItem(@PathVariable("id") Integer id) {
-		String result = "";
-		try {
-			cartItemService.deleteCartItem(id);
-			result = "Success";
-		} catch (Exception e) {
-			result = "Failed";
-		}
-		return new ResponseEntity<String>(result, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> deleteCartItem(@PathVariable("id") Integer id) {
+		cartItemService.deleteCartItem(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/cartitems/{userid}")

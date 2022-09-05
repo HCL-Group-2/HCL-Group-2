@@ -1,7 +1,7 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,114 +26,92 @@ public class ProductControllerTest {
 	@Mock
 	ProductService productService;
 	
+//	@BeforeEach
+//	public void setupMocks() {
+//		
+//	}
+	
 	@Test
 	public void testAddProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		Product product = new Product();
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
 		
-		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(productService.addProduct(product)).thenReturn(product);
 		
-		ResponseEntity<Product> response = productController.addProduct(mockProduct);
+		ResponseEntity<Product> prod = productController.addProduct(product);
 		
-		Product product = response.getBody();
+		assertEquals(HttpStatus.CREATED.value(), prod.getStatusCodeValue());
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		assertEquals(product, prod.getBody());
 		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
 		
 	}
 	
 	@Test
 	public void testGetProductById() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
 		
-		Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
+		Mockito.when(productService.getProductById(1)).thenReturn(product);
 		
-		ResponseEntity<Product> response = productController.getProductById(1);
+		ResponseEntity<Product> prod = productController.getProductById(1);
 		
-		Product product = response.getBody();
+		assertEquals(HttpStatus.OK.value(), prod.getStatusCodeValue());
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
-		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
+		assertEquals(product, prod.getBody());
 		
 	}
 	
 	@Test
 	public void testUpdateProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
 		
-		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(productService.updateProduct(product)).thenReturn(product);
 		
-		ResponseEntity<Product> response = productController.updateProduct(mockProduct);
+		ResponseEntity<Product> prod = productController.updateProduct(product);
 		
-		Product product = response.getBody();
+		assertEquals(HttpStatus.OK.value(), prod.getStatusCodeValue());
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
-		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
+		assertEquals(product, prod.getBody());
 		
 	}
 	
 	@Test
 	public void testDeleteProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		Product product = new Product();
+		product.setId(1);
+		product.setName("Test Product");
+		product.setDescription("A test product.");
+		product.setPrice(50.0);
+		product.setImage("Test Image");
+		product.setCategory("Test Category");
+		product.setInventory(300);
 		
-		Mockito.when(productService.deleteProduct(1)).thenReturn("Success");
+		productController.deleteProduct(1);
 		
-		ResponseEntity<String> response = productController.deleteProduct(1);
-		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		Mockito.verify(productService, times(1)).deleteProduct(1);
 		
 	}
 

@@ -15,7 +15,7 @@ public interface CartItemService {
 	
 	CartItem updateCartItem(CartItem cartItem);
 	
-	String deleteCartItem(Integer cartItemId);
+	void deleteCartItem(Integer cartItemId);
 
 	List<CartItem> getAllCartItemsByUserId(Integer userId);
 

@@ -52,8 +52,7 @@ public class UserServiceImpl implements UserService {
 			roleRepository.save(role);
 		}
 		userRepository.save(user);
-		Role role = roleRepository.findByName("Customer");
-		assignRoleToUser(role.getId(), user.getId());
+		assignRoleToUser(roleRepository.findByName("Customer").getId(), user.getId());
 //			mailSenderService.sendEmail(user.getEmail());
 //			try {
 //				mailSenderService.sendEmailWithAttachment(user.getEmail());
@@ -61,6 +60,7 @@ public class UserServiceImpl implements UserService {
 //			} catch (IOException e) {
 //			}
 		return user;
+		
 	}
 
 	@Override
@@ -82,9 +82,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deleteUser(Integer userId) {
+	public void deleteUser(Integer userId) {
 		userRepository.deleteById(userId);
-		return "Success";
 	}
 
 	@Override
@@ -103,6 +102,16 @@ public class UserServiceImpl implements UserService {
 		Role role = getRoleById(roleId);
 		user.addRole(role);
 		userRepository.save(user);
+	}
+	
+	@Override
+	public synchronized boolean addRole(Role role) {
+		if (roleRepository.findByName(role.getName()) != null) {
+			return false;
+		} else {
+			roleRepository.save(role);
+			return true;
+		}
 	}
 
 	@Override
