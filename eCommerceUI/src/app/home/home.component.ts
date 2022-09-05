@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
     this.getUser(1);
     this.getProducts();
 
+
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
