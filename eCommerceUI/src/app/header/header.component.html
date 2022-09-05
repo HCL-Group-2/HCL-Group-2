@@ -32,15 +32,19 @@
     <button mat-button [matMenuTriggerFor]="menu">Account</button>
     
     <mat-menu #menu="matMenu">
-    <button mat-button (click)="goToAccount()">
+    <!--<button mat-button (click)="goToAccount()">
     Address
+    
     <mat-icon>home</mat-icon>
     </button> <br>
+-->
     <button mat-button (click)= "goToRegister()">
     User Details
+    <mat-icon>account_circle</mat-icon>
     </button><br>
     <button mat-button (click)="goToOrderStatus()">
     Order Status
+    <mat-icon> local_shipping</mat-icon>
     </button>
     </mat-menu>
     </form>
