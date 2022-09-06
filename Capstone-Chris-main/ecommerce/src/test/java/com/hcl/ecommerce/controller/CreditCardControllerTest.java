@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +33,9 @@ public class CreditCardControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
 	@MockBean
 	CreditCardService creditCardService;
 	
@@ -44,8 +48,8 @@ public class CreditCardControllerTest {
 		String mockCreditCardJson = 
 				"{\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\",\"user\":{\"id\":1}}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.addCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		
@@ -69,8 +73,8 @@ public class CreditCardControllerTest {
 		
 		String mockCreditCardJson = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.getCreditCardById(1)).thenReturn(mockCreditCard);
 		
@@ -94,8 +98,8 @@ public class CreditCardControllerTest {
 		String mockCreditCardJson = 
 				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.updateCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		

@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +33,9 @@ public class ProductControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
 	@MockBean
 	ProductService productService;
 	
@@ -44,8 +48,8 @@ public class ProductControllerTest {
 		String mockProductJson = 
 				"{\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
 		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
 		
@@ -69,8 +73,8 @@ public class ProductControllerTest {
 		
 		String mockProductJson = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
         Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
 		
@@ -94,8 +98,8 @@ public class ProductControllerTest {
 		String mockProductJson = 
 				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
 		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
 		

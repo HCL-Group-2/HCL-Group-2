@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +33,9 @@ public class AddressControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
 	@MockBean
 	AddressService addressService;
 	
@@ -44,8 +48,8 @@ public class AddressControllerTest {
 		String mockAddressJson = 
 				"{\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\",\"user\":{\"id\":1}}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.addAddress(any(Address.class))).thenReturn(mockAddress);
 		
@@ -69,8 +73,8 @@ public class AddressControllerTest {
 		
 		String mockAddressJson = "{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.getAddressById(1)).thenReturn(mockAddress);
 		
@@ -94,8 +98,8 @@ public class AddressControllerTest {
 		String mockAddressJson = 
 				"{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.updateAddress(any(Address.class))).thenReturn(mockAddress);
 		

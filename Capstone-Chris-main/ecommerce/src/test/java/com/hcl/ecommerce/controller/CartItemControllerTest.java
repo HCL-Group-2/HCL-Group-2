@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +33,9 @@ public class CartItemControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
 	@MockBean
 	CartItemService cartItemService;
 	
@@ -44,8 +48,8 @@ public class CartItemControllerTest {
 		String mockCartItemJson = 
 				"{\"quantity\":1,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.addCartItem(any(CartItem.class))).thenReturn(mockCartItem);
 		
@@ -69,8 +73,8 @@ public class CartItemControllerTest {
 		
 		String mockCartItemJson = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.getCartItemById(1)).thenReturn(mockCartItem);
 		
@@ -94,8 +98,8 @@ public class CartItemControllerTest {
 		String mockCartItemJson = 
 				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
-		ObjectMapper mapper = new ObjectMapper();
-        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
+		ObjectMapper mapper = mapperBuilder.build();
+		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.updateCartItem(any(CartItem.class))).thenReturn(mockCartItem);
 		
