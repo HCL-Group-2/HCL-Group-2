@@ -54,12 +54,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 		Role role = roleRepository.findByName("Customer");
 		assignRoleToUser(role.getId(), user.getId());
-		mailSenderService.sendEmail(user.getEmail());
-		try {
-			mailSenderService.sendEmailWithAttachment(user.getEmail());
-		} catch (MessagingException e) {
-		} catch (IOException e) {
-		}
+//		mailSenderService.sendEmail(user.getEmail());
+//		try {
+//			mailSenderService.sendEmailWithAttachment(user.getEmail());
+//		} catch (MessagingException e) {
+//		} catch (IOException e) {
+//		}
 		return user;
 	}
 

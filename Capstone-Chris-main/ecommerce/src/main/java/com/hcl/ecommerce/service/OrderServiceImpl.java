@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderDate(LocalDate.now());
 		order.setOrderStatus("");
 		cartItemRepository.deleteAll(cartItems);
-		mailSenderService.sendEmail(user.getEmail());
+//		mailSenderService.sendEmail(user.getEmail());
 		try {
 			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
 		} catch (MessagingException e) {
