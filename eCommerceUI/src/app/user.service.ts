@@ -19,4 +19,8 @@ export class UserService {
   saveUser(user: User): Observable<User>{
     return this.http.post<User>(this.baseURL + 'user', user)
   }
+
+  getUserByEmail(email: string):Observable<User>{
+    return this.http.get<User>(this.baseURL + 'byEmail/?email=' + email);
+  }
 }
