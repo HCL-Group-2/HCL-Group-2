@@ -27,12 +27,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@PostMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
-		boolean flag = userService.login(userLoginDto);
-		if (!flag) return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+	
 	
 	@PostMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {

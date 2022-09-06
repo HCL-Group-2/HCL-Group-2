@@ -36,31 +36,4 @@ public class Payment {
 	@JsonFormat(pattern = "MM-yy")
 	private String expirationDate;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getCreditCardNumber() {
-		return creditCardNumber;
-	}
-
-	public void setCreditCardNumber(String creditCardNumber) {
-		this.creditCardNumber = creditCardNumber;
-	}
-
-	public String getExpirationDate() {
-		return expirationDate;
-	}
-
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-
-	
-
 }

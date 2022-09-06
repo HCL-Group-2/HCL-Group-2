@@ -35,7 +35,7 @@
                         <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" style="width:80%;">
                                 <mat-label>First Name</mat-label>
-                                <input type="text" matInput placeholder="First Name" formControlName="firstname">
+                                <input type="text" matInput placeholder="First name" formControlName="firstname">
                                 <mat-error>first name is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -43,7 +43,7 @@
                         <div class="col-md-6 mb-3">
                             <mat-form-field appearance="outline" style="width:80%; ">
                                 <mat-label>Last Name</mat-label>
-                                <input type="text" matInput placeholder="Last Name" formControlName="lastname">
+                                <input type="text" matInput placeholder="Full name" formControlName="firstname">
                                 <mat-error>last name is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -113,7 +113,7 @@
                             <div class="col-md-6 mb-3">
                                 <mat-form-field appearance="outline" style="width:80%;">
                                     <mat-label>Name on card</mat-label>
-                                    <input type="text" matInput placeholder='Full name must match the login' formControlName="nameOnCard">
+                                    <input type="text" matInput placeholder='Full name as displayed on card' formControlName="nameOnCard">
                                     <mat-error> Name on card is required</mat-error>
                                 </mat-form-field>
                             </div>
@@ -130,7 +130,7 @@
                             <div class="col-md-3 mb-3">
                                 <mat-form-field appearance="outline" style="width:80%;">
                                     <mat-label>Expiration Date</mat-label>
-                                    <input type="text" matInput placeholder='YYYY-MM-DD' formControlName="expirationDate">
+                                    <input type="text" matInput formControlName="expirationDate">
                                     <mat-error> Expiration date required</mat-error>
                                 </mat-form-field> 
                             </div>
@@ -147,7 +147,7 @@
                 </form>
 
                 <hr class="mb-4">
-                <button mat-raised-button color="warn" (click)="checkout($event)">Continue to checkout</button>
+                <button mat-raised-button color="primary">Continue to checkout</button>
 
             </div>
         </div>

@@ -103,16 +103,6 @@ public class UserServiceImpl implements UserService {
 		user.addRole(role);
 		userRepository.save(user);
 	}
-	
-	@Override
-	public synchronized boolean addRole(Role role) {
-		if (roleRepository.findByName(role.getName()) != null) {
-			return false;
-		} else {
-			roleRepository.save(role);
-			return true;
-		}
-	}
 
 	@Override
 	public Role getRoleById(Integer roleId) {
