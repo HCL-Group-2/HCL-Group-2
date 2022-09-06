@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Checkout } from './model/Checkout';
+import { CheckoutOrder } from './model/CheckoutOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ export class CheckoutService {
 
   constructor(private http: HttpClient) { }
   
-  addOneCheckout(checkout :Checkout): Observable<any> {
+  addOneCheckout(checkoutOrder :CheckoutOrder): Observable<any> {
   
-    return this.http.post(this.baseURL + 'order/',checkout);
+    return this.http.post(this.baseURL + 'order/',checkoutOrder);
   }
 
 
