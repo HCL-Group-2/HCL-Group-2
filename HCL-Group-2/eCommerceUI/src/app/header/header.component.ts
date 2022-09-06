@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
 import { CartItems2 } from '../model/CartItems';
-import { UserService } from '../user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,12 +12,9 @@ export class HeaderComponent implements OnInit {
   itemsInCartCount !: Array<CartItems2>;
   a_cart_count$ !: Observable<number>;
 
-  loggedIn = true;
-
 
   constructor(private route: ActivatedRoute,
-    private router: Router, private cartService: CartService,
-    private userService: UserService) { }
+    private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
     console.log('hello from header');
@@ -36,7 +32,7 @@ export class HeaderComponent implements OnInit {
   // https://dev.to/isamrish/how-to-display-observable-of-an-object-in-angular-22em
     this.router.navigate(['/cart']);
   }
-
+ 
   goToOrderStatus(){
     this.router.navigate(['/order']);
   }
@@ -49,17 +45,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/account']);
   }
 
-  goToLogin(){
-    this.router.navigate(['/login']);
-  }
-
-  public logout() {
-    this.loggedIn = false;
-    this.userService.clear();
-    this.goToLogin();
-    //window.location.reload();
-  }
-
-
+ 
 
 }

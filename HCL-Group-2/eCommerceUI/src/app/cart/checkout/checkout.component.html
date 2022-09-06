@@ -1,0 +1,153 @@
+
+<body class="bg-light">
+    <div class="container">
+
+        <h2>Checkout</h2>
+        <div class="row">
+            <div class="col-md-4 order-md-2 mb-4">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart</span>
+                    <span class="badge badge-secondary badge-pill">3</span>
+                </h4>
+                <ul class="list-group mb-3"  *ngFor="let cc of cartItemsCheckout;">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"> {{cc.product.name}}</h6>
+                            <img class="card-img-top" src={{cc.product.image}} alt="..." />
+                            <small class="text-muted">Quantity: &nbsp;{{cc.quantity}} &nbsp;</small>
+                            <small class="text-muted">Subtotal: &nbsp; ${{cc.subtotal}}</small>
+                        </div>
+                        <span class="text-muted"></span>
+                    </li>
+
+                </ul>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD) {{ checkoutTotal }}</span>
+                    <strong>$</strong>
+                </li>
+            </div>
+
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3">Billing address</h4>
+                <form [formGroup]="checkoutForm">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field appearance="outline" style="width:80%;">
+                                <mat-label>First Name</mat-label>
+                                <input type="text" matInput placeholder="First Name" formControlName="firstname">
+                                <mat-error>first name is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field appearance="outline" style="width:80%; ">
+                                <mat-label>Last Name</mat-label>
+                                <input type="text" matInput placeholder="Last Name" formControlName="lastname">
+                                <mat-error>last name is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <mat-form-field appearance="outline" style="width:80%;">
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput placeholder="you@example.com" formControlName="email">
+                            <mat-icon matSuffix>mail_outline</mat-icon>
+                            <mat-error *ngIf="checkoutForm.controls['email'].errors?.['required']">Email is required
+                            </mat-error>
+                            <mat-error *ngIf="checkoutForm.controls['email'].errors?.['pattern']">Please enter valid
+                                email</mat-error>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div formGroupName="shippingaddress">
+
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" style="width:80%;">
+                                <mat-label>Address 1</mat-label>
+                                <input type="text" matInput placeholder="1234 Main St" formControlName="address1">
+                                <mat-error>Address 1 is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mb-3">
+                            <mat-form-field appearance="outline" style="width:80%;">
+                                <mat-label>Address 2 is optional</mat-label>
+                                <input type="text" matInput placeholder="Apartment or suite" formControlName="address2">
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>City</mat-label>
+                                    <input type="text" matInput placeholder="City" formControlName="city">
+                                    <mat-error>City is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>State</mat-label>
+                                    <input type="text" matInput placeholder="State" formControlName="state">
+                                    <mat-error>State is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Zip Code</mat-label>
+                                    <input type="text" matInput placeholder="Zipcode" formControlName="zipcode">
+                                    <mat-error>Zip code is required</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <h4 class="mb-3">Payment</h4>
+                    <div formGroupName="payment">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <mat-form-field appearance="outline" style="width:80%;">
+                                    <mat-label>Name on card</mat-label>
+                                    <input type="text" matInput placeholder='Full name must match the login' formControlName="nameOnCard">
+                                    <mat-error> Name on card is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <mat-form-field appearance="outline" style="width:80%;">
+                                    <mat-label>card number</mat-label>
+                                    <input type="text" matInput formControlName="creditCardNumber">
+                                    <mat-error>Credit card number is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <mat-form-field appearance="outline" style="width:80%;">
+                                    <mat-label>Expiration Date</mat-label>
+                                    <input type="text" matInput placeholder='YYYY-MM-DD' formControlName="expirationDate">
+                                    <mat-error> Expiration date required</mat-error>
+                                </mat-form-field> 
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <mat-form-field appearance="outline" style="width:80%;">
+                                    <mat-label>CVV</mat-label>
+                                    <input type="text" matInput formControlName="verificationCode">
+                                    <mat-error> Security code required</mat-error>
+                                </mat-form-field> 
+                            </div>
+
+                        </div>
+                    </div>      
+                </form>
+
+                <hr class="mb-4">
+                <button mat-raised-button color="warn" (click)="checkout($event)">Continue to checkout</button>
+
+            </div>
+        </div>

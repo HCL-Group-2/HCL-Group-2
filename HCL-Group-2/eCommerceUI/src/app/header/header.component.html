@@ -2,25 +2,26 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
     <a class="navbar-brand" href="/home">Ostrich Mart</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="#!">Sign Out</a></li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="#">All Products</a>
-        <a class="dropdown-item" href="#">By Category</a>
-      </div>
+    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item" href="/home">All Products</a></li>
+    <li><hr class="dropdown-divider" /></li>
+    <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+    <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+    </ul>
     </li>
     </ul>
     <form class="navbar-form navbar-left" action="localhost:8081/ecommerce/products">
     <div class="form">
     <input type="text" class="form-control" placeholder="Search">
     </div>
-
+   
     </form>
     <form class="d-flex">
     <button class="btn btn-outline-dark" (click) ="goToCart()">
@@ -31,11 +32,11 @@
     </button>
 
     <button mat-button [matMenuTriggerFor]="menu">Account</button>
-
+    
     <mat-menu #menu="matMenu">
     <!--<button mat-button (click)="goToAccount()">
     Address
-
+    
     <mat-icon>home</mat-icon>
     </button> <br>
 -->
@@ -46,10 +47,6 @@
     <button mat-button (click)="goToOrderStatus()">
     Order Status
     <mat-icon> local_shipping</mat-icon>
-    </button><br>
-    <button mat-button (click)="logout()">
-      Sign Out
-    <mat-icon>logout</mat-icon>
     </button>
     </mat-menu>
     </form>
