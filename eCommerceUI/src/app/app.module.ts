@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule , APP_INITIALIZER, Injector } from '@angular/core';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -40,7 +40,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
-import {CloudinaryModule} from '@cloudinary/ng';
+import { CloudinaryModule } from '@cloudinary/ng';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,7 +51,6 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
@@ -59,18 +58,21 @@ import { NavComponent } from './nav/nav.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { CheckoutComponent } from './cart/checkout/checkout.component';
+
 import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
+import { OktaAuth } from '@okta/okta-auth-js';
 
 
 
-const oktaConfig = Object.assign({
-  onAuthRequired: (oktaAuth: any, injector: Injector) => {
-    const router = injector.get(Router);
-    router.navigate(['/login']);
-  }
-}, myAppConfig.oidc)
+const oktaAuth = new OktaAuth({
+  issuer: 'https://dev-06861319.okta.com/oauth2/default',
+  clientId: '0oa6b7ee0wwOnJzuz5d7',
+  redirectUri: window.location.origin + '/login/callback'
+});
 
 
 @NgModule({
@@ -88,6 +90,7 @@ const oktaConfig = Object.assign({
     LoginComponent,
     NavComponent,
     WelcomeComponent,
+
 
   ],
   imports: [
@@ -118,11 +121,10 @@ const oktaConfig = Object.assign({
     CloudinaryModule,
     OktaAuthModule,
   ],
-  
+
   providers: [
-    {provide: OKTA_CONFIG, useValue: oktaConfig 
-    }
-   ],
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

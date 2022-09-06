@@ -1,39 +1,8 @@
 
 
 .custom-toolbar {
-    background-color: rgba(25,100,196,255);
-    padding: 0 15px 12px 10px;
+
+    background-color: rgba(118, 118, 236, 0.598);
+    padding: 0 20px;
   }
 
-.logo {
-  position: relative;
-  top: 5px;
-}
-
-form.searchbar input[type=text] {
-  padding: 10px;
-  font-size: 17px;
-  border: 1px solid grey;
-  float: left;
-  width: 80%;
-  height: 70%;
-  background: #f1f1f1;
-}
-
-form.searchbar button {
-  float: left;
-  width: 20%;
-  padding: 10px 5px 10px 5px;
-  background: blue;
-  color: black;
-  font-size: 12px;
-  border: 1px solid grey;
-  border-left: none;
-  cursor: pointer;
-}
-
-form.searchbar::after {
-  content: "";
-  clear: both;
-  display: table;
-}

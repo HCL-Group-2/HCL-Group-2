@@ -1,34 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
+import { lastValueFrom, Observable, of } from 'rxjs';
+import { CartService } from '../cart.service';
+import { CartItems2 } from '../model/CartItems';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  itemsInCartCount !: Array<CartItems2>;
+  a_cart_count$ !: Observable<number>;
 
-  logo: CloudinaryImage; //ostrichmart logo
 
   constructor(private route: ActivatedRoute,
-    private router: Router) {
-      const cld = new Cloudinary({
-        cloud:{
-          cloudName: 'ecommercehcl'
-        }
-      });
-      this.logo=cld.image('ostrichmart_qu5yud');
-    }
+    private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
+    console.log('hello from header');
+    this.cartService.getCartItems(1).subscribe(data => {
+      this.itemsInCartCount = data;
+      // this.a_cart_count$ = of(this.itemsInCartCount.length);
+    })
+
   }
   goToHomePage(){
     this.router.navigate(['/home']);
 
   }
   goToCart(){
+  // https://dev.to/isamrish/how-to-display-observable-of-an-object-in-angular-22em
     this.router.navigate(['/cart']);
   }
+ 
   goToOrderStatus(){
     this.router.navigate(['/order']);
   }
@@ -40,5 +44,7 @@ export class HeaderComponent implements OnInit {
   goToAccount(){
     this.router.navigate(['/account']);
   }
+
+ 
 
 }

@@ -8,8 +8,6 @@ export class CartItems {
      user !: UserCart;
      product !: ProductCart;
 
-
-
 }
 
 export class UserCart {
@@ -21,7 +19,7 @@ export class ProductCart {
 }
 
 export class CartItems2 {
-
+     id ?: number;
      quantity !: number;
      subtotal ?: number;
      user !: User;

@@ -13,4 +13,8 @@ export class OrderComponent{
   public orderStatus = "In Progress"
   //constructor() { }
 
+  //TODO
+  //Pass the values represented in the order post
+  processOrder(){}
+
 }

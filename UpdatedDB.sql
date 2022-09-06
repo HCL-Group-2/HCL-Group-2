@@ -33,7 +33,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`id`),
   KEY `FK6i66ijb8twgcqtetl8eeeed6v` (`user_id`),
   CONSTRAINT `FK6i66ijb8twgcqtetl8eeeed6v` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,6 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'1234 Test Address',NULL,'Frisco','Texas','75034',1);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,7 +63,7 @@ CREATE TABLE `cart_items` (
   KEY `FK709eickf3kc0dujx3ub9i7btf` (`user_id`),
   CONSTRAINT `FK1re40cjegsfvw58xrkdp6bac6` FOREIGN KEY (`product_id`) REFERENCES `products` (`prod_id`),
   CONSTRAINT `FK709eickf3kc0dujx3ub9i7btf` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +72,6 @@ CREATE TABLE `cart_items` (
 
 LOCK TABLES `cart_items` WRITE;
 /*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (1,1,50,1,1),(2,50,2500,3,1),(3,3,150,1,1),(4,4,600,2,1);
 /*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,13 +87,12 @@ CREATE TABLE `credit_card` (
   `credit_card_number` varchar(255) NOT NULL,
   `expiration_date` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `verification_code` varchar(255) NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_svbyf90rkln6g3ilk8m2yn1d7` (`credit_card_number`),
   KEY `FKes0kii3rdngv6p26vsih412jy` (`user_id`),
   CONSTRAINT `FKes0kii3rdngv6p26vsih412jy` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +101,6 @@ CREATE TABLE `credit_card` (
 
 LOCK TABLES `credit_card` WRITE;
 /*!40000 ALTER TABLE `credit_card` DISABLE KEYS */;
-INSERT INTO `credit_card` VALUES (1,'1234567812345678','2024-01-01','Test User','123',1);
 /*!40000 ALTER TABLE `credit_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +122,7 @@ CREATE TABLE `order_items` (
   KEY `FKocimc7dtr037rh4ls4l95nlfi` (`product_id`),
   CONSTRAINT `FKbioxgbv59vetrxe0ejfubep1w` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   CONSTRAINT `FKocimc7dtr037rh4ls4l95nlfi` FOREIGN KEY (`product_id`) REFERENCES `products` (`prod_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,6 +131,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (1,2,27.1,2,3),(2,1,14.99,2,1);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +157,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `FK2dntnxe9677sy06ujhix6o2bp` FOREIGN KEY (`shipping_address_id`) REFERENCES `shipping_address` (`id`),
   CONSTRAINT `FK32ql8ubntj5uh44ph9659tiih` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `FKag8ppnkjvx255gj7lm3m18wkj` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,6 +166,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'2022-09-05','In Progress',0,1,1,2),(2,'2022-09-05','In Progress',42.09,3,2,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,10 +181,10 @@ CREATE TABLE `payment` (
   `id` int NOT NULL AUTO_INCREMENT,
   `credit_card_number` varchar(255) NOT NULL,
   `expiration_date` varchar(255) NOT NULL,
-  `verification_code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_jgl1yyvp42trnjnk3409i07of` (`credit_card_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,6 +193,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (1,'1111222233334444','2024-12-12','Jane Doe'),(3,'1111111111112222','2024-12-12','Jane Doe');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +213,7 @@ CREATE TABLE `products` (
   `prod_name` varchar(255) NOT NULL,
   `prod_price` double NOT NULL,
   PRIMARY KEY (`prod_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +222,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Test Category','A test product.','Test Image',300,'Test Product A',50),(2,'Test Category','B test product.','Test Image B',500,'Test Product B',150),(3,'Test Category','A test product.','Test Image',300,'Test Product',50);
+INSERT INTO `products` VALUES (1,'Clothing','A graphic T-shirt of an ostrich.','https://res.cloudinary.com/ecommercehcl/image/upload/v1662346389/c9797a18-1fed-4ac8-a218-bd8e52881aa8_1.758d00198bfc1604c7c782e72223551d_idkj3h.jpg',199,'Graphic T-Shirt',14.99),(2,'Electronics','A Iphone phone case with an ostrich. ','https://res.cloudinary.com/ecommercehcl/image/upload/v1662346511/7011927_0_p633we.jpg',399,'Phone Case',9),(3,'Clothing','A flamingo cross hairand. ','https://res.cloudinary.com/ecommercehcl/image/upload/v1662346361/1pc-Flamingo-Cross-Hair-band-Girl-Hairband-for-Flamingo-Themed-Wedding-Birthday-Party-Hair-Decoration-Girl.jpg_Q90.jpg__aynngt.jpg',398,'Head Band',13.55),(4,'Toys','A cute ostrich plush toy. ','https://res.cloudinary.com/ecommercehcl/image/upload/v1662346254/jessshopify21_79_ims96y.jpg',250,'Plush Toy',16.99),(5,'Fashion','Pink handbag with seperate compartments. ','https://res.cloudinary.com/ecommercehcl/image/upload/v1662088099/purse.jpg',80,'Purse',42),(6,'Clothing','White Adidas sneakers. ','https://res.cloudinary.com/ecommercehcl/image/upload/v1661972641/cld-sample-5.jpg',40,'White sneakers',68.99);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +265,7 @@ CREATE TABLE `shipping_address` (
   `state` varchar(255) NOT NULL,
   `zip_code` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,6 +274,7 @@ CREATE TABLE `shipping_address` (
 
 LOCK TABLES `shipping_address` WRITE;
 /*!40000 ALTER TABLE `shipping_address` DISABLE KEYS */;
+INSERT INTO `shipping_address` VALUES (1,'953 Silverthorne Trail',NULL,'Highland Village','TX','75077'),(2,'953 Silverthorne Trail',NULL,'Highland Village','TX','75077');
 /*!40000 ALTER TABLE `shipping_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +301,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` VALUES (1,1),(2,1),(3,1),(4,1),(5,1);
+INSERT INTO `user_roles` VALUES (1,1),(2,1),(3,1);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +320,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,7 +329,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'testuser@gmail.com','Test','User','test'),(2,'emailtest@email.com','LeeT','PedersonT','password'),(3,'leepederson88@gmail.com','Lee','Pederson','password'),(4,'janedoe@gmail.com','Jane','Doe','jane'),(5,'newemail@email.com','Lee','Pederson','password');
+INSERT INTO `users` VALUES (1,'leepederson88@gmail.com','Lee','Pederson','password'),(2,'janedoe@gmail.com','Jane','Doe','jane'),(3,'testuser@gmail.com','test','user','password');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -342,4 +342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-01 13:23:51
+-- Dump completed on 2022-09-06  9:40:24
