@@ -6,177 +6,131 @@ import static org.mockito.ArgumentMatchers.any;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.CartItemService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class CartItemControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	CartItemService cartItemService;
 	
 	@InjectMocks
 	CartItemController cartItemController;
 	
-	@Mock
-	CartItemService cartItemService;
-	
 	@Test
 	public void testAddCartItem() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCartItemJson = 
+				"{\"quantity\":1,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
-		Product product = new Product();
-		product.setId(1);
-		product.setName("Test Product");
-		product.setDescription("A test product.");
-		product.setPrice(50.0);
-		product.setImage("Test Image");
-		product.setCategory("Test Category");
-		product.setInventory(300);
-		
-		CartItem mockCartItem = new CartItem();
-		mockCartItem.setId(1);
-		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
-		mockCartItem.setUser(user);
-		mockCartItem.setProduct(product);
+		ObjectMapper mapper = new ObjectMapper();
+        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.addCartItem(any(CartItem.class))).thenReturn(mockCartItem);
 		
-		ResponseEntity<CartItem> response = cartItemController.addCartItem(mockCartItem);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/cartitem/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCartItemJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		CartItem cartItem = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetCartItemById() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCartItemJson = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
 		
-		Product product = new Product();
-		product.setId(1);
-		product.setName("Test Product");
-		product.setDescription("A test product.");
-		product.setPrice(50.0);
-		product.setImage("Test Image");
-		product.setCategory("Test Category");
-		product.setInventory(300);
-		
-		CartItem mockCartItem = new CartItem();
-		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
-		mockCartItem.setUser(user);
-		mockCartItem.setProduct(product);
+		ObjectMapper mapper = new ObjectMapper();
+        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.getCartItemById(1)).thenReturn(mockCartItem);
 		
-		ResponseEntity<CartItem> response = cartItemController.getCartItemById(1);
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/cartitem/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		CartItem cartItem = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
 		
-		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateCartItem() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCartItemJson = 
+				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
 		
-		Product product = new Product();
-		product.setId(1);
-		product.setName("Test Product");
-		product.setDescription("A test product.");
-		product.setPrice(50.0);
-		product.setImage("Test Image");
-		product.setCategory("Test Category");
-		product.setInventory(300);
-		
-		CartItem mockCartItem = new CartItem();
-		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
-		mockCartItem.setUser(user);
-		mockCartItem.setProduct(product);
+		ObjectMapper mapper = new ObjectMapper();
+        CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
 		
 		Mockito.when(cartItemService.updateCartItem(any(CartItem.class))).thenReturn(mockCartItem);
 		
-		ResponseEntity<CartItem> response = cartItemController.updateCartItem(mockCartItem);
+		//Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/cartitem/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCartItemJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		CartItem cartItem = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null,\"password\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":0.0,\"image\":null,\"category\":null,\"inventory\":0}}";
 		
-		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteCartItem() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCartItemJson = 
+				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null,\"password\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":0.0,\"image\":null,\"category\":null,\"inventory\":0}}";
 		
-		Product product = new Product();
-		product.setId(1);
-		product.setName("Test Product");
-		product.setDescription("A test product.");
-		product.setPrice(50.0);
-		product.setImage("Test Image");
-		product.setCategory("Test Category");
-		product.setInventory(300);
 		
-		CartItem mockCartItem = new CartItem();
-		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
-		mockCartItem.setUser(user);
-		mockCartItem.setProduct(product);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/cartitem/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockCartItemJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Mockito.when(cartItemService.deleteCartItem(1)).thenReturn("Success");
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		ResponseEntity<String> response = cartItemController.deleteCartItem(1);
-		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

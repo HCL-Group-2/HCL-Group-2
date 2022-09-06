@@ -13,7 +13,7 @@ public interface AddressService {
 
 	Address updateAddress(Address address);
 
-	String deleteAddress(Integer addressId);
+	void deleteAddress(Integer addressId);
 
 	List<Address> getAllAddressesByUserId(Integer userId);
 

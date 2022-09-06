@@ -6,146 +6,131 @@ import static org.mockito.ArgumentMatchers.any;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.CreditCard;
-import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.CreditCardService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class CreditCardControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	CreditCardService creditCardService;
 	
 	@InjectMocks
 	CreditCardController creditCardController;
 	
-	@Mock
-	CreditCardService creditCardService;
-	
 	@Test
 	public void testAddCreditCard() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCreditCardJson = 
+				"{\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\",\"user\":{\"id\":1}}";
 		
-		CreditCard mockCreditCard = new CreditCard();
-		mockCreditCard.setId(1);
-		mockCreditCard.setName("Test Name");
-		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
-		mockCreditCard.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.addCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		
-		ResponseEntity<CreditCard> response = creditCardController.addCreditCard(mockCreditCard);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/creditcard/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		CreditCard creditCard = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals("Test Name", creditCard.getName());
-		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetCreditCardById() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCreditCardJson = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}";
 		
-		CreditCard mockCreditCard = new CreditCard();
-		mockCreditCard.setId(1);
-		mockCreditCard.setName("Test Name");
-		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
-		mockCreditCard.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.getCreditCardById(1)).thenReturn(mockCreditCard);
 		
-		ResponseEntity<CreditCard> response = creditCardController.getCreditCardById(1);
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/creditcard/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		CreditCard creditCard = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}";
 		
-		assertEquals("Test Name", creditCard.getName());
-		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateCreditCard() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCreditCardJson = 
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
-		CreditCard mockCreditCard = new CreditCard();
-		mockCreditCard.setId(1);
-		mockCreditCard.setName("Test Name");
-		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
-		mockCreditCard.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
 		Mockito.when(creditCardService.updateCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		
-		ResponseEntity<CreditCard> response = creditCardController.updateCreditCard(mockCreditCard);
+		//Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/creditcard/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		CreditCard creditCard = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
-		assertEquals("Test Name", creditCard.getName());
-		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteCreditCard() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockCreditCardJson = 
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
-		CreditCard mockCreditCard = new CreditCard();
-		mockCreditCard.setId(1);
-		mockCreditCard.setName("Test Name");
-		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
-		mockCreditCard.setUser(user);
 		
-		Mockito.when(creditCardService.deleteCreditCard(1)).thenReturn("Success");
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/creditcard/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		ResponseEntity<String> response = creditCardController.deleteCreditCard(1);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

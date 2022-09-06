@@ -15,7 +15,7 @@ public interface OrderService {
 	
 	Order updateOrder(Order order);
 
-	String deleteOrder(Integer orderId);
+	void deleteOrder(Integer orderId);
 	
 	Product getProductById(Integer productId);
 

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +27,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "products")
+@JsonIgnoreProperties(value = { "cartItems", "orderItems" }, allowSetters = true)
 public class Product {
 	
 	@Id
@@ -53,11 +54,9 @@ public class Product {
 	private int inventory;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	@JsonIgnore
 	private List<CartItem> cartItems = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 }

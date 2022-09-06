@@ -6,134 +6,131 @@ import static org.mockito.ArgumentMatchers.any;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.service.ProductService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class ProductControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	ProductService productService;
 	
 	@InjectMocks
 	ProductController productController;
 	
-	@Mock
-	ProductService productService;
-	
 	@Test
 	public void testAddProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		String mockProductJson = 
+				"{\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		
+		ObjectMapper mapper = new ObjectMapper();
+        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
 		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
 		
-		ResponseEntity<Product> response = productController.addProduct(mockProduct);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/product/")
+				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Product product = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetProductById() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		String mockProductJson = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
+		ObjectMapper mapper = new ObjectMapper();
+        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
-		ResponseEntity<Product> response = productController.getProductById(1);
+        Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
 		
-		Product product = response.getBody();
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/product/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
+		String expected = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		String mockProductJson = 
+				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		
+		ObjectMapper mapper = new ObjectMapper();
+        Product mockProduct = mapper.readValue(mockProductJson, Product.class);
 		
 		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
 		
-		ResponseEntity<Product> response = productController.updateProduct(mockProduct);
+		//Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/product/")
+				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Product product = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		assertEquals("Test Product", product.getName());
-		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
-		assertEquals("Test Image", product.getImage());
-		assertEquals("Test Category", product.getCategory());
-		assertEquals(300, product.getInventory());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteProduct() throws Exception {
 		
-		Product mockProduct = new Product();
-		mockProduct.setId(1);
-		mockProduct.setName("Test Product");
-		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
-		mockProduct.setImage("Test Image");
-		mockProduct.setCategory("Test Category");
-		mockProduct.setInventory(300);
+		String mockProductJson = 
+				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
 		
-		Mockito.when(productService.deleteProduct(1)).thenReturn("Success");
 		
-		ResponseEntity<String> response = productController.deleteProduct(1);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/product/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		String str = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

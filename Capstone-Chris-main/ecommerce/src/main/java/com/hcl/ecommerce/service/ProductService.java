@@ -13,7 +13,7 @@ public interface ProductService {
 	
 	Product updateProduct(Product product);
 	
-	String deleteProduct(Integer productId);
+	void deleteProduct(Integer productId);
 	
 	List<Product> getAllProducts();
 

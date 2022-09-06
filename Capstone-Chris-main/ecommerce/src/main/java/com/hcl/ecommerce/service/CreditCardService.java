@@ -13,7 +13,7 @@ public interface CreditCardService {
 
 	CreditCard updateCreditCard(CreditCard creditCard);
 
-	String deleteCreditCard(Integer creditCardId);
+	void deleteCreditCard(Integer creditCardId);
 
 	List<CreditCard> getAllCreditCardsByUserId(Integer userId);
 

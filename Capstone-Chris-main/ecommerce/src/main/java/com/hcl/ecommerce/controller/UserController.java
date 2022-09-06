@@ -27,6 +27,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	
+	
 	@PostMapping("/user")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 		try {
@@ -50,15 +52,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/user/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id) {
-		String result = "";
-		try {
-			userService.deleteUser(id);
-			result = "Success";
-		} catch (Exception e) {
-			result = "Failed";
-		}
-		return new ResponseEntity<String>(result, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
+		userService.deleteUser(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/users")

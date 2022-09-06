@@ -46,15 +46,9 @@ public class CreditCardController {
 	}
 	
 	@DeleteMapping("/creditcard/{id}")
-	public ResponseEntity<String> deleteCreditCard(@PathVariable("id") Integer id) {
-		String result = "";
-		try {
-			creditCardService.deleteCreditCard(id);
-			result = "Success";
-		} catch (Exception e) {
-			result = "Failed";
-		}
-		return new ResponseEntity<String>(result, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> deleteCreditCard(@PathVariable("id") Integer id) {
+		creditCardService.deleteCreditCard(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/creditcards/{userid}")

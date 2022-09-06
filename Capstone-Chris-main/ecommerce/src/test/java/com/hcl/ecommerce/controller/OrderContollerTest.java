@@ -3,217 +3,138 @@ package com.hcl.ecommerce.controller;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-import java.time.LocalDate;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.Order;
-import com.hcl.ecommerce.entity.Payment;
-import com.hcl.ecommerce.entity.ShippingAddress;
-import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.OrderService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class OrderContollerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
+	@MockBean
+	OrderService orderService;
 	
 	@InjectMocks
 	OrderController orderController;
 	
-	@Mock
-	OrderService orderService;
-	
 	@Test
 	public void testAddOrder() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockOrderJson = 
+				"{\"user\":{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"shippingAddress\": {\"address1\":\"1234 Test Address A\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"name\":\"Test Name\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}}";
 		
-		ShippingAddress shippingAddress = new ShippingAddress();
-		shippingAddress.setId(1);
-		shippingAddress.setAddress1("123 Test Address");
-		shippingAddress.setAddress2(null);
-		shippingAddress.setCity("Frisco");
-		shippingAddress.setState("Texas");
-		shippingAddress.setZipCode("75034");
-		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
-		
-		Order mockOrder = new Order();
-		mockOrder.setId(1);
-		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
-		mockOrder.setOrderStatus("");
-		mockOrder.setUser(user);
-		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		ObjectMapper mapper = mapperBuilder.build();
+        Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
 		
 		Mockito.when(orderService.addOrder(any(Order.class))).thenReturn(mockOrder);
 		
-		ResponseEntity<Order> response = orderController.addOrder(mockOrder);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/order/")
+				.accept(MediaType.APPLICATION_JSON).content(mockOrderJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Order order = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
-		assertEquals("", order.getOrderStatus());
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetOrderById() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockOrderJson = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"2024-01-01\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
 		
-		ShippingAddress shippingAddress = new ShippingAddress();
-		shippingAddress.setId(1);
-		shippingAddress.setAddress1("123 Test Address");
-		shippingAddress.setAddress2(null);
-		shippingAddress.setCity("Frisco");
-		shippingAddress.setState("Texas");
-		shippingAddress.setZipCode("75034");
-		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
-		
-		Order mockOrder = new Order();
-		mockOrder.setId(1);
-		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
-		mockOrder.setOrderStatus("");
-		mockOrder.setUser(user);
-		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		ObjectMapper mapper = mapperBuilder.build();
+        Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
 		
 		Mockito.when(orderService.getOrderById(1)).thenReturn(mockOrder);
 		
-		ResponseEntity<Order> response = orderController.getOrderById(1);
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/order/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		Order order = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"2024-01-01\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
 		
-		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
-		assertEquals("", order.getOrderStatus());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateOrder() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockOrderJson = 
+				"{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"2024-01-01\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
 		
-		ShippingAddress shippingAddress = new ShippingAddress();
-		shippingAddress.setId(1);
-		shippingAddress.setAddress1("123 Test Address");
-		shippingAddress.setAddress2(null);
-		shippingAddress.setCity("Frisco");
-		shippingAddress.setState("Texas");
-		shippingAddress.setZipCode("75034");
-		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
-		
-		Order mockOrder = new Order();
-		mockOrder.setId(1);
-		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
-		mockOrder.setOrderStatus("");
-		mockOrder.setUser(user);
-		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		ObjectMapper mapper = mapperBuilder.build();
+        Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
 		
 		Mockito.when(orderService.updateOrder(any(Order.class))).thenReturn(mockOrder);
 		
-		ResponseEntity<Order> response = orderController.updateOrder(mockOrder);
+		//Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/order/")
+				.accept(MediaType.APPLICATION_JSON).content(mockOrderJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Order order = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"2024-01-01\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
 		
-		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
-		assertEquals("", order.getOrderStatus());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteOrder() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockOrderJson = 
+				"{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"2024-01-01\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
 		
-		ShippingAddress shippingAddress = new ShippingAddress();
-		shippingAddress.setId(1);
-		shippingAddress.setAddress1("123 Test Address");
-		shippingAddress.setAddress2(null);
-		shippingAddress.setCity("Frisco");
-		shippingAddress.setState("Texas");
-		shippingAddress.setZipCode("75034");
 		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/order/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockOrderJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Order mockOrder = new Order();
-		mockOrder.setId(1);
-		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
-		mockOrder.setOrderStatus("");
-		mockOrder.setUser(user);
-		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		Mockito.when(orderService.deleteOrder(1)).thenReturn("Success");
-		
-		ResponseEntity<String> response = orderController.deleteOrder(1);
-		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

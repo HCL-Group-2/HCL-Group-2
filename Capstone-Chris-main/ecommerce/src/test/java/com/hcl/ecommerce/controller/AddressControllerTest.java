@@ -6,160 +6,131 @@ import static org.mockito.ArgumentMatchers.any;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.Address;
-import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.AddressService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class AddressControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@MockBean
+	AddressService addressService;
 	
 	@InjectMocks
 	AddressController addressController;
 	
-	@Mock
-	AddressService addressService;
-	
 	@Test
 	public void testAddAddress() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockAddressJson = 
+				"{\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\",\"user\":{\"id\":1}}";
 		
-		Address mockAddress = new Address();
-		mockAddress.setId(1);
-		mockAddress.setAddress1("123 Test Address");
-		mockAddress.setAddress2(null);
-		mockAddress.setCity("Frisco");
-		mockAddress.setState("Texas");
-		mockAddress.setZipCode("75034");
-		mockAddress.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.addAddress(any(Address.class))).thenReturn(mockAddress);
 		
-		ResponseEntity<Address> response = addressController.addAddress(mockAddress);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/address/")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Address address = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals("123 Test Address", address.getAddress1());
-		assertEquals(null, address.getAddress2());
-		assertEquals("Frisco", address.getCity());
-		assertEquals("Texas", address.getState());
-		assertEquals("75034", address.getZipCode());
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetAddressById() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockAddressJson = "{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		Address mockAddress = new Address();
-		mockAddress.setId(1);
-		mockAddress.setAddress1("123 Test Address");
-		mockAddress.setAddress2(null);
-		mockAddress.setCity("Frisco");
-		mockAddress.setState("Texas");
-		mockAddress.setZipCode("75034");
-		mockAddress.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.getAddressById(1)).thenReturn(mockAddress);
 		
-		ResponseEntity<Address> response = addressController.getAddressById(1);
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/address/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		Address address = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		assertEquals("123 Test Address", address.getAddress1());
-		assertEquals(null, address.getAddress2());
-		assertEquals("Frisco", address.getCity());
-		assertEquals("Texas", address.getState());
-		assertEquals("75034", address.getZipCode());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateAddress() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockAddressJson = 
+				"{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		Address mockAddress = new Address();
-		mockAddress.setId(1);
-		mockAddress.setAddress1("123 Test Address");
-		mockAddress.setAddress2(null);
-		mockAddress.setCity("Frisco");
-		mockAddress.setState("Texas");
-		mockAddress.setZipCode("75034");
-		mockAddress.setUser(user);
+		ObjectMapper mapper = new ObjectMapper();
+        Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
 		Mockito.when(addressService.updateAddress(any(Address.class))).thenReturn(mockAddress);
 		
-		ResponseEntity<Address> response = addressController.updateAddress(mockAddress);
+		//Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/address/")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		Address address = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		assertEquals("123 Test Address", address.getAddress1());
-		assertEquals(null, address.getAddress2());
-		assertEquals("Frisco", address.getCity());
-		assertEquals("Texas", address.getState());
-		assertEquals("75034", address.getZipCode());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteAddress() throws Exception {
 		
-		User user = new User();
-		user.setId(1);
-		user.setFirstName("Test");
-		user.setLastName("User");
-		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
+		String mockAddressJson = 
+				"{\"id\":1,\"address1\":\"1234 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
-		Address mockAddress = new Address();
-		mockAddress.setId(1);
-		mockAddress.setAddress1("123 Test Address");
-		mockAddress.setAddress2(null);
-		mockAddress.setCity("Frisco");
-		mockAddress.setState("Texas");
-		mockAddress.setZipCode("75034");
-		mockAddress.setUser(user);
 		
-		Mockito.when(addressService.deleteAddress(1)).thenReturn("Success");
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/address/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		ResponseEntity<String> response = addressController.deleteAddress(1);
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		String str = response.getBody();
-		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

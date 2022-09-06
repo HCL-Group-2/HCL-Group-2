@@ -9,13 +9,15 @@ import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface UserService {
 	
+	boolean login(UserLoginDto userLoginDto);
+	
 	User addUser(User user) throws AddEntityException;
 
 	User getUserById(Integer userId);
 
 	User updateUser(User user);
 
-	String deleteUser(Integer userId);
+	void deleteUser(Integer userId);
 
 	List<User> getAllUsers();
 	
@@ -26,8 +28,6 @@ public interface UserService {
 	Role getRoleById(Integer roleId);
 	
 	User getUserByEmail(String email);
-	
-	boolean login(UserLoginDto userLoginDto);
 
 //	User loginUser(String username, String password);
 

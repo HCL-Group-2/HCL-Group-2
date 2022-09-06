@@ -6,120 +6,135 @@ import static org.mockito.ArgumentMatchers.any;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class UserControllerTest {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
+	
+	@MockBean
+	UserService userService;
 	
 	@InjectMocks
 	UserController userController;
 	
-	@Mock
-	UserService userService;
-	
 	@Test
 	public void testAddUser() throws Exception {
 		
-		User mockUser = new User();
-		mockUser.setId(1);
-		mockUser.setFirstName("Test");
-		mockUser.setLastName("User");
-		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
+		String mockUserJson = 
+				"{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
+		
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
 		
 		Mockito.when(userService.addUser(any(User.class))).thenReturn(mockUser);
 		
-		ResponseEntity<User> response = userController.addUser(mockUser);
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/user/")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		User user = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.CREATED.value(), response.getStatusCodeValue());
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals("Test", user.getFirstName());
-		assertEquals("User", user.getLastName());
-		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 		
 	}
 	
 	@Test
 	public void testGetUserById() throws Exception {
 		
-		User mockUser = new User();
-		mockUser.setId(1);
-		mockUser.setFirstName("Test");
-		mockUser.setLastName("User");
-		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
+		String mockUserJson = "{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		Mockito.when(userService.getUserById(1)).thenReturn(mockUser);
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
+        
+        Mockito.when(userService.getUserById(1)).thenReturn(mockUser);
 		
-		ResponseEntity<User> response = userController.getUserById(1);
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/user/1")
+				.accept(MediaType.APPLICATION_JSON);
 		
-		User user = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		assertEquals("Test", user.getFirstName());
-		assertEquals("User", user.getLastName());
-		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testUpdateUser() throws Exception {
 		
-		User mockUser = new User();
-		mockUser.setId(1);
-		mockUser.setFirstName("Test");
-		mockUser.setLastName("User");
-		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
+		String mockUserJson = 
+				"{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		Mockito.when(userService.updateUser(any(User.class))).thenReturn(mockUser);
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
+        
+        Mockito.when(userService.updateUser(any(User.class))).thenReturn(mockUser);
 		
-		ResponseEntity<User> response = userController.updateUser(mockUser);
+        //Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/user/")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		User user = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+		String expected = "{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		assertEquals("Test", user.getFirstName());
-		assertEquals("User", user.getLastName());
-		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
 		
 	}
 	
 	@Test
 	public void testDeleteUser() throws Exception {
 		
-		User mockUser = new User();
-		mockUser.setId(1);
-		mockUser.setFirstName("Test");
-		mockUser.setLastName("User");
-		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
+		String mockUserJson = 
+				"{\"id\":1,\"firstName\":\"Test Updated\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"}";
 		
-		Mockito.when(userService.deleteUser(1)).thenReturn("Success");
 		
-		ResponseEntity<String> response = userController.deleteUser(1);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/user/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
 		
-		String str = response.getBody();
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
 		
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatusCodeValue());
-		
-		assertEquals("Success", str);
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 		
 	}
 

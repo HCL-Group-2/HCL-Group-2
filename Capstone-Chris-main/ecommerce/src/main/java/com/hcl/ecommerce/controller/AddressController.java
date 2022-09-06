@@ -46,15 +46,9 @@ public class AddressController {
 	}
 	
 	@DeleteMapping("/address/{id}")
-	public ResponseEntity<String> deleteAddress(@PathVariable("id") Integer id) {
-		String result = "";
-		try {
-			addressService.deleteAddress(id);
-			result = "Success";
-		} catch (Exception e) {
-			result = "Failed";
-		}
-		return new ResponseEntity<String>(result, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> deleteAddress(@PathVariable("id") Integer id) {
+		addressService.deleteAddress(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/addresses/{userid}")

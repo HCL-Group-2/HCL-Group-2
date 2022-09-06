@@ -44,15 +44,9 @@ public class OrderController {
 	}
 	
 	@DeleteMapping("/order/{id}")
-	public ResponseEntity<String> deleteOrder(@PathVariable("id") Integer id) {
-		String result = "";
-		try {
-			orderService.deleteOrder(id);
-			result = "Success";
-		} catch (Exception e) {
-			result = "Failed";
-		}
-		return new ResponseEntity<String>(result, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Integer id) {
+		orderService.deleteOrder(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 }
