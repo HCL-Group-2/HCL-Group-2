@@ -37,7 +37,7 @@ public class CreditCard {
 	private String creditCardNumber;
 	
 	@Column(nullable = false)
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "MM-yy")
 	private String expirationDate;
 
 	@ManyToOne
