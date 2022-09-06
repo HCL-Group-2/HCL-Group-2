@@ -29,17 +29,23 @@
     <!-- <span class="badge bg-dark text-white ms-1 rounded-pill" *ngIf="a_cart_count$" >{{ a_cart_count$ | async }}</span> -->
     <span class="badge bg-dark text-white ms-1 rounded-pill" >0</span>
     </button>
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+    <button mat-button [matMenuTriggerFor]="menu">Account</button>
+    
     <mat-menu #menu="matMenu">
-    <button mat-button (click)="goToAccount()">
+    <!--<button mat-button (click)="goToAccount()">
     Address
-    <mat-icon>account_circle</mat-icon>
+    
+    <mat-icon>home</mat-icon>
     </button> <br>
+-->
     <button mat-button (click)= "goToRegister()">
     User Details
+    <mat-icon>account_circle</mat-icon>
     </button><br>
     <button mat-button (click)="goToOrderStatus()">
     Order Status
+    <mat-icon> local_shipping</mat-icon>
     </button>
     </mat-menu>
     </form>
