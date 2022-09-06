@@ -31,9 +31,12 @@ export class UserService {
     return this.http.post<User>(this.baseURL + 'user', user)
   }
 
+<<<<<<< HEAD
   getUserByEmail(email: string):Observable<User>{
     return this.http.get<User>(this.baseURL + 'byEmail/?email=' + email);
   }
+=======
+>>>>>>> parent of 811c63b (Revert "Merge branch 'main' into chrisbranch")
   saveAddress(address: Address): Observable<Address>{
     return this.http.post<Address>(this.baseURL+'address', address)
 

@@ -70,7 +70,10 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
 		order.setOrderStatus("In Progress");
+<<<<<<< HEAD
 		
+=======
+>>>>>>> parent of 811c63b (Revert "Merge branch 'main' into chrisbranch")
 		cartItemRepository.deleteAll(cartItems);
 		
 //		mailSenderService.sendEmail(order.getUser().getEmail());
