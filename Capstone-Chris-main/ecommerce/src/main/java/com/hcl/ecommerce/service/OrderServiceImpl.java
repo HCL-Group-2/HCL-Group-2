@@ -38,16 +38,19 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 	
-//	@Autowired
-//	private MailSenderService mailSenderService;
+	@Autowired
+	private MailSenderService mailSenderService;
 	
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
 		if (user == null) {
 			throw new AddEntityException("The user doesn't exists");
-		}	
+		}
 		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
+		if (cartItems.isEmpty()) {
+			throw new AddEntityException("There aren't any cart items");
+		}
 		List<OrderItem> orderItems = new ArrayList<>();
 		double total = 0.0;
 		for (CartItem cartItem : cartItems) {
@@ -64,14 +67,13 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("");
+		order.setOrderStatus("In progress");
 		cartItemRepository.deleteAll(cartItems);
-//		mailSenderService.sendEmail(order.getUser().getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
+		try {
+			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail(), order);
+		} catch (MessagingException e) {
+		} catch (IOException e) {
+		}
 		return orderRepository.save(order);
 	}
 	
