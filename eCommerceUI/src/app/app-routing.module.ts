@@ -34,11 +34,6 @@ const routes: Routes = [
 
 ];
 
-// const routes: Routes = [
-//   { path: '', pathMatch: 'full', redirectTo: 'signin' },
-//   { path: 'signin', component: LoginComponent},
-//   { path: 'register', component: RegisterComponent }
-// ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -21,7 +21,11 @@ export class UserService {
     return this.http.get<User>(this.baseURL + 'user/'+ userId);
   }
 
-  
+  getUserByEmail(email: string):Observable<User>{
+      // localhost:8081/ecommerce/byEmail?email=testuser@gmail.com
+    return this.http.get<User>(this.baseURL + 'byEmail?email='+ email);
+  }
+
 
   saveUser(user: User): Observable<User>{
     return this.http.post<User>(this.baseURL + 'user', user)

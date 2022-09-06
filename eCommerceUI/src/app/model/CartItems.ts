@@ -19,7 +19,7 @@ export class ProductCart {
 }
 
 export class CartItems2 {
-
+     id ?: number;
      quantity !: number;
      subtotal ?: number;
      user !: User;
