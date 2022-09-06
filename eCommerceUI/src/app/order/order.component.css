@@ -35,6 +35,7 @@
     display: inline-block;
     text-align:center;
     margin:"0 auto";
+    margin-top: 20px;
   }
   
   .container{
@@ -50,4 +51,5 @@
    width: auto;
    max-width:9.375em;
    margin-left:-0.750em;
+   margin-top: 0px;
   }

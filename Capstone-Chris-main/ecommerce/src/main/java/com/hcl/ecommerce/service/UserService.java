@@ -24,6 +24,8 @@ public interface UserService {
 	List<User> getAllUsersByRoleId(Integer roleId);
 
 	void assignRoleToUser(Integer roleId, Integer userId);
+	
+	boolean addRole(Role role);
 
 	Role getRoleById(Integer roleId);
 	

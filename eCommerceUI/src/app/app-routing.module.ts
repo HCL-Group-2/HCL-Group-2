@@ -20,7 +20,7 @@ const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
   { path: 'welcome', component: WelcomeComponent },
-  { path: 'user', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
@@ -34,11 +34,6 @@ const routes: Routes = [
 
 ];
 
-// const routes: Routes = [
-//   { path: '', pathMatch: 'full', redirectTo: 'signin' },
-//   { path: 'signin', component: LoginComponent},
-//   { path: 'register', component: RegisterComponent }
-// ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

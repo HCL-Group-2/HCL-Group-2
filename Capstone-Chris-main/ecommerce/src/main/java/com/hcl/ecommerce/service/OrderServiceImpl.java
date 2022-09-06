@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
+import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
+import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
@@ -67,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("");
+		order.setOrderStatus("In Progress");
 		cartItemRepository.deleteAll(cartItems);
 		mailSenderService.sendEmail(user.getEmail());
 		try {
@@ -84,15 +86,6 @@ public class OrderServiceImpl implements OrderService {
 		if (order.isPresent())
 			return order.get();
 		return null;
-	}
-	
-	@Override
-	public Order updateOrder(Order order) {
-		Order ord = getOrderById(order.getId());
-		ord.setOrderDate(order.getOrderDate());
-		ord.setOrderTotal(order.getOrderTotal());
-		ord.setOrderStatus(order.getOrderStatus());
-		return orderRepository.save(ord);
 	}
 
 	@Override

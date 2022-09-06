@@ -33,7 +33,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
-@JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
+@JsonIgnoreProperties(value = { "roles", "cartItems", "orders" }, allowSetters = true)
 public class User {
 
 	@Id
@@ -50,20 +50,8 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
+	
 	private String password;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Address> addresses = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CreditCard> creditCards = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade =
@@ -88,6 +76,12 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Order> orders = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -129,7 +123,7 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Address> getAddresses() {
+/*	public List<Address> getAddresses() {
 		return addresses;
 	}
 
@@ -144,7 +138,7 @@ public class User {
 	public void setCreditCards(List<CreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
-
+*/
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
@@ -168,5 +162,7 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	
+	
 
 }
