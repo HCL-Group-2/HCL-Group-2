@@ -41,7 +41,7 @@ public class AddressController {
 	
 	@PutMapping("/address")
 	public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
-		address = addressService.updateAddress(address);
+		addressService.updateAddress(address);
 		return new ResponseEntity<Address>(address, HttpStatus.OK);
 	}
 	

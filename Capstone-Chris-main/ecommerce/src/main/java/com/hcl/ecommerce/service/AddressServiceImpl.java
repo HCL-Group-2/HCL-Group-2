@@ -31,14 +31,14 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address updateAddress(Address address) {
+	public void updateAddress(Address address) {
 		Address addr = getAddressById(address.getId());
 		addr.setAddress1(address.getAddress1());
 		addr.setAddress2(address.getAddress2());
 		addr.setCity(address.getCity());
 		addr.setState(address.getState());
 		addr.setZipCode(address.getZipCode());
-		return addressRepository.save(addr);
+		addressRepository.save(addr);
 	}
 
 	@Override

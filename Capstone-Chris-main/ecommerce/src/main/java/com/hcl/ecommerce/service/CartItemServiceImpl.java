@@ -63,11 +63,11 @@ public class CartItemServiceImpl implements CartItemService {
 	}
 	
 	@Override
-	public CartItem updateCartItem(CartItem cartItem) {
+	public void updateCartItem(CartItem cartItem) {
 		CartItem item = getCartItemById(cartItem.getId());
 		item.setQuantity(cartItem.getQuantity());
 		item.setSubtotal(cartItem.getSubtotal());
-		return cartItemRepository.save(item);
+		cartItemRepository.save(item);
 	}
 	
 	@Override

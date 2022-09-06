@@ -11,7 +11,7 @@ public interface CreditCardService {
 
 	CreditCard getCreditCardById(Integer creditCardId);
 
-	CreditCard updateCreditCard(CreditCard creditCard);
+	void updateCreditCard(CreditCard creditCard);
 
 	void deleteCreditCard(Integer creditCardId);
 
