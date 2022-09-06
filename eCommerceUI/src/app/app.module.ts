@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule , APP_INITIALIZER, Injector } from '@angular/core';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -40,7 +40,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgMaterialModule } from './ng-material/ng-material.module';
-import { CloudinaryModule } from '@cloudinary/ng';
+import {CloudinaryModule} from '@cloudinary/ng';
 import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -97,7 +97,7 @@ const oktaAuth = new OktaAuth({
     BrowserModule,
     FormsModule,
     MatSelectModule,
-    MatFormFieldModule,
+    MatFormFieldModule,  
     HttpClientModule,
     FlexLayoutModule,
     CommonModule,
@@ -121,10 +121,10 @@ const oktaAuth = new OktaAuth({
     CloudinaryModule,
     OktaAuthModule,
   ],
-
+  
   providers: [
-    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
-  ],
+    {provide: OKTA_CONFIG, useValue: { oktaAuth } }
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
