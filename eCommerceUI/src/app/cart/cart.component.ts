@@ -81,7 +81,8 @@ export class CartDialog2 {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/cart']);
+    window.location.reload();
 
   }
 
