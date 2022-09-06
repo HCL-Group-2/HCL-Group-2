@@ -48,6 +48,9 @@ public class OrderServiceImplTest {
 	@Mock
 	CartItemRepository cartItemRepository;
 	
+	@Mock
+	MailSenderService mailSenderService;
+	
 	@Test
 	public void testAddOrder() throws Exception {
 		
@@ -90,7 +93,7 @@ public class OrderServiceImplTest {
 		payment.setId(1);
 		payment.setName("Test Name");
 		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
+		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -110,6 +113,10 @@ public class OrderServiceImplTest {
 		Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 		
 		Mockito.when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
+		
+		Mockito.doNothing().when(mailSenderService).sendEmail(null);
+		
+		Mockito.doNothing().when(mailSenderService).sendEmailWithAttachment(null, null);
 		
 		Order order = orderServiceImpl.addOrder(mockOrder);
 		
@@ -163,7 +170,7 @@ public class OrderServiceImplTest {
 		payment.setId(1);
 		payment.setName("Test Name");
 		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
+		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -228,7 +235,7 @@ public class OrderServiceImplTest {
 		payment.setId(1);
 		payment.setName("Test Name");
 		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
+		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -295,7 +302,7 @@ public class OrderServiceImplTest {
 		payment.setId(1);
 		payment.setName("Test Name");
 		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("2024-01-01");
+		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);

@@ -33,6 +33,9 @@ public class UserServiceImplTest {
 	@Mock
 	RoleRepository roleRepository;
 	
+	@Mock
+	MailSenderService mailSenderService;
+	
 	@Test
 	public void testAddUser() throws Exception {
 		
@@ -59,6 +62,10 @@ public class UserServiceImplTest {
 		Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
 		
 		Mockito.when(roleRepository.findById(1)).thenReturn(Optional.of(role));
+		
+		Mockito.doNothing().when(mailSenderService).sendEmail(null);
+		
+		Mockito.doNothing().when(mailSenderService).sendEmailWithAttachment(null);
 		
 		User user = userServiceImpl.addUser(mockUser);
 		

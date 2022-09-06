@@ -43,7 +43,7 @@ public class CreditCardServiceImplTest {
 		mockCreditCard.setId(1);
 		mockCreditCard.setName("Test Name");
 		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
+		mockCreditCard.setExpirationDate("01-24");
 		mockCreditCard.setUser(user);
 		
 		Mockito.when(creditCardRepository.save(any(CreditCard.class))).thenReturn(mockCreditCard);
@@ -54,7 +54,7 @@ public class CreditCardServiceImplTest {
 		
 		assertEquals("Test Name", creditCard.getName());
 		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		assertEquals("01-24", creditCard.getExpirationDate());
 		
 	}
 	
@@ -72,7 +72,7 @@ public class CreditCardServiceImplTest {
 		mockCreditCard.setId(1);
 		mockCreditCard.setName("Test Name");
 		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
+		mockCreditCard.setExpirationDate("01-24");
 		mockCreditCard.setUser(user);
 		
 		Mockito.when(creditCardRepository.findById(1)).thenReturn(Optional.of(mockCreditCard));
@@ -83,7 +83,7 @@ public class CreditCardServiceImplTest {
 		
 		assertEquals("Test Name", creditCard.getName());
 		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		assertEquals("01-24", creditCard.getExpirationDate());
 		
 	}
 	
@@ -101,7 +101,7 @@ public class CreditCardServiceImplTest {
 		mockCreditCard.setId(1);
 		mockCreditCard.setName("Test Name");
 		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
+		mockCreditCard.setExpirationDate("01-24");
 		mockCreditCard.setUser(user);
 		
 		Mockito.when(creditCardRepository.findById(1)).thenReturn(Optional.of(mockCreditCard));
@@ -114,7 +114,7 @@ public class CreditCardServiceImplTest {
 		
 		assertEquals("Test Name", creditCard.getName());
 		assertEquals("1234123412341234", creditCard.getCreditCardNumber());
-		assertEquals("2024-01-01", creditCard.getExpirationDate());
+		assertEquals("01-24", creditCard.getExpirationDate());
 		
 	}
 	
@@ -132,7 +132,7 @@ public class CreditCardServiceImplTest {
 		mockCreditCard.setId(1);
 		mockCreditCard.setName("Test Name");
 		mockCreditCard.setCreditCardNumber("1234123412341234");
-		mockCreditCard.setExpirationDate("2024-01-01");
+		mockCreditCard.setExpirationDate("01-24");
 		mockCreditCard.setUser(user);
 		
 		creditCardServiceImpl.deleteCreditCard(1);
