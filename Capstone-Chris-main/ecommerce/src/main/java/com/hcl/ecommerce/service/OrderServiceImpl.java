@@ -84,12 +84,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public void updateOrder(Order order) {
+	public Order updateOrder(Order order) {
 		Order ord = getOrderById(order.getId());
 		ord.setOrderDate(order.getOrderDate());
 		ord.setOrderTotal(order.getOrderTotal());
 		ord.setOrderStatus(order.getOrderStatus());
-		orderRepository.save(ord);
+		return orderRepository.save(ord);
 	}
 
 	@Override

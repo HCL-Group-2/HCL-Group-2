@@ -41,7 +41,7 @@ public class CreditCardController {
 	
 	@PutMapping("/creditcard")
 	public ResponseEntity<CreditCard> updateCreditCard(@RequestBody CreditCard creditCard) {
-		creditCardService.updateCreditCard(creditCard);
+		creditCard = creditCardService.updateCreditCard(creditCard);
 		return new ResponseEntity<CreditCard>(creditCard, HttpStatus.OK);
 	}
 	

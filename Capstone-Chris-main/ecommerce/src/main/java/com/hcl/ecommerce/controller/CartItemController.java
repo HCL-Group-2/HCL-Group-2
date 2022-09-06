@@ -43,7 +43,7 @@ public class CartItemController {
 	
 	@PutMapping("/cartitem")
 	public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
-		cartItemService.updateCartItem(cartItem);
+		cartItem = cartItemService.updateCartItem(cartItem);
 		return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
 	}
 	

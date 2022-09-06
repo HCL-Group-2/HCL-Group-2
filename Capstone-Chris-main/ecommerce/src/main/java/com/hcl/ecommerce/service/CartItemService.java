@@ -13,7 +13,7 @@ public interface CartItemService {
 	
 	CartItem getCartItemById(Integer cartItemId);
 	
-	void updateCartItem(CartItem cartItem);
+	CartItem updateCartItem(CartItem cartItem);
 	
 	void deleteCartItem(Integer cartItemId);
 
