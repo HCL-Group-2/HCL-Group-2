@@ -122,7 +122,7 @@ public class AddressControllerTest {
 	public void testDeleteAddress() throws Exception {
 		
 		String mockAddressJson = 
-				"{\"id\":1,\"address1\":\"1234 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
+				"{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
