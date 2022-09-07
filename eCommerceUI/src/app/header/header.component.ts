@@ -12,14 +12,16 @@ export class HeaderComponent implements OnInit {
 
   itemsInCartCount !: Array<CartItems2>;
   a_cart_count$ !: Observable<number>;
+  storage: Storage = sessionStorage;
 
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
-    console.log('hello from header');
-    this.cartService.getCartItems(1).subscribe(data => {
+    //console.log('hello from header');
+    let userId = +this.storage.getItem('userId')!;
+    this.cartService.getCartItems(userId).subscribe(data => {
       this.itemsInCartCount = data;
       // this.a_cart_count$ = of(this.itemsInCartCount.length);
     })

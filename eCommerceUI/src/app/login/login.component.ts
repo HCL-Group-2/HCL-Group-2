@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
+  storage: Storage =sessionStorage;
 
   loggedIn = false;
 
@@ -64,6 +65,8 @@ export class LoginComponent implements OnInit {
     this.http.post<any>(this.baseURL + 'login', loginRequest).subscribe((response: any) => {
       this.loggedIn = true;
       this.userService.setLoggedIn("true");
+      this.storage.setItem('userEmail', (this.user.email));
+      this.userEntity();
       this._router.navigate(['/home'])
     },
     (error) => {
@@ -72,9 +75,19 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  public userEntity(){
+    this.userService.getUserByEmail(this.user.email).subscribe(data =>{
+      this.storage.setItem('userId', data.id as unknown as string);
+      this.storage.setItem('firstName', data.firstName);
+      this.storage.setItem('lastName', data.lastName);
+    }
+    );
+  }
+
   public logout() {
     this.loggedIn = false;
     this.userService.clear();
+    this.storage.clear();
     window.location.reload();
   }
 

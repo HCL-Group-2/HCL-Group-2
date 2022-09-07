@@ -30,6 +30,10 @@ export class HomeComponent implements OnInit {
 
   turnOnAddToCart : boolean = false;
 
+  //Use this.storage.getKey('userId;) to retrive the userId of the logged in user
+  storage: Storage = sessionStorage;
+  
+
 
 
   constructor(private route: ActivatedRoute,
@@ -46,7 +50,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
-    this.getUser(1);
+    let userId = +this.storage.getItem('userId')!;
+    
+    this.getUser(userId);
     this.getProducts();
 
 
@@ -98,7 +104,7 @@ export class HomeComponent implements OnInit {
       let itemCount = this.cartQuantityForm.get('quantity')?.value; 
       if (itemCount != null) {
 
-        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': 1 }, 'product': { 'id': productID } };
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
       }
