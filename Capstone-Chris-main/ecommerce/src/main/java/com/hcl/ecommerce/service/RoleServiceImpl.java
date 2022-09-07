@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
 
@@ -21,13 +22,13 @@ public class RoleServiceImpl implements RoleService {
 	UserRepository userRepository;
 
 	@Override
-	public synchronized boolean addRole(Role role) {
+	public synchronized Role addRole(Role role) throws AddEntityException{
 		if (roleRepository.findByName(role.getName()) != null) {
-			return false;
-		} else {
-			roleRepository.save(role);
-			return true;
+			throw new AddEntityException("The role: " + role.getName() + " already exists");
 		}
+		roleRepository.save(role);
+		return role;
+		
 	}
 
 	@Override

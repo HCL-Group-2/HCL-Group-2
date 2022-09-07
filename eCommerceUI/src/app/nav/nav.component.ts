@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { OktaAuthService } from '@okta/okta-angular';
+import { Component, Inject, OnInit } from '@angular/core';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { AuthState, OktaAuth } from '@okta/okta-auth-js';
+import { filter, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -8,20 +10,24 @@ import { OktaAuthService } from '@okta/okta-angular';
 })
 export class NavComponent implements OnInit {
 
-  isAuthenticated: boolean = false;
+  public isAuthenticated$!: Observable<boolean>;
 
-  constructor(private oktaAuthService: OktaAuthService) {
-    this.oktaAuthService.$authenticationState.subscribe(
-      isAuth => this.isAuthenticated = isAuth
+  constructor(private _oktaStateService: OktaAuthStateService, @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth) {
+    this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
+      filter((s: AuthState) => !!s),
+      map((s: AuthState) => s.isAuthenticated ?? false)
     );
    }
 
-  async ngOnInit() {
-    this.isAuthenticated = await this.oktaAuthService.isAuthenticated();
+  ngOnInit() {
+    this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
+      filter((s: AuthState) => !!s),
+      map((s: AuthState) => s.isAuthenticated ?? false)
+    );
   }
 
-  logout(){
-    this.oktaAuthService.signOut();
+  public async logout(): Promise<void> {
+    await this._oktaAuth.signOut();
   }
 
 }

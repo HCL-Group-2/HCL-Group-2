@@ -21,14 +21,33 @@ export class UserService {
     return this.http.get<User>(this.baseURL + 'user/'+ userId);
   }
 
-  
+  getUserByEmail(email: string):Observable<User>{
+      // localhost:8081/ecommerce/byEmail?email=testuser@gmail.com
+    return this.http.get<User>(this.baseURL + 'byEmail?email='+ email);
+  }
+
 
   saveUser(user: User): Observable<User>{
     return this.http.post<User>(this.baseURL + 'user', user)
   }
 
+
+
   saveAddress(address: Address): Observable<Address>{
     return this.http.post<Address>(this.baseURL+'address', address)
 
   }
+
+  public setLoggedIn(loggedIn : string) {
+    localStorage.setItem('loggedIn', loggedIn);
+  }
+
+  public getLoggedIn() : string {
+    return localStorage.getItem('loggedIn') as string;
+  }
+
+  public clear() {
+    localStorage.clear();
+  }
+
 }
