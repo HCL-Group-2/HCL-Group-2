@@ -151,7 +151,8 @@ export class CheckoutDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/home']);
+    window.location.reload();
+    // this.router.navigate(['/home']);
 
   }
 

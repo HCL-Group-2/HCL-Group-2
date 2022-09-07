@@ -10,7 +10,7 @@ import { CartItems2 } from '../model/CartItems';
 })
 export class HeaderComponent implements OnInit {
 
-  itemsInCartCount !: Array<CartItems2>;
+  itemsInCartCount : number = 0;
   a_cart_count$ !: Observable<number>;
   storage: Storage = sessionStorage;
 
@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit {
     private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
-    //console.log('hello from header');
     let userId = +this.storage.getItem('userId')!;
     this.cartService.getCartItems(userId).subscribe(data => {
-      this.itemsInCartCount = data;
-      // this.a_cart_count$ = of(this.itemsInCartCount.length);
+      data.forEach((element: any) => {
+        this.itemsInCartCount += element.quantity;
+    });
     })
 
   }
