@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
 import { CartItems2 } from '../model/CartItems';
+import { Product } from '../model/Product';
+import { ProductService } from '../product.service';
 import { UserService } from '../user.service';
 @Component({
   selector: 'app-header',
@@ -15,10 +17,13 @@ export class HeaderComponent implements OnInit {
 
   loggedIn = true;
 
+  products !: Array<Product>;
+
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private productService: ProductService,) { }
 
   ngOnInit(): void {
     console.log('hello from header');
@@ -58,6 +63,13 @@ export class HeaderComponent implements OnInit {
     this.userService.clear();
     this.goToLogin();
     //window.location.reload();
+  }
+
+  getProducts() {
+    this.productService.getProducts().subscribe(data => {
+      this.products = data;
+    }
+    );
   }
 
 
