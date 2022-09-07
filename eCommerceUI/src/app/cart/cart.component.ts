@@ -57,9 +57,9 @@ export class CartComponent implements OnInit {
       this.cartService.deleteCartItem(cartId).subscribe();
       this.cartDialog2.open(CartDialog2, {
         data: {
-          name: ' in the CartDialog2 placeholder',
-        },
-      });
+          name: ' in the CartDialog2 placeholder',  
+        }, disableClose: true 
+      }, );
 
     }
 
@@ -79,7 +79,10 @@ export class CartComponent implements OnInit {
 })
 export class CartDialog2 {
   constructor( public dialogRef: MatDialogRef<CartDialog2>, private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
+      dialogRef.disableClose = true;
+
+     }
 
   onNoClick(): void {
     this.dialogRef.close();
