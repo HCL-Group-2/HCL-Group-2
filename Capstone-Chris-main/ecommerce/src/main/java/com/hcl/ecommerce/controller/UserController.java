@@ -27,10 +27,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 811c63b (Revert "Merge branch 'main' into chrisbranch")
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody UserLoginDto userLoginDto) {
 		boolean flag = userService.login(userLoginDto);
