@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
-import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
@@ -40,17 +38,19 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 	
-//	@Autowired
-//	private MailSenderService mailSenderService;
+	@Autowired
+	private MailSenderService mailSenderService;
 	
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
-
 		if (user == null) {
 			throw new AddEntityException("The user doesn't exists");
-		}	
+		}
 		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
+		if (cartItems.isEmpty()) {
+			throw new AddEntityException("There aren't any cart items");
+		}
 		List<OrderItem> orderItems = new ArrayList<>();
 		double total = 0.0;
 		for (CartItem cartItem : cartItems) {
@@ -62,26 +62,19 @@ public class OrderServiceImpl implements OrderService {
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 			total += orderItem.getSubtotal();
-
 		}
-		
 		order.setUser(user);
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("In Progress");
-<<<<<<< HEAD
-		
-=======
->>>>>>> parent of 811c63b (Revert "Merge branch 'main' into chrisbranch")
+		order.setOrderStatus("");
 		cartItemRepository.deleteAll(cartItems);
-		
-//		mailSenderService.sendEmail(order.getUser().getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(order.getUser().getEmail());
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
+//		mailSenderService.sendEmail(user.getEmail());
+		try {
+			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
+		} catch (MessagingException e) {
+		} catch (IOException e) {
+		}
 		return orderRepository.save(order);
 	}
 	
@@ -91,6 +84,15 @@ public class OrderServiceImpl implements OrderService {
 		if (order.isPresent())
 			return order.get();
 		return null;
+	}
+	
+	@Override
+	public Order updateOrder(Order order) {
+		Order ord = getOrderById(order.getId());
+		ord.setOrderDate(order.getOrderDate());
+		ord.setOrderTotal(order.getOrderTotal());
+		ord.setOrderStatus(order.getOrderStatus());
+		return orderRepository.save(ord);
 	}
 
 	@Override

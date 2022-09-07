@@ -22,13 +22,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.service.ProductService;
+import com.hcl.ecommerce.entity.Address;
+import com.hcl.ecommerce.service.AddressService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductControllerTest {
+public class AddressControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -37,26 +37,26 @@ public class ProductControllerTest {
 	Jackson2ObjectMapperBuilder mapperBuilder;
 	
 	@MockBean
-	ProductService productService;
+	AddressService addressService;
 	
 	@InjectMocks
-	ProductController productController;
+	AddressController addressController;
 	
 	@Test
-	public void testAddProduct() throws Exception {
+	public void testAddAddress() throws Exception {
 		
-		String mockProductJson = 
-				"{\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockAddressJson = 
+				"{\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\",\"user\":{\"id\":1}}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
-		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(addressService.addAddress(any(Address.class))).thenReturn(mockAddress);
 		
 		//Create a post request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/product/")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.post("/address/")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -69,23 +69,23 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testGetProductById() throws Exception {
+	public void testGetAddressById() throws Exception {
 		
-		String mockProductJson = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockAddressJson = "{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
-        Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
+		Mockito.when(addressService.getAddressById(1)).thenReturn(mockAddress);
 		
 		//Create a request
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/product/1")
+				.get("/address/1")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String expected = "{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -93,25 +93,25 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testUpdateProduct() throws Exception {
+	public void testUpdateAddress() throws Exception {
 		
-		String mockProductJson = 
-				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockAddressJson = 
+				"{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		Address mockAddress = mapper.readValue(mockAddressJson, Address.class);
 		
-		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(addressService.updateAddress(any(Address.class))).thenReturn(mockAddress);
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.put("/product/")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.put("/address/")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String expected = "{\"id\":1,\"address1\":\"123 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -119,15 +119,15 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testDeleteProduct() throws Exception {
+	public void testDeleteAddress() throws Exception {
 		
-		String mockProductJson = 
-				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockAddressJson = 
+				"{\"id\":1,\"address1\":\"1234 Test Address Updated\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"}";
 		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.delete("/product/1")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.delete("/address/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockAddressJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
