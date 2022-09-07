@@ -21,6 +21,7 @@ export class CartComponent implements OnInit {
   itemsInCart2 !: Array<CartItems2>;
 
   userIdFromUser !: number;
+  storage: Storage = sessionStorage;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private userService: UserService, 
@@ -29,8 +30,9 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
-
-    this.getCartItems(1);
+    let userId = +this.storage.getItem('userId')!;
+    this.getCartItems(userId);
+    console.log(userId);
 
 
 
