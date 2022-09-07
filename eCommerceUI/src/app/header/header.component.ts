@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
@@ -12,8 +13,12 @@ import { UserService } from '../user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  itemsInCartCount !: Array<CartItems2>;
+
+  itemsInCartCount : number = 0;
   a_cart_count$ !: Observable<number>;
+  storage: Storage = sessionStorage;
+  searchText: string = '';
+  searchForm: FormGroup = new FormGroup([]);
 
   loggedIn = true;
 
@@ -22,19 +27,23 @@ export class HeaderComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
-    private userService: UserService,
-    private productService: ProductService,) { }
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log('hello from header');
-    this.cartService.getCartItems(1).subscribe(data => {
-      this.itemsInCartCount = data;
-      // this.a_cart_count$ = of(this.itemsInCartCount.length);
+    let userId = +this.storage.getItem('userId')!;
+    this.cartService.getCartItems(userId).subscribe(data => {
+      data.forEach((element: any) => {
+        this.itemsInCartCount += element.quantity;
+    });
     })
+    this.searchForm = this.fb.group({
+      searchText:[null, [Validators.required]]});
+    
 
   }
   goToHomePage(){
     this.router.navigate(['/home']);
+    this.storage.setItem('search', 'true');
 
   }
   goToCart(){
@@ -65,13 +74,11 @@ export class HeaderComponent implements OnInit {
     //window.location.reload();
   }
 
-  getProducts() {
-    this.productService.getProducts().subscribe(data => {
-      this.products = data;
-    }
-    );
+  searchSubmit(){
+    var search = 'false';
+    this.storage.setItem('search', search);
+    this.storage.setItem('searchText', this.searchForm.value.searchText);
+    window.location.reload();
   }
-
-
 
 }

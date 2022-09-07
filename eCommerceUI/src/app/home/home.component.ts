@@ -23,12 +23,19 @@ export class HomeComponent implements OnInit {
 
   name: string = "";
   products !: Array<Product>;
+  searchProducts ! :Array<Product>;
   user !: User;
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
   cartQuantityForm: FormGroup = new FormGroup([]);
 
   turnOnAddToCart : boolean = false;
+  search: boolean = true;
+  searchText: string = '';
+
+  //Use this.storage.getKey('userId;) to retrive the userId of the logged in user
+  storage: Storage = sessionStorage;
+  
 
 
 
@@ -45,9 +52,21 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
-    this.getUser(1);
-    this.getProducts();
+    let userId = +this.storage.getItem('userId')!;
+    this.getSearchBool();
+    console.log(this.search);
+    
+    this.getUser(userId);
+    if(this.storage.getItem('search')=='true'){
+      this.getProducts();
+    }
+    else{
+      this.getSearchProducts();
+    }
+  
+    
 
 
     this.name$ = this._oktaAuthStateService.authState$.pipe(
@@ -66,6 +85,10 @@ export class HomeComponent implements OnInit {
     this.userService.getUser(userId).subscribe(data => {
       this.user = data;
     })
+  }
+  getSearchBool(){
+    this.search = (this.storage.getItem('search') ==='true');
+   
   }
   updateUser(user: User) {
 
@@ -96,9 +119,9 @@ export class HomeComponent implements OnInit {
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value; 
-      if (itemCount != null) {
-
-        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': 1 }, 'product': { 'id': productID } };
+      if (itemCount != null && this.user.id !== undefined) {
+        console.log('user id from cookies ' + this.user.id); 
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
       }
@@ -106,6 +129,15 @@ export class HomeComponent implements OnInit {
     }
     return undefined;
   }
+
+  getSearchProducts(){
+    this.searchText = this.storage.getItem('searchText')!;
+    this.productService.getProductsBySearch(this.searchText).subscribe(data => {
+      this.searchProducts = data;
+    }
+    );
+  }
+
 
 
 }
@@ -119,6 +151,8 @@ export class CartDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
+    window.location.reload();
+
   }
 
 }

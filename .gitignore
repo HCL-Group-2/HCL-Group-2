@@ -111,4 +111,5 @@ local.properties
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
 Capstone-Chris-main/ecommerce/src/main/resources/application.properties
+#The below line may be problematic, for example this ignores the file that everyone needs to run the unit tests, and this still will not ignore the application.properties files that are already being tracked which is the issue that we need to fix
 *.properties

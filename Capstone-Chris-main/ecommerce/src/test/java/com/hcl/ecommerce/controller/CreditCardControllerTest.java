@@ -22,13 +22,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.service.ProductService;
+import com.hcl.ecommerce.entity.CreditCard;
+import com.hcl.ecommerce.service.CreditCardService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductControllerTest {
+public class CreditCardControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -37,26 +37,26 @@ public class ProductControllerTest {
 	Jackson2ObjectMapperBuilder mapperBuilder;
 	
 	@MockBean
-	ProductService productService;
+	CreditCardService creditCardService;
 	
 	@InjectMocks
-	ProductController productController;
+	CreditCardController creditCardController;
 	
 	@Test
-	public void testAddProduct() throws Exception {
+	public void testAddCreditCard() throws Exception {
 		
-		String mockProductJson = 
-				"{\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockCreditCardJson = 
+				"{\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\",\"user\":{\"id\":1}}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
-		Mockito.when(productService.addProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(creditCardService.addCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		
 		//Create a post request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/product/")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.post("/creditcard/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -69,23 +69,23 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testGetProductById() throws Exception {
+	public void testGetCreditCardById() throws Exception {
 		
-		String mockProductJson = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockCreditCardJson = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
-        Mockito.when(productService.getProductById(1)).thenReturn(mockProduct);
+		Mockito.when(creditCardService.getCreditCardById(1)).thenReturn(mockCreditCard);
 		
 		//Create a request
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/product/1")
+				.get("/creditcard/1")
 				.accept(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -93,25 +93,25 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testUpdateProduct() throws Exception {
+	public void testUpdateCreditCard() throws Exception {
 		
-		String mockProductJson = 
-				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockCreditCardJson = 
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
-		Product mockProduct = mapper.readValue(mockProductJson, Product.class);
+		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
 		
-		Mockito.when(productService.updateProduct(any(Product.class))).thenReturn(mockProduct);
+		Mockito.when(creditCardService.updateCreditCard(any(CreditCard.class))).thenReturn(mockCreditCard);
 		
 		//Create a put request with an accept header for application\json
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.put("/product/")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.put("/creditcard/")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -119,15 +119,15 @@ public class ProductControllerTest {
 	}
 	
 	@Test
-	public void testDeleteProduct() throws Exception {
+	public void testDeleteCreditCard() throws Exception {
 		
-		String mockProductJson = 
-				"{\"id\":1,\"name\":\"Test Product Updated\",\"description\":\"An updated test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}";
+		String mockCreditCardJson = 
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
 		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.delete("/product/1")
-				.accept(MediaType.APPLICATION_JSON).content(mockProductJson)
+				.delete("/creditcard/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockCreditCardJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
