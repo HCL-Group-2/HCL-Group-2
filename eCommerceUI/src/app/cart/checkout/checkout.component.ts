@@ -22,6 +22,7 @@ export class CheckoutComponent implements OnInit {
   userShippingAddress !: CheckoutAddress;
   userPayment !: CheckoutCard;
   orderCheckOut !: CheckoutOrder;
+  session: Storage = sessionStorage;
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService,
     private checkOutService: CheckoutService, public checkoutDialog: MatDialog
@@ -49,8 +50,9 @@ export class CheckoutComponent implements OnInit {
         verificationCode: ['']
       })
     })
+    let userId = +this.session.getItem('userId')!;
 
-    this.getCartItems(1);
+    this.getCartItems(userId);
 
   }
 
