@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
   itemsInCartCount : number = 0;
   a_cart_count$ !: Observable<number>;
   storage: Storage = sessionStorage;
+  lstorage: Storage = localStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
 
@@ -27,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     let userId = +this.storage.getItem('userId')!;
@@ -38,7 +40,7 @@ export class HeaderComponent implements OnInit {
     })
     this.searchForm = this.fb.group({
       searchText:[null, [Validators.required]]});
-    
+
 
   }
   goToHomePage(){
