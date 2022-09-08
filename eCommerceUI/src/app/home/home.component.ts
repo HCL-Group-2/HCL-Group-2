@@ -60,11 +60,20 @@ export class HomeComponent implements OnInit {
     
     this.getUser(userId);
     if(this.storage.getItem('search')=='true'){
-      this.getProducts();
+      if(this.storage.getItem('category')=='toys'){
+        this.getProductsByCategory('toys');
+      }else if(this.storage.getItem('category')=='clothing'){
+        this.getProductsByCategory('clothing');
+      }else if(this.storage.getItem('category')=='electronics'){
+        this.getProductsByCategory('electronics');
+      }
+      else{
+        this.getProducts();
+      }
     }
     else{
       this.getSearchProducts();
-    }
+      }
   
     
 
@@ -138,6 +147,12 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  getProductsByCategory(category: string){
+    this.productService.getProductByCategory(category).subscribe(data => {
+      this.products = data;  }
+    );
+    }
+    
 
 
 }

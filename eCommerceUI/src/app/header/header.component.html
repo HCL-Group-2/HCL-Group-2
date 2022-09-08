@@ -5,14 +5,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home"(click)="goToHomePage()">Home</a></li>
-    <li class="nav-item"><a class="nav-link" href="#!">Sign Out</a></li>
     <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" href="/home">All Products</a></li>
-    <li><hr class="dropdown-divider" /></li>
-    <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-    <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+    <li><a class="dropdown-item" (click)="searchToys()">Toys</a></li>
+    <li><a class="dropdown-item" (click)="searchClothing()">Clothing</a></li>
+    <li><a class="dropdown-item" (click)="searchElectronics()">Electronics</a></li>
     </ul>
     </li>
     </ul>
@@ -46,6 +44,11 @@
     <button mat-button (click)="goToOrderStatus()">
     Order Status
     <mat-icon> local_shipping</mat-icon>
+    </button><br>
+
+    <button mat-button (click)="logout()">
+    Sign Out
+    <mat-icon>logout</mat-icon>
     </button>
     </mat-menu>
     </form>
