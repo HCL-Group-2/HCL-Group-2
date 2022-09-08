@@ -20,6 +20,10 @@ export class ProductService {
   getProductsBySearch(searchText: string):Observable<any>{
     return this.http.get(this.baseURL + 'productsbyname?name='+ searchText);
   }
+
+  getProductByCategory(category: string):Observable<any>{
+    return this.http.get(this.baseURL + 'productsbycategory?category='+category);
+  }
   
  
 
