@@ -60,24 +60,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/account']);
   }
 
-  goToToysPage(){
-    this.router.navigate(['/toys']);
-    this.storage.setItem('search', 'true');
-
-  }
-
-  goToClothingPage(){
-    this.router.navigate(['/clothing']);
-    this.storage.setItem('search', 'true');
-
-  }
-
-  goToElectronicsPage(){
-    this.router.navigate(['/electronics']);
-    this.storage.setItem('search', 'true');
-
-  }
-
   searchSubmit(){
     var search = 'false';
     this.storage.setItem('search', search);
