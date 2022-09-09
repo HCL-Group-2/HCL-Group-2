@@ -122,8 +122,8 @@ export class HomeComponent implements OnInit {
       console.log('product id selected ' + productID);
       this.cartDialog.open(CartDialog, {
         data: {
-          name: ' in the cart placeholder',
-        },
+          name: ' in the cart placeholder', 
+        }, disableClose: true 
       });
       console.log('selected item quantity ' + this.selectedQuantity);
 
@@ -162,7 +162,10 @@ export class HomeComponent implements OnInit {
 })
 export class CartDialog {
   constructor( public dialogRef: MatDialogRef<CartDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { }
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { 
+      dialogRef.disableClose = true;
+
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
