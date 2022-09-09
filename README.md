@@ -14,7 +14,7 @@ In order for the project to run, there are two files you need to fill out:
     
     3. Edit the file to fill in your credentials everywhere you see "<YOUR INFO HERE>"
     
-    4.Don't delete the template file, just leave the original as is
+    4. Don't delete the template file, just leave the original as is
   Then you should be good to go.
 
 https://docs.google.com/presentation/d/1FCb3vkPRjQYAz98KbZnBJw9jyV5xEpspjBh4GICx2-k/edit?usp=sharing
