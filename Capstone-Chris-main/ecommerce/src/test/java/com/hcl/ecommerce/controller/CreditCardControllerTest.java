@@ -46,7 +46,7 @@ public class CreditCardControllerTest {
 	public void testAddCreditCard() throws Exception {
 		
 		String mockCreditCardJson = 
-				"{\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\",\"user\":{\"id\":1}}";
+				"{\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\",\"user\":{\"id\":1}}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
 		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
@@ -71,7 +71,7 @@ public class CreditCardControllerTest {
 	@Test
 	public void testGetCreditCardById() throws Exception {
 		
-		String mockCreditCardJson = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}";
+		String mockCreditCardJson = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
 		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
@@ -85,7 +85,7 @@ public class CreditCardControllerTest {
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}";
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"2024-01-01\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -96,7 +96,7 @@ public class CreditCardControllerTest {
 	public void testUpdateCreditCard() throws Exception {
 		
 		String mockCreditCardJson = 
-				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
 		CreditCard mockCreditCard = mapper.readValue(mockCreditCardJson, CreditCard.class);
@@ -111,7 +111,7 @@ public class CreditCardControllerTest {
 		
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		
-		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
+		String expected = "{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -122,7 +122,7 @@ public class CreditCardControllerTest {
 	public void testDeleteCreditCard() throws Exception {
 		
 		String mockCreditCardJson = 
-				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"01-24\"}";
+				"{\"id\":1,\"name\":\"Test User\",\"creditCardNumber\":\"4321432143214321\",\"expirationDate\":\"2024-01-01\"}";
 		
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders

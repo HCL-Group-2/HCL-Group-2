@@ -23,15 +23,12 @@ export class HomeComponent implements OnInit {
 
   name: string = "";
   products !: Array<Product>;
-  searchProducts ! :Array<Product>;
   user !: User;
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
   cartQuantityForm: FormGroup = new FormGroup([]);
 
   turnOnAddToCart : boolean = false;
-  search: boolean = true;
-  searchText: string = '';
 
   //Use this.storage.getKey('userId;) to retrive the userId of the logged in user
   storage: Storage = sessionStorage;
@@ -52,30 +49,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     let userId = +this.storage.getItem('userId')!;
-    this.getSearchBool();
-    console.log(this.search);
     
     this.getUser(userId);
-    if(this.storage.getItem('search')=='true'){
-      if(this.storage.getItem('category')=='toys'){
-        this.getProductsByCategory('toys');
-      }else if(this.storage.getItem('category')=='clothing'){
-        this.getProductsByCategory('clothing');
-      }else if(this.storage.getItem('category')=='electronics'){
-        this.getProductsByCategory('electronics');
-      }
-      else{
-        this.getProducts();
-      }
-    }
-    else{
-      this.getSearchProducts();
-      }
-  
-    
+    this.getProducts();
 
 
     this.name$ = this._oktaAuthStateService.authState$.pipe(
@@ -94,10 +72,6 @@ export class HomeComponent implements OnInit {
     this.userService.getUser(userId).subscribe(data => {
       this.user = data;
     })
-  }
-  getSearchBool(){
-    this.search = (this.storage.getItem('search') ==='true');
-   
   }
   updateUser(user: User) {
 
@@ -138,21 +112,6 @@ export class HomeComponent implements OnInit {
     }
     return undefined;
   }
-
-  getSearchProducts(){
-    this.searchText = this.storage.getItem('searchText')!;
-    this.productService.getProductsBySearch(this.searchText).subscribe(data => {
-      this.searchProducts = data;
-    }
-    );
-  }
-
-  getProductsByCategory(category: string){
-    this.productService.getProductByCategory(category).subscribe(data => {
-      this.products = data;  }
-    );
-    }
-    
 
 
 }

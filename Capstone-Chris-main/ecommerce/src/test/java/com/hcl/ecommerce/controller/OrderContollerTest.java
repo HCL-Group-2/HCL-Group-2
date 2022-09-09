@@ -46,7 +46,7 @@ public class OrderContollerTest {
 	public void testAddOrder() throws Exception {
 		
 		String mockOrderJson = 
-				"{\"user\":{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"shippingAddress\": {\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"name\":\"Test Name\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}}";
+				"{\"user\":{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"shippingAddress\": {\"address1\":\"1234 Test Address A\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"name\":\"Test Name\",\"creditCardNumber\":\"1234123412341234\",\"expirationDate\":\"01-24\"}}";
 		
 		ObjectMapper mapper = mapperBuilder.build();
         Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
