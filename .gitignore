@@ -112,3 +112,4 @@ local.properties
 #.project
 Capstone-Chris-main/ecommerce/src/main/resources/application.properties
 Capstone-Chris-main/ecommerce/src/test/resources/application.properties
+*.log
