@@ -111,3 +111,4 @@ local.properties
 # Typically, this file would be tracked if it contains build/dependency configurations:
 #.project
 Capstone-Chris-main/ecommerce/src/main/resources/application.properties
+Capstone-Chris-main/ecommerce/src/test/resources/application.properties
