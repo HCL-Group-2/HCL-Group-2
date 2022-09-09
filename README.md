@@ -5,8 +5,11 @@ In order for the project to run, there are two files you need to fill out:
   Capstone-Chris-main/ecommerce/src/test/resources/TESTING TEMPLATE application.properties
   
   For each of these
+  
     1. Make a copy of the file
+    
     2. rename the copy to application.properties
+    
     3. edit the file to fill in your credentials everywhere you see "<YOUR INFO HERE>"
   Then you should be good to go.
 
