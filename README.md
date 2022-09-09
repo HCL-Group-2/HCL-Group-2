@@ -1,7 +1,9 @@
 # HCL-Group-2
 
 In order for the project to run, there are two files you need to fill out:
+
   Capstone-Chris-main/ecommerce/src/main/resources/TEMPLATE application.properties
+  
   Capstone-Chris-main/ecommerce/src/test/resources/TESTING TEMPLATE application.properties
   
   For each of these
