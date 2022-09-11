@@ -80,6 +80,10 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
+      // hardcoded role : backend may change
+      this.storage.setItem('userRole', 'Admin');
+
+
     }
     );
   }

@@ -1,1 +1,63 @@
-<p>admin works!</p>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Users Management</h1>
+            <!-- <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p> -->
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="justify-content-center">
+            <div class="col mb-5" *ngFor="let ua of usersOnAdmin; let i = index">
+                <div class="card h-100">
+                 
+                    <!-- Users details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Users name-->
+                            <h3 class="fw-bolder">{{ua.firstName}}  {{ua.lastName}}
+                            </h3>
+                            {{ua.email}}
+                            <!-- <button mat-raised-button color="primary" >Edit</button> -->
+
+                         
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <!-- <form [formGroup]="cartQuantityForm" >
+                        <div class="text-center"><button class="btn btn-outline-dark mt-auto" value="p.id"
+                          (click)="openCartDialog($event, p.id!)" [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart</button></div>
+                        <mat-form-field appearance="outline"  >
+                          <mat-label  >Select a quantity</mat-label>
+                          <mat-select formControlName="quantity">
+                            <mat-option value="1"> 1 </mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                            <mat-option value="6">6</mat-option>
+                            <mat-option value="7">7</mat-option>
+                            <mat-option value="8">8</mat-option>
+                            <mat-option value="9">9</mat-option>
+                            <mat-option value="10">10</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+                        </mat-form-field>
+                    </form>                         -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+    </div>
+</footer>
+<router-outlet></router-outlet>
