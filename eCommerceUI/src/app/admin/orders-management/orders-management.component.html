@@ -2,7 +2,7 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Users Management</h1>
+            <h1 class="display-4 fw-bolder">Orders Management</h1>
             <!-- <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p> -->
         </div>
     </div>
@@ -11,24 +11,19 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="justify-content-center">
-            <div class="col mb-5" *ngFor="let ua of usersOnAdmin; let i = index">
+            <!-- <div class="col mb-5" *ngFor="let ua of usersOnAdmin; let i = index">
                 <div class="card h-100">
                  
-                    <!-- Users details-->
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <!-- Users name-->
                             <h3 class="fw-bolder">{{ua.firstName}}  {{ua.lastName}}
                             </h3>
-                            {{ua.email}}
-                            <!-- <button mat-raised-button color="primary" >Edit</button> -->
-
-                         
+                            {{ua.email}}   
                         </div>
                     </div>
-                
+                               
                 </div>
-            </div>
+            </div> -->
 
 
         </div>
@@ -41,3 +36,4 @@
     </div>
 </footer>
 <router-outlet></router-outlet>
+

@@ -65,6 +65,8 @@ import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
 import { OktaAuth } from '@okta/okta-auth-js';
+import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
+import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 
 
 
@@ -90,6 +92,8 @@ const oktaAuth = new OktaAuth({
     LoginComponent,
     NavComponent,
     WelcomeComponent,
+    ProductMangementComponent,
+    OrdersManagementComponent,
 
 
   ],

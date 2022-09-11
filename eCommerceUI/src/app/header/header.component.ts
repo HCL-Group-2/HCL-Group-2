@@ -24,22 +24,27 @@ export class HeaderComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    let userId = +this.storage.getItem('userId')!;
-    this.cartService.getCartItems(userId).subscribe(data => {
-      data.forEach((element: any) => {
-        this.itemsInCartCount += element.quantity;
-      });
-    });
-
-    this.searchForm = this.fb.group({
-      searchText: [null, [Validators.required]]
-    });
 
     let userRole = this.storage.getItem('userRole')!;
-    if(userRole !== undefined && userRole === 'Admin'){
+    if (userRole !== undefined && userRole === 'Admin') {
       console.log('admin user');
       this.isAdmin = true;
     }
+
+    if (userRole !== 'Admin') {
+      let userId = +this.storage.getItem('userId')!;
+      this.cartService.getCartItems(userId).subscribe(data => {
+        data.forEach((element: any) => {
+          this.itemsInCartCount += element.quantity;
+        });
+      });
+
+      this.searchForm = this.fb.group({
+        searchText: [null, [Validators.required]]
+      });
+    }
+
+
 
 
   }
@@ -99,12 +104,12 @@ export class HeaderComponent implements OnInit {
     // default into users management page
     this.router.navigate(['/admin']);
   }
-  
-  goToProductCatalog(){
 
+  goToProductCatalog() {
+    this.router.navigate(['/admin/productManagement']);
   }
-  goToOrders(){
-
+  goToOrders() {
+    this.router.navigate(['/admin/orderManagement']);
   }
 
   public logout() {
