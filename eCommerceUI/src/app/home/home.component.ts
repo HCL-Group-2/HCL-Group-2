@@ -35,9 +35,6 @@ export class HomeComponent implements OnInit {
 
   //Use this.storage.getKey('userId;) to retrive the userId of the logged in user
   storage: Storage = sessionStorage;
-  
-
-
 
   constructor(private route: ActivatedRoute,
     private router: Router, private userService: UserService,
@@ -52,7 +49,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     let userId = +this.storage.getItem('userId')!;
     this.getSearchBool();
@@ -70,12 +66,11 @@ export class HomeComponent implements OnInit {
       else{
         this.getProducts();
       }
+
     }
     else{
       this.getSearchProducts();
-      }
-  
-    
+    }
 
 
     this.name$ = this._oktaAuthStateService.authState$.pipe(
@@ -138,7 +133,6 @@ export class HomeComponent implements OnInit {
     }
     return undefined;
   }
-
   getSearchProducts(){
     this.searchText = this.storage.getItem('searchText')!;
     this.productService.getProductsBySearch(this.searchText).subscribe(data => {
