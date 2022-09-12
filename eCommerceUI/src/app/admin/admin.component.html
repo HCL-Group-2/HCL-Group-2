@@ -1,1 +1,107 @@
-<p>admin works!</p>
+<mat-card-header>
+    <mat-card-title>Administrator Add/Remove Product to Catalog</mat-card-title>
+</mat-card-header>
+
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="saveProduct(product)">
+
+        <mat-form-field appearance="standard">
+            <mat-label>Product ID</mat-label>
+            <input matInput maxlength="20" inputmode="tel" placeholder="Product ID" formControlName="id" #nameInput>
+            <mat-error>Product ID is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Name</mat-label>
+            <input matInput maxlength="45" inputmode="tel" placeholder="Product Name" formControlName="name" #nameInput>
+            <mat-error>Product Name is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Description</mat-label>
+            <input matInput maxlength="1024" inputmode="tel" placeholder="Product Description" formControlName="description" #nameInput>
+            <mat-error>Product Description is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Price</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Product Price" formControlName="price" #nameInput>
+            <mat-error>Product Price is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Product Image URL</mat-label>
+            <input matInput maxlength="100" inputmode="tel" placeholder="Product Image URL" formControlName="image" #nameInput>
+            <mat-error>Product Image URL is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Product Category</mat-label>
+            <input matInput maxlength="12" inputmode="tel" placeholder="Product Category" formControlName="category" #nameInput>
+            <mat-error>Product UPC is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Product Inventory</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Product Inventory" formControlName="inventory" #nameInput>
+            <mat-error>Product Inventory is required</mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Add Product</button>
+        </div>
+    
+    </form>
+<div>
+  
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="deleteProduct(product)">
+
+        <mat-form-field appearance="standard">
+            <mat-label>Product ID</mat-label>
+            <input matInput maxlength="20" inputmode="tel" placeholder="Product ID" formControlName="id" #nameInput>
+            <mat-error>Product ID is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="standard">
+            <mat-label>Product Name</mat-label>
+            <input matInput maxlength="45" inputmode="tel" placeholder="Product Name" formControlName="name" #nameInput>
+            <mat-error>Product Name is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="standard">
+            <mat-label>Product Description</mat-label>
+            <input matInput maxlength="1024" inputmode="tel" placeholder="Product Description" formControlName="description" #nameInput>
+            <mat-error>Product Description is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="standard">
+            <mat-label>Product Price</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Product Price" formControlName="price" #nameInput>
+            <mat-error>Product Price is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Image URL</mat-label>
+            <input matInput maxlength="100" inputmode="tel" placeholder="Product Image URL" formControlName="image" #nameInput>
+            <mat-error>Product Image URL is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Category</mat-label>
+            <input matInput maxlength="12" inputmode="tel" placeholder="Product Category" formControlName="category" #nameInput>
+            <mat-error>Product UPC is required</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="standard">
+            <mat-label>Product Inventory</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="Product Inventory" formControlName="inventory" #nameInput>
+            <mat-error>Product Inventory is required</mat-error>
+        </mat-form-field>
+    
+        <div mat-dialog-actions align="end">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Remove Product</button>
+        </div>
+        
+    </form>
+<div>
