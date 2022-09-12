@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
@@ -84,6 +85,11 @@ public class UserController {
 	@GetMapping("/byEmail")
 	public User getUserByEmail(@RequestParam String email) {
 		return userService.getUserByEmail(email);
+	}
+	
+	@GetMapping("/{userId}/orders")
+	public List<Order> getOrdersById(@RequestParam Integer userId){
+		return userService.getOrdersByUserId(userId);
 	}
 
 //	@PostMapping("/register")
