@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
     let userRole = this.storage.getItem('userRole')!;
+    console.log('user role is ' + userRole);
     if (userRole !== undefined && userRole === 'Admin') {
       console.log('admin user');
       this.isAdmin = true;

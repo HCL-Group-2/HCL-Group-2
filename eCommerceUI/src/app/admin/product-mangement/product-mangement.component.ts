@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/product.service';
 })
 export class ProductMangementComponent implements OnInit {
   products !: Array<Product>;
+  columns !: Array<string>;
   constructor( private productService: ProductService, public productRemoveDialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -20,53 +21,11 @@ export class ProductMangementComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
+      this.columns = Object.keys(data[0]);
     }
 
     );
   }
-
-  deleteProductFromCatalog(event: any, productId: number){
-
-    
-    if(productId !== undefined){
-      //this.productService.deleteProduct(productId).subscribe();
-      this.productRemoveDialog.open(ProductManagementRemoveWarningDialog, {
-        data: {
-          name: 'in the ProductManagementRemoveWarningDialog placeholder',  
-          product_ID: productId
-        }, disableClose: true 
-      }, );
-
-    }
-
-  }
-
-}
-@Component({
-  selector: 'productManagementRemoveWarning',
-  templateUrl: 'productManagementRemoveWarning.html',
-})
-export class ProductManagementRemoveWarningDialog {
-  constructor( public dialogRef: MatDialogRef<ProductManagementRemoveWarningDialog>, private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string, product_ID: number }) {
-      dialogRef.disableClose = true;
-
-     }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-    //this.router.navigate(['/admin/productManagement']);
-    //window.location.reload();
-
-  }
-  remove(): void {
-    console.log(this.data.product_ID);
-    //this.dialogRef.close();
-    //this.router.navigate(['/admin/productManagement']);
-    //window.location.reload();
-
-  }
-
 
 }
 
