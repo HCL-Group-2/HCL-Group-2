@@ -87,9 +87,9 @@ public class UserController {
 		return userService.getUserByEmail(email);
 	}
 	
-	@GetMapping("/{userId}/orders")
-	public List<Order> getOrdersById(@RequestParam Integer userId){
-		return userService.getOrdersByUserId(userId);
+	@GetMapping("/user/{userid}/orders")
+	public ResponseEntity<List<Order>> getOrdersById(@PathVariable("userid") Integer userId){
+		return new ResponseEntity<List<Order>>(userService.getOrdersByUserId(userId), HttpStatus.OK);
 	}
 
 //	@PostMapping("/register")
