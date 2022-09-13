@@ -68,6 +68,8 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
+import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
+import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
 
 
@@ -96,6 +98,8 @@ const oktaAuth = new OktaAuth({
     ProductMangementComponent,
     OrdersManagementComponent,
     AddProductComponent,
+    EditProductComponent,
+    EditUserComponent,
 
 
   ],

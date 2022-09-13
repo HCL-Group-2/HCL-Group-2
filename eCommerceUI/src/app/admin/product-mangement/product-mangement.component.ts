@@ -33,27 +33,19 @@ export class ProductMangementComponent implements OnInit {
     );
   }
   goToAddProductForm() {
-    console.log('goToAddProductForm()')
+    console.log('goToAddProductForm()');
     this.router.navigate(['admin/productManagement/addProduct']);
   }
 
+  goToEditProductForm(productId: number) {
+    console.log('goToEditProductForm() productId: ' + productId);
+    this.router.navigate(['admin/productManagement/editProduct',productId]);
+  }
+  
+
+ 
+
 }
-
-
-// @Component({
-//   selector: 'product-edit-dialog',
-//   templateUrl: 'product-edit-dialog.html',
-// })
-// export class ProductEditDialog {
-//   constructor(
-//     public dialogRef: MatDialogRef<ProductEditDialog>,
-//     @Inject(MAT_DIALOG_DATA) public data: Product,
-//   ) { }
-
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-// }
 
 
 

@@ -24,8 +24,15 @@ export class ProductService {
   getProductByCategory(category: string):Observable<any>{
     return this.http.get(this.baseURL + 'productsbycategory?category='+category);
   }
+  
+  getProductById(productId: number):Observable<any>{
+    return this.http.get(this.baseURL + 'product/'+productId);
+  }
   addProduct(newProduct: Product):Observable<any>{
     return this.http.post(this.baseURL + 'product', newProduct);
+  }
+  updateProduct(newProduct: Product): Observable<any> {
+    return this.http.put<Product>(this.baseURL + 'product', newProduct);
   }
 
   deleteProduct(productId: number): Observable<any>{

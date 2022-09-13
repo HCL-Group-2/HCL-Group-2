@@ -16,6 +16,7 @@
                 <th> Id</th>
                 <th> Name </th>
                 <th> Description</th>
+                <th> Price</th>
                 <th> Image </th>
                 <th> Category </th>
                 <th> Inventory </th>
@@ -27,13 +28,14 @@
                 <td> {{ p.id }} </td>
                 <td> {{ p.name }} </td>
                 <td> {{ p.description }} </td>
+                <td> {{ p.price }} </td>
                 <td> {{ p.image }} </td>
                 <td> {{ p.category}} </td>
                 <td> {{ p.inventory}} </td>
 
 
                 <td>
-                    <button class="btn btn-info" style="margin-left: 10px">Edit</button>
+                    <button class="btn btn-info" style="margin-left: 10px" (click)="goToEditProductForm(p.id!)">Edit</button>
                 </td>
             </tr>
         </tbody>

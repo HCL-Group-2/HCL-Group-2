@@ -27,5 +27,11 @@ export class AdminComponent implements OnInit {
       console.log(JSON.stringify(this.usersOnAdmin));
     });
   }
+  
+  goToEditUserForm(userId: number) {
+    console.log(' goToEditUserForm userId: ' + userId);
+    this.router.navigate(['admin/editUser/',userId]);
+  }
+  
 
 }
