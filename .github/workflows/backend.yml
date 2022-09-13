@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'Capstone-Chris-main/**'
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
