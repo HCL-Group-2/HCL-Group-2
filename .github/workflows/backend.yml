@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'eCommerceUI/**'
+      - 'Capstone-Chris-main/**'
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
