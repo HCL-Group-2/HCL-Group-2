@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/model/Product';
@@ -11,21 +12,47 @@ import { ProductService } from 'src/app/product.service';
 })
 export class ProductMangementComponent implements OnInit {
   products !: Array<Product>;
-  columns !: Array<string>;
-  constructor( private productService: ProductService, public productRemoveDialog: MatDialog) { }
+
+
+  constructor(private productService: ProductService,
+    private router: Router,
+   public productAddDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getProducts();
+
+
   }
 
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
-      this.columns = Object.keys(data[0]);
     }
 
     );
   }
+  goToAddProductForm() {
+    console.log('goToAddProductForm()')
+    this.router.navigate(['admin/productManagement/addProduct']);
+  }
 
 }
+
+
+// @Component({
+//   selector: 'product-edit-dialog',
+//   templateUrl: 'product-edit-dialog.html',
+// })
+// export class ProductEditDialog {
+//   constructor(
+//     public dialogRef: MatDialogRef<ProductEditDialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: Product,
+//   ) { }
+
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+// }
+
+
 

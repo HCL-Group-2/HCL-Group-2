@@ -18,6 +18,7 @@
                 <th > Image </th>
                 <th> Category </th>
                 <th> Inventory </th>
+                <th> Actions </th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +32,8 @@
 
 
                 <td>
-                    <button class="btn btn-info">Edit</button>
-
+                    <button class="btn btn-info" (click)="goToAddProductForm()">Add</button>
+                    <button class="btn btn-info"  style="margin-left: 10px">Edit</button>
                 </td>
             </tr>
         </tbody>

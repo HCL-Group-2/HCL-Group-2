@@ -17,6 +17,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 
 const routes: Routes = [
 
@@ -28,6 +29,8 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/productManagement', component: ProductMangementComponent  },
+  { path: 'admin/productManagement/addProduct', component: AddProductComponent },
+
   { path: 'admin/orderManagement', component:  OrdersManagementComponent },
   { path: 'account', component: UserComponent },
   { path: 'order', component: OrderComponent },

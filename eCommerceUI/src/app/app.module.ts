@@ -67,6 +67,7 @@ import myAppConfig from './config/my-app-config';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
+import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 
 
 
@@ -94,6 +95,7 @@ const oktaAuth = new OktaAuth({
     WelcomeComponent,
     ProductMangementComponent,
     OrdersManagementComponent,
+    AddProductComponent,
 
 
   ],
