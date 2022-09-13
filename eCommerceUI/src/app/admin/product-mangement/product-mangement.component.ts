@@ -19,6 +19,7 @@ export class ProductMangementComponent implements OnInit {
    public productAddDialog: MatDialog) { }
 
   ngOnInit(): void {
+ 
     this.getProducts();
 
 

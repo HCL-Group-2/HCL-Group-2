@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/model/Product';
+import { ProductService } from 'src/app/product.service';
+
 
 @Component({
   selector: 'app-add-product',
@@ -13,7 +16,8 @@ export class AddProductComponent implements OnInit {
   productAddForm !: FormGroup;
   newProduct !: Product;
   // https://github.com/RameshMF/Angular-10-Spring-Boot-CRUD-Full-Stack-App/blob/master/angular-frontend/src/app/create-employee/create-employee.component.html
-  constructor( private formBuilder: FormBuilder) { }
+  constructor( private formBuilder: FormBuilder, private productService: ProductService,
+    public addProductDialog: MatDialog,  private router: Router) { }
 
   ngOnInit(): void {
 
@@ -29,7 +33,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  addProductSubmit(){
+  addProductSubmit(event: any){
     let productName = this.productAddForm.get('name')?.value;
     console.log('name' + productName);
     let productDesc = this.productAddForm.get('description')?.value;
@@ -52,11 +56,20 @@ export class AddProductComponent implements OnInit {
       "inventory": productInventory
     };
 
-    
-    // const addProductdialogRef = this.productAddDialog.open(ProductAddDialog, {
-    //   data: { newProduct: this.newProduct },  disableClose: true
-    // });
+    console.log('new product ' + JSON.stringify(this.newProduct));
+    this.productService.addProduct(this.newProduct).subscribe();
 
+    const dialogRef = this.addProductDialog.open(ProductAddDialog, {
+      data: {
+        name: ' in the ProductAddDialog placeholder',  
+      }, disableClose: true 
+    }, );
+    
+    dialogRef.afterClosed().subscribe(() => { 
+      console.log('add product dialog box is closed.');
+      this.router.navigate(['admin/productManagement']);
+     // window.location.reload();
+    } );
 
   }
 
@@ -70,12 +83,13 @@ export class AddProductComponent implements OnInit {
 export class ProductAddDialog {
   constructor(
     public dialogRef: MatDialogRef<ProductAddDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: Product,
+    @Inject(MAT_DIALOG_DATA) public data: Product
   ) {
     dialogRef.disableClose = true;
   }
 
   onNoClick(): void {
+ 
     this.dialogRef.close();
   }
 }

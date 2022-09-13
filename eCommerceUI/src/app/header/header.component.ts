@@ -108,6 +108,7 @@ export class HeaderComponent implements OnInit {
 
   goToProductCatalog() {
     this.router.navigate(['/admin/productManagement']);
+ 
   }
   goToOrders() {
     this.router.navigate(['/admin/orderManagement']);

@@ -8,14 +8,15 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-
+    <button class="btn btn-info" (click)="goToAddProductForm()">Add</button>
+    
     <table class="table table-striped">
         <thead>
             <tr>
                 <th> Id</th>
                 <th> Name </th>
                 <th> Description</th>
-                <th > Image </th>
+                <th> Image </th>
                 <th> Category </th>
                 <th> Inventory </th>
                 <th> Actions </th>
@@ -26,14 +27,13 @@
                 <td> {{ p.id }} </td>
                 <td> {{ p.name }} </td>
                 <td> {{ p.description }} </td>
-                <td > {{ p.image }} </td>
+                <td> {{ p.image }} </td>
                 <td> {{ p.category}} </td>
                 <td> {{ p.inventory}} </td>
 
 
                 <td>
-                    <button class="btn btn-info" (click)="goToAddProductForm()">Add</button>
-                    <button class="btn btn-info"  style="margin-left: 10px">Edit</button>
+                    <button class="btn btn-info" style="margin-left: 10px">Edit</button>
                 </td>
             </tr>
         </tbody>

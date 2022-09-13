@@ -24,6 +24,9 @@ export class ProductService {
   getProductByCategory(category: string):Observable<any>{
     return this.http.get(this.baseURL + 'productsbycategory?category='+category);
   }
+  addProduct(newProduct: Product):Observable<any>{
+    return this.http.post(this.baseURL + 'product', newProduct);
+  }
 
   deleteProduct(productId: number): Observable<any>{
     //localhost:8081/ecommerce/product/1
