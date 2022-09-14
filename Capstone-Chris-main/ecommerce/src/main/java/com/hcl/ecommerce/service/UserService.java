@@ -2,6 +2,7 @@ package com.hcl.ecommerce.service;
 
 import java.util.List;
 
+import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.dto.UserLoginDto;
@@ -28,6 +29,8 @@ public interface UserService {
 	Role getRoleById(Integer roleId);
 	
 	User getUserByEmail(String email);
+
+	List<Order> getOrdersByUserId(Integer userId);
 
 //	User loginUser(String username, String password);
 

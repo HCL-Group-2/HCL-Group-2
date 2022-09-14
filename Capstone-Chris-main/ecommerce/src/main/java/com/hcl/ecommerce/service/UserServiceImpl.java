@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.dto.UserDto;
@@ -116,6 +117,13 @@ public class UserServiceImpl implements UserService {
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+	
+	@Override
+    public List<Order> getOrdersByUserId(Integer userId) {
+        User user = userRepository.findById(userId).get();
+
+        return user.getOrders();
+    }
 
 //	@Override
 //	public User registerUser(UserDto userDto) {

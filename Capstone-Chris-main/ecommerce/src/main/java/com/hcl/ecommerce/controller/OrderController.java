@@ -27,6 +27,7 @@ public class OrderController {
 		try {
 			order = orderService.addOrder(order);
 		} catch (AddEntityException e) {
+			e.printStackTrace();
 			return new ResponseEntity<Order>(order, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
