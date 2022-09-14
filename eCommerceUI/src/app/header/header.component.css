@@ -21,7 +21,8 @@
     margin-left: 1%;
 }
 
-.search input:focus {
+
+/* .search input:focus {
     box-shadow: none;
     border: 2px solid black;
 }
@@ -31,4 +32,4 @@
     height: 38px;
     border-radius: 5px;
     padding: 10px;
-}
+} */
