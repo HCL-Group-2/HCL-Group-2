@@ -1,0 +1,52 @@
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Product Catalog Management</h1>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <button class="btn btn-info" (click)="goToAddProductForm()">Add</button>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Id</th>
+                <th> Name </th>
+                <th> Description</th>
+                <th> Price</th>
+                <th> Image </th>
+                <th> Category </th>
+                <th> Inventory </th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of products">
+                <td> {{ p.id }} </td>
+                <td> {{ p.name }} </td>
+                <td> {{ p.description }} </td>
+                <td> {{ p.price }} </td>
+                <td> {{ p.image }} </td>
+                <td> {{ p.category}} </td>
+                <td> {{ p.inventory}} </td>
+
+
+                <td>
+                    <button class="btn btn-info" style="margin-left: 10px" (click)="goToEditProductForm(p.id!)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+    </div>
+</footer>
+<router-outlet></router-outlet>
