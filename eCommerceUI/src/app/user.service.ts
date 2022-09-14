@@ -9,7 +9,7 @@ import { User } from './model/User';
 })
 export class UserService {
   private baseURL = 'http://localhost:8081/ecommerce/';
-  
+
   constructor(private http: HttpClient) { }
 
   updateUser(user: User): Observable<User> {
@@ -17,32 +17,35 @@ export class UserService {
   }
 
 
-  getUser(userId : number):Observable<User>{
-    return this.http.get<User>(this.baseURL + 'user/'+ userId);
+  getUser(userId: number): Observable<User> {
+    return this.http.get<User>(this.baseURL + 'user/' + userId);
+  }
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.baseURL + 'users');
   }
 
-  getUserByEmail(email: string):Observable<User>{
-      // localhost:8081/ecommerce/byEmail?email=testuser@gmail.com
-    return this.http.get<User>(this.baseURL + 'byEmail?email='+ email);
+  getUserByEmail(email: string): Observable<User> {
+    // localhost:8081/ecommerce/byEmail?email=testuser@gmail.com
+    return this.http.get<User>(this.baseURL + 'byEmail?email=' + email);
   }
 
 
-  saveUser(user: User): Observable<User>{
+  saveUser(user: User): Observable<User> {
     return this.http.post<User>(this.baseURL + 'user', user)
   }
 
 
 
-  saveAddress(address: Address): Observable<Address>{
-    return this.http.post<Address>(this.baseURL+'address', address)
+  saveAddress(address: Address): Observable<Address> {
+    return this.http.post<Address>(this.baseURL + 'address', address)
 
   }
 
-  public setLoggedIn(loggedIn : string) {
+  public setLoggedIn(loggedIn: string) {
     localStorage.setItem('loggedIn', loggedIn);
   }
 
-  public getLoggedIn() : string {
+  public getLoggedIn(): string {
     return localStorage.getItem('loggedIn') as string;
   }
 

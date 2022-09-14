@@ -1,58 +1,77 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" href="/home"(click)="goToHomePage()">Ostrich Mart</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home"(click)="goToHomePage()">Home</a></li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" (click)="searchToys()">Toys</a></li>
-            <li><a class="dropdown-item" (click)="searchClothing()">Clothing</a></li>
-            <li><a class="dropdown-item" (click)="searchElectronics()">Electronics</a></li>
+        <a class="navbar-brand" href="/home"  *ngIf="!isAdmin" (click)="goToHomePage()">Ostrich Mart</a>
+        <a class="navbar-brand" href="/admin" *ngIf="isAdmin" (click)="goToAdmin()">Ostrich Mart</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"  *ngIf="!isAdmin" >
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home"
+                        (click)="goToHomePage()">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" (click)="searchToys()">Toys</a></li>
+                        <li><a class="dropdown-item" (click)="searchClothing()">Clothing</a></li>
+                        <li><a class="dropdown-item" (click)="searchElectronics()">Electronics</a></li>
+                    </ul>
+                </li>
             </ul>
-            </li>
-        </ul>
-    <div>
-        <form [formGroup]="searchForm" (ngSubmit)="searchSubmit()" class="navbar-form navbar-left">
-            <input type="search" placeholder="Search..."formControlName="searchText">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-   
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"  *ngIf="isAdmin" >
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/admin"
+                        (click)="goToAdmin()">Admin Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Mangement Menu</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" (click)="goToAdmin()">Users</a></li>
+                        <li><a class="dropdown-item" (click)="goToProductCatalog()">Product Catalog</a></li>
+                        <li><a class="dropdown-item" (click)="goToOrders()">Orders</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div *ngIf="!isAdmin">
+                <form [formGroup]="searchForm" (ngSubmit)="searchSubmit()" class="navbar-form navbar-left">
+                    <input type="search" placeholder="Search..." formControlName="searchText">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
 
-    <form class="d-flex">
-    <button class="btn btn-outline-dark" (click) ="goToCart()">
-    <i class="bi-cart-fill me-1"></i>
-    Cart
-    <!-- <span class="badge bg-dark text-white ms-1 rounded-pill" *ngIf="a_cart_count$" >{{ a_cart_count$ | async }}</span> -->
-    <span class="badge bg-dark text-white ms-1 rounded-pill" >{{itemsInCartCount}}</span>
-    </button>
 
-    <button mat-button [matMenuTriggerFor]="menu">Account</button>        
-        <mat-menu #menu="matMenu">
-        <!--<button mat-button (click)="goToAccount()">
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" (click)="goToCart()" [hidden]="isAdmin">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <!-- <span class="badge bg-dark text-white ms-1 rounded-pill" *ngIf="a_cart_count$" >{{ a_cart_count$ | async }}</span> -->
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">{{itemsInCartCount}}</span>
+                </button>
+
+                <button mat-button [matMenuTriggerFor]="menu">Account</button>
+                <mat-menu #menu="matMenu">
+                    <!--<button mat-button (click)="goToAccount()">
         Address
         
         <mat-icon>home</mat-icon>
         </button> <br>
     -->
-        <button mat-button (click)= "goToRegister()">
-        User Details
-        <mat-icon>account_circle</mat-icon>
-            </button><br>
-            <button mat-button (click)="goToOrderStatus()">
-        Order Status
-        <mat-icon> local_shipping</mat-icon>
-        </button><br>
+                    <button mat-button (click)="goToRegister()">
+                        User Details
+                        <mat-icon>account_circle</mat-icon>
+                    </button><br>
+                    <button mat-button (click)="goToOrderStatus()">
+                        Order Status
+                        <mat-icon> local_shipping</mat-icon>
+                    </button><br>
 
-        <button mat-button (click)="logout()">
-        Sign Out
-        <mat-icon>logout</mat-icon>
-    </button>
-    </mat-menu>
-    </form>
+                    <button mat-button (click)="logout()">
+                        Sign Out
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </mat-menu>
+            </form>
+        </div>
     </div>
-    </div>
-    </nav>
+</nav>
