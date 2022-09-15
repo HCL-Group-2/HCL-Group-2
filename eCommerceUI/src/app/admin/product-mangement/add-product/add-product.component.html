@@ -1,0 +1,59 @@
+
+    <h3> Add New Product </h3>
+
+<form [formGroup]="productAddForm">
+    
+    <div >
+        <mat-form-field appearance="outline" style="width:80%;">
+            <mat-label>Product Name</mat-label>
+            <input type="text" matInput placeholder="name" formControlName="name">
+            <mat-error>Product name is required</mat-error>
+        </mat-form-field>
+    </div>
+
+
+    <div >
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Description</mat-label>
+            <input type="text" matInput placeholder="description" formControlName="description">
+            <mat-error>Description is required</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div >
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Price</mat-label>
+            <input type="text" matInput placeholder="price" formControlName="price">
+            <mat-error>Price is required</mat-error>
+        </mat-form-field>
+    </div>
+
+    
+    <div >
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Image URL</mat-label>
+            <input type="text" matInput placeholder="image URL" formControlName="image">
+            <mat-error>Image URL is required</mat-error>
+        </mat-form-field>
+    </div>
+
+        
+    <div >
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Category</mat-label>
+            <input type="text" matInput placeholder="category" formControlName="category">
+            <mat-error>Category is required</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div >
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Inventory</mat-label>
+            <input type="text" matInput placeholder="inventory" formControlName="inventory">
+            <mat-error>Inventory is required</mat-error>
+        </mat-form-field>
+    </div>
+
+</form>
+<button mat-raised-button color="warn" (click)="addProductSubmit($event)">Submit</button>
+

@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
   getUser(userId: number) {
     this.userService.getUser(userId).subscribe(data => {
       this.user = data;
-    })
+    });
   }
   getSearchBool(){
     this.search = (this.storage.getItem('search') ==='true');

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
-import { CartItems2 } from '../model/CartItems';
 import { UserService } from '../user.service';
 @Component({
   selector: 'app-header',
@@ -12,12 +10,12 @@ import { UserService } from '../user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  itemsInCartCount : number = 0;
-  a_cart_count$ !: Observable<number>;
+  itemsInCartCount: number = 0;
   storage: Storage = sessionStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
   loggedIn = true;
+  isAdmin = false;
 
 
   constructor(private route: ActivatedRoute,
@@ -26,67 +24,94 @@ export class HeaderComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    let userId = +this.storage.getItem('userId')!;
-    this.cartService.getCartItems(userId).subscribe(data => {
-      data.forEach((element: any) => {
-        this.itemsInCartCount += element.quantity;
-    });
-    })
-    this.searchForm = this.fb.group({
-      searchText:[null, [Validators.required]]});
-    
+
+    let userRole = this.storage.getItem('userRole')!;
+    console.log('user role is ' + userRole);
+    if (userRole !== undefined && userRole === 'Admin') {
+      console.log('admin user');
+      this.isAdmin = true;
+    }
+
+    if (userRole !== 'Admin') {
+      let userId = +this.storage.getItem('userId')!;
+      this.cartService.getCartItems(userId).subscribe(data => {
+        data.forEach((element: any) => {
+          this.itemsInCartCount += element.quantity;
+        });
+      });
+
+      this.searchForm = this.fb.group({
+        searchText: [null, [Validators.required]]
+      });
+    }
+
+
+
 
   }
-  goToHomePage(){
+  goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
     this.storage.setItem('category', 'home');
 
   }
-  goToCart(){
-  // https://dev.to/isamrish/how-to-display-observable-of-an-object-in-angular-22em
+  goToCart() {
+    // https://dev.to/isamrish/how-to-display-observable-of-an-object-in-angular-22em
     this.router.navigate(['/cart']);
   }
- 
-  goToOrderStatus(){
+
+  goToOrderStatus() {
     this.router.navigate(['/order']);
   }
 
-  goToRegister(){
+  goToRegister() {
     this.router.navigate(['/user']);
   }
 
-  goToAccount(){
+  goToAccount() {
     this.router.navigate(['/account']);
   }
 
-  searchSubmit(){
+  searchSubmit() {
     var search = 'false';
     this.storage.setItem('search', search);
     this.storage.setItem('searchText', this.searchForm.value.searchText);
     window.location.reload();
   }
 
-  searchToys(){
+  searchToys() {
     var search = 'false';
     this.storage.setItem('category', 'toys');
     window.location.reload();
   }
 
-  searchClothing(){
+  searchClothing() {
     var search = 'false';
     this.storage.setItem('category', 'clothing');
     window.location.reload();
   }
 
-  searchElectronics(){
+  searchElectronics() {
     var search = 'false';
     this.storage.setItem('category', 'electronics');
     window.location.reload();
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  goToAdmin() {
+    // default into users management page
+    this.router.navigate(['/admin']);
+  }
+
+  goToProductCatalog() {
+    this.router.navigate(['/admin/productManagement']);
+ 
+  }
+  goToOrders() {
+    this.router.navigate(['/admin/orderManagement']);
   }
 
   public logout() {
@@ -95,6 +120,6 @@ export class HeaderComponent implements OnInit {
     this.goToLogin();
     //window.location.reload();
   }
- 
+
 
 }

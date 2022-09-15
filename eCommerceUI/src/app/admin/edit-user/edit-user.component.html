@@ -1,0 +1,32 @@
+<h3> Edit User</h3>
+
+<div [formGroup]="userEditForm" >
+
+        <mat-form-field appearance="outline" style="width:80%;">
+            <mat-label>User ID</mat-label>
+            <input type="text" matInput   formControlName="id">
+            <mat-error>User ID is required and cannot be changed</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" style="width:80%;">
+            <mat-label>First Name</mat-label>
+            <input type="text" matInput  formControlName="firstName">
+            <mat-error>First name is required</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Last Name</mat-label>
+            <input type="text" matInput formControlName="lastName">
+            <mat-error>Last Name is required</mat-error>
+        </mat-form-field>
+ 
+
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="email">
+            <mat-error>Email is required</mat-error>
+        </mat-form-field>
+    
+    </div>
+<button mat-raised-button color="warn" (click)="editUserSubmit($event)">Submit</button>
