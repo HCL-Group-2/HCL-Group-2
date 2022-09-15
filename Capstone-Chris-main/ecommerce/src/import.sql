@@ -1,7 +1,8 @@
 DROP TRIGGER IF EXISTS `ecommerce`.upd_check;
 
 DELIMITER $$
-CREATE TRIGGER upd_check BEFORE UPDATE ON products
+CREATE TRIGGER upd_check 
+BEFORE UPDATE ON products
 FOR EACH ROW
 BEGIN 
 	IF NEW.prod_inventory <= 0 THEN
