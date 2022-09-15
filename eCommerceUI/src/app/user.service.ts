@@ -50,7 +50,9 @@ export class UserService {
   }
 
   public clear() {
-    localStorage.clear();
+    //localStorage.clear();
+    window.localStorage.clear();
+
   }
 
 }
