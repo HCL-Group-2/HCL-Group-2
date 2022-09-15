@@ -34,10 +34,7 @@ export class CartComponent implements OnInit {
     this.getCartItems(userId);
     console.log(userId);
 
-
-
   }
-
 
   getCartItems(userId: number) {
 
@@ -49,17 +46,25 @@ export class CartComponent implements OnInit {
     );
   }
   
-
   deleteCartItem(event: any,cartId: number){
 
     console.log('trying to get cart id in the delete cart function ' + cartId);
     if(cartId !== undefined){
       this.cartService.deleteCartItem(cartId).subscribe();
-      this.cartDialog2.open(CartDialog2, {
+      
+      
+      const dialogRef = this.cartDialog2.open(CartDialog2, {
         data: {
           name: ' in the CartDialog2 placeholder',  
         }, disableClose: true 
       }, );
+
+        dialogRef.afterClosed().subscribe(() => {
+        console.log('remove from cart dialog box is closed.');
+        this.router.navigate(['/cart']).then(() => {
+          window.location.reload();
+        });
+      });
 
     }
 
@@ -86,9 +91,6 @@ export class CartDialog2 {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/cart']);
-    window.location.reload();
-
   }
 
 }
