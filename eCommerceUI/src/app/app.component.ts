@@ -33,7 +33,7 @@ export class AppComponent {
     //this.img = cld.image('docs/models');
    }
 
-   rabbitmq(){
+   trigger(){
     this.http.get<any[]>('http://localhost:8080/')
       .subscribe(data => {
         console.log("get data")
