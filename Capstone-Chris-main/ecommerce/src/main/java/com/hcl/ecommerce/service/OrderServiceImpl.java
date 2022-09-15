@@ -70,11 +70,11 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderStatus("");
 		cartItemRepository.deleteAll(cartItems);
 //		mailSenderService.sendEmail(user.getEmail());
-		try {
-			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
-		} catch (MessagingException e) {
-		} catch (IOException e) {
-		}
+//		try {
+//			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
+//		} catch (MessagingException e) {
+//		} catch (IOException e) {
+//		}
 		return orderRepository.save(order);
 	}
 	

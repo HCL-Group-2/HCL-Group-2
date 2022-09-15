@@ -1,13 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav *ngIf="loggedIn" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/home"  *ngIf="!isAdmin" (click)="goToHomePage()">Ostrich Mart</a>
+
+        <a class="navbar-brand" href="/home" *ngIf="!isAdmin" (click)="goToHomePage()">Ostrich Mart</a>
         <a class="navbar-brand" href="/admin" *ngIf="isAdmin" (click)="goToAdmin()">Ostrich Mart</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"  *ngIf="!isAdmin" >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4" *ngIf="!isAdmin">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home"
                         (click)="goToHomePage()">Home</a></li>
                 <li class="nav-item dropdown">
@@ -20,7 +21,7 @@
                     </ul>
                 </li>
             </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"  *ngIf="isAdmin" >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4" *ngIf="isAdmin">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/admin"
                         (click)="goToAdmin()">Admin Home</a></li>
                 <li class="nav-item dropdown">
@@ -51,12 +52,7 @@
 
                 <button mat-button [matMenuTriggerFor]="menu">Account</button>
                 <mat-menu #menu="matMenu">
-                    <!--<button mat-button (click)="goToAccount()">
-        Address
-        
-        <mat-icon>home</mat-icon>
-        </button> <br>
-    -->
+                    <!--<button mat-button (click)="goToAccount()">Address<mat-icon>home</mat-icon></button> <br>-->
                     <button mat-button (click)="goToRegister()">
                         User Details
                         <mat-icon>account_circle</mat-icon>
@@ -73,5 +69,6 @@
                 </mat-menu>
             </form>
         </div>
+
     </div>
 </nav>
