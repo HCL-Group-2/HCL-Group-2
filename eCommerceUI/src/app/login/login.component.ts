@@ -19,7 +19,7 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  private baseURL = 'http://localhost:8081/ecommerce/';
+  private baseURL = 'http://localhost:7777/ecommerce/';
 
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;

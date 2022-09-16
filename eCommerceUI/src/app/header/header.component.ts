@@ -34,15 +34,18 @@ export class HeaderComponent implements OnInit {
 
     if (userRole !== 'Admin') {
       let userId = +this.storage.getItem('userId')!;
-      this.cartService.getCartItems(userId).subscribe(data => {
-        data.forEach((element: any) => {
-          this.itemsInCartCount += element.quantity;
+      if(userId !== undefined || userId !== null){
+        this.cartService.getCartItems(userId).subscribe(data => {
+          data.forEach((element: any) => {
+            this.itemsInCartCount += element.quantity;
+          });
         });
-      });
-
-      this.searchForm = this.fb.group({
-        searchText: [null, [Validators.required]]
-      });
+  
+        this.searchForm = this.fb.group({
+          searchText: [null, [Validators.required]]
+        });
+      }
+     
     }
 
 

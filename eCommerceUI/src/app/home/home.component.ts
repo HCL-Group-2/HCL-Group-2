@@ -20,8 +20,9 @@ import { UserService } from '../user.service';
 export class HomeComponent implements OnInit {
 
   public name$!: Observable<string>;
+  public email$!: Observable<string>;
 
-  name: string = "";
+  email: string = "";
   products !: Array<Product>;
   searchProducts ! :Array<Product>;
   user !: User;
@@ -45,7 +46,8 @@ export class HomeComponent implements OnInit {
     private _oktaAuthStateService: OktaAuthStateService
   ) { }
 
-
+//chriswilcox580@gmail.com
+//Okta4444
 
   ngOnInit(): void {
 
@@ -77,9 +79,23 @@ export class HomeComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
 
+    
+     this._oktaAuthStateService.authState$.subscribe(data =>{
+      console.log('raw email ' + data.idToken?.claims.email);
+      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+      this.email = data.idToken?.claims.email!;
+      console.log('this.email ' +   this.email );
+    });
+    console.log('this.email outside ' +   this.email );
+    
+
       this.cartQuantityForm = this.formBuilder.group({
         quantity: ['', [Validators.required]]
-      })
+      });
+
+
+
+
 
 
 
