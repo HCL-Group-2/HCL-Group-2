@@ -8,8 +8,12 @@ import { User } from './model/User';
   providedIn: 'root'
 })
 export class UserService {
-  //private baseURL = 'http://localhost:7777/ecommerce/';
+  
+  //test
   private baseURL = 'http://localhost:7777/';
+  
+  // product
+  // private baseURL = location.href;
 
   constructor(private http: HttpClient) { }
 

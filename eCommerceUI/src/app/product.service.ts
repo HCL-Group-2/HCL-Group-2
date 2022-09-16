@@ -7,9 +7,12 @@ import { Product } from './model/Product';
   providedIn: 'root'
 })
 export class ProductService {
-
-  //private baseURL = 'http://localhost:7777/ecommerce/';
+  
+  // test
   private baseURL = 'http://localhost:7777/';
+
+  // production
+  // private baseURL = location.href;
 
 
   constructor(private http: HttpClient) { }
