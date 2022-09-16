@@ -23,13 +23,13 @@ export class HomeComponent implements OnInit {
 
   name: string = "";
   products !: Array<Product>;
-  searchProducts ! :Array<Product>;
+  searchProducts !: Array<Product>;
   user !: User;
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
   cartQuantityForm: FormGroup = new FormGroup([]);
 
-  turnOnAddToCart : boolean = false;
+  turnOnAddToCart: boolean = false;
   search: boolean = true;
   searchText: string = '';
 
@@ -43,7 +43,9 @@ export class HomeComponent implements OnInit {
     private cartService: CartService,
     public cartDialog: MatDialog,
     private _oktaAuthStateService: OktaAuthStateService
-  ) { }
+  ) {
+    console.log('at customer home page constructor');
+  }
 
 
 
@@ -51,24 +53,29 @@ export class HomeComponent implements OnInit {
 
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     let userId = +this.storage.getItem('userId')!;
+    console.log('userId from session storage ' + userId);
     this.getSearchBool();
     console.log(this.search);
-    
+
     this.getUser(userId);
-    if(this.storage.getItem('search')=='true'){
-      if(this.storage.getItem('category')=='toys'){
+
+  
+    if (this.storage.getItem('search') == 'true') {
+      if (this.storage.getItem('category') == 'toys') {
         this.getProductsByCategory('toys');
-      }else if(this.storage.getItem('category')=='clothing'){
+      } else if (this.storage.getItem('category') == 'clothing') {
         this.getProductsByCategory('clothing');
-      }else if(this.storage.getItem('category')=='electronics'){
+      } else if (this.storage.getItem('category') == 'electronics') {
         this.getProductsByCategory('electronics');
       }
-      else{
+      else {
+
         this.getProducts();
       }
 
     }
-    else{
+    else {
+
       this.getSearchProducts();
     }
 
@@ -77,9 +84,9 @@ export class HomeComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
 
-      this.cartQuantityForm = this.formBuilder.group({
-        quantity: ['', [Validators.required]]
-      })
+    this.cartQuantityForm = this.formBuilder.group({
+      quantity: ['', [Validators.required]]
+    })
 
 
 
@@ -90,9 +97,9 @@ export class HomeComponent implements OnInit {
       this.user = data;
     });
   }
-  getSearchBool(){
-    this.search = (this.storage.getItem('search') ==='true');
-   
+  getSearchBool() {
+    this.search = (this.storage.getItem('search') === 'true');
+
   }
   updateUser(user: User) {
 
@@ -107,7 +114,7 @@ export class HomeComponent implements OnInit {
     );
   }
   enableAddCart(event: any) {
-    if(event.option.value > 0){
+    if (event.option.value > 0) {
       this.turnOnAddToCart = true;
     }
   }
@@ -115,38 +122,50 @@ export class HomeComponent implements OnInit {
 
     if (productID != undefined) {
       console.log('product id selected ' + productID);
-      this.cartDialog.open(CartDialog, {
-        data: {
-          name: ' in the cart placeholder', 
-        }, disableClose: true 
-      });
+    
       console.log('selected item quantity ' + this.selectedQuantity);
 
-      let itemCount = this.cartQuantityForm.get('quantity')?.value; 
+      let itemCount = this.cartQuantityForm.get('quantity')?.value;
       if (itemCount != null && this.user.id !== undefined) {
-        console.log('user id from cookies ' + this.user.id); 
+        console.log('user id from cookies ' + this.user.id);
         this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
+        const dialogRef = this.cartDialog.open(CartDialog, {
+          data: {
+            name: ' in the cart placeholder',
+          }, disableClose: true
+        });
+    
+        dialogRef.afterClosed().subscribe(() => {
+          console.log('edit product dialog box is closed.');
+          window.location.reload();
+        });
+        
       }
 
     }
     return undefined;
   }
-  getSearchProducts(){
-    this.searchText = this.storage.getItem('searchText')!;
-    this.productService.getProductsBySearch(this.searchText).subscribe(data => {
-      this.searchProducts = data;
+  getSearchProducts() {
+   
+    if(this.searchText !== null){
+      this.productService.getProductsBySearch(this.searchText).subscribe(data => {
+        this.searchProducts = data;
+      }
+      );
+
+    }
+  
+  }
+
+  getProductsByCategory(category: string) {
+    this.productService.getProductByCategory(category).subscribe(data => {
+      this.products = data;
     }
     );
   }
 
-  getProductsByCategory(category: string){
-    this.productService.getProductByCategory(category).subscribe(data => {
-      this.products = data;  }
-    );
-    }
-    
 
 
 }
@@ -155,15 +174,15 @@ export class HomeComponent implements OnInit {
   templateUrl: 'cartDialog-dialog.html',
 })
 export class CartDialog {
-  constructor( public dialogRef: MatDialogRef<CartDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string }) { 
-      dialogRef.disableClose = true;
+  constructor(public dialogRef: MatDialogRef<CartDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
+    dialogRef.disableClose = true;
 
-    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
-    window.location.reload();
+   // window.location.reload();
 
   }
 
