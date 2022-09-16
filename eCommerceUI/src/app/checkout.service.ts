@@ -8,7 +8,9 @@ import { CheckoutOrder } from './model/CheckoutOrder';
   providedIn: 'root'
 })
 export class CheckoutService {
-  private baseURL = 'http://localhost:7777/ecommerce/';
+ // private baseURL = 'http://localhost:7777/ecommerce/';
+  private baseURL = 'http://localhost:7777/';
+
 
   constructor(private http: HttpClient) { }
   

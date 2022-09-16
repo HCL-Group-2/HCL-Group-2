@@ -10,7 +10,9 @@ import { CartItems, CartItems2 } from './model/CartItems';
   providedIn: 'root'
 })
 export class CartService {
-  private baseURL = 'http://localhost:7777/ecommerce/';
+  //private baseURL = 'http://localhost:7777/ecommerce/';
+  private baseURL = 'http://localhost:7777/';
+
 
   constructor(private http: HttpClient) { }
 
