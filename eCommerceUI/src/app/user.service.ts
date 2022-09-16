@@ -8,7 +8,7 @@ import { User } from './model/User';
   providedIn: 'root'
 })
 export class UserService {
-  private baseURL = 'http://localhost:7777/ecommerce/';
+  private baseURL = location.href;
 
   constructor(private http: HttpClient) { }
 

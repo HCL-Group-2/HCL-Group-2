@@ -19,7 +19,7 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  private baseURL = 'http://localhost:7777/ecommerce/';
+  private baseURL = location.href;
 
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('userRole', 'Admin');
 
 
+
     }
     );
   }
@@ -100,4 +101,4 @@ export class LoginComponent implements OnInit {
     return this.userService.getLoggedIn() === "true";
   }
 
-}
+}4
