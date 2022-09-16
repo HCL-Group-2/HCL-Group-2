@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-     paths:
+    paths:
       - 'eCommerceUI/**'
   pull_request:
     types: [opened, synchronize, reopened]
