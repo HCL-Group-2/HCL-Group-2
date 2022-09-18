@@ -26,8 +26,8 @@ const routes: Routes = [
 
   { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent},
-  // { path: 'home', component: HomeComponent, canActivate: [OktaAuthGuard] },
+  // { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent, canActivate: [OktaAuthGuard] },
   { path: 'cart', component: CartComponent,canActivate: [OktaAuthGuard]  },
   { path: 'checkout', component: CheckoutComponent, canActivate: [OktaAuthGuard]  },
   { path: 'admin', component: AdminComponent, canActivate: [OktaAuthGuard]  },

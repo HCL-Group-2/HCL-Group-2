@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
-import { filter, map, Observable } from 'rxjs';
+import { filter, map, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
 import { UserService } from '../user.service';
 @Component({
@@ -21,6 +21,9 @@ export class HeaderComponent implements OnInit {
   isAdmin = false;
   public isAuthenticated$!: Observable<boolean>;
 
+  isLoggedinFromOkta = false;
+
+
 
 
   constructor(private route: ActivatedRoute,
@@ -35,6 +38,22 @@ export class HeaderComponent implements OnInit {
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
+
+    this._oktaStateService.authState$.subscribe(data =>{
+      console.log('data.isAuthenticated ' + data.isAuthenticated);
+      this.isLoggedinFromOkta  = data.isAuthenticated !;
+    })
+
+      
+
+    console.log('loggedIn from header ngOnInit() ' + this.loggedIn);
+
+    if(this.userService.getLoggedIn() === null){
+      this.loggedIn = false;
+      console.log('user is not logged in');
+    }
+
+    console.log('this.userService.getLoggedIn() ' + this.userService.getLoggedIn());
 
     let userRole = this.storage.getItem('userRole')!;
     console.log('user role is ' + userRole);

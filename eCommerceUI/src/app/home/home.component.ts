@@ -55,8 +55,10 @@ export class HomeComponent implements OnInit {
     let userId = +this.storage.getItem('userId')!;
     this.getSearchBool();
     console.log(this.search);
+
+    console.log('userId ' + userId);
     
-    this.getUser(userId);
+    this.getUser(1);
     if(this.storage.getItem('search')=='true'){
       if(this.storage.getItem('category')=='toys'){
         this.getProductsByCategory('toys');
@@ -116,6 +118,7 @@ export class HomeComponent implements OnInit {
 
   }
   getProducts() {
+    console.log('trying to get all products ');
     this.productService.getProducts().subscribe(data => {
       this.products = data;
     }

@@ -1,4 +1,4 @@
-<nav *ngIf="(isAuthenticated$  | async) === false;" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav *ngIf="this.isLoggedinFromOkta" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/home"  *ngIf="!isAdmin" (click)="goToHomePage()">Ostrich Mart</a>
         <a class="navbar-brand" href="/admin" *ngIf="isAdmin" (click)="goToAdmin()">Ostrich Mart</a>

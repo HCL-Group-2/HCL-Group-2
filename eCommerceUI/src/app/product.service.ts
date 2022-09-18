@@ -9,7 +9,7 @@ import { Product } from './model/Product';
 export class ProductService {
 
   //private baseURL = 'http://localhost:7777/ecommerce/';
-  private baseURL = 'http://localhost:7777/';
+  private baseURL = 'http://localhost:8080/';
 
 
   constructor(private http: HttpClient) { }

@@ -11,7 +11,7 @@ import { CartItems, CartItems2 } from './model/CartItems';
 })
 export class CartService {
   //private baseURL = 'http://localhost:7777/ecommerce/';
-  private baseURL = 'http://localhost:7777/';
+  private baseURL = 'http://localhost:8080/';
 
 
   constructor(private http: HttpClient) { }
