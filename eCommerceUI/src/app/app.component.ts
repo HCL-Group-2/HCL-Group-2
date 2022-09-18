@@ -34,7 +34,7 @@ export class AppComponent {
    }
 
    trigger(){
-    this.http.get<any[]>('http://localhost:8080/')
+    this.http.get<any[]>('https://ostrichmart-backend.azurewebsites.net/')
       .subscribe(data => {
         console.log("get data")
       },
