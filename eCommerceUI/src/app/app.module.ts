@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -70,7 +70,7 @@ import { OrdersManagementComponent } from './admin/orders-management/orders-mana
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
-
+import { AuthInterceptor } from './auth.interceptor';
 
 
 const oktaAuth = new OktaAuth({
@@ -133,7 +133,8 @@ const oktaAuth = new OktaAuth({
   ],
 
   providers: [
-    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
