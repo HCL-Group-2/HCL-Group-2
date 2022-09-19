@@ -53,8 +53,7 @@ public class OrderController {
 			paymentResponse = new CreatePaymentResponse(intent.getClientSecret());
 
 		} catch (StripeException se) {
-			//DEBUG
-			se.printStackTrace();
+			se.printStackTrace();//DEBUG
 			return new ResponseEntity<CreatePaymentResponse>((CreatePaymentResponse)null, HttpStatus.CONFLICT);
 		}
 		
