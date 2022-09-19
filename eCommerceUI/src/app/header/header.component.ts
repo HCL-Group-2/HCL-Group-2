@@ -6,7 +6,6 @@ import { AuthState, OktaAuth } from '@okta/okta-auth-js';
 import { Observable, filter, map } from 'rxjs';
 import { CartService } from '../cart.service';
 import { UserService } from '../user.service';
-import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -32,8 +31,7 @@ export class HeaderComponent implements OnInit {
     private fb: FormBuilder,  private _oktaStateService: OktaAuthStateService,
     @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
     private userService: UserService,
-    private _oktaAuthStateService: OktaAuthStateService,
-    private loginService: LoginComponent) { }
+    private _oktaAuthStateService: OktaAuthStateService) { }
 
   ngOnInit(): void {
 
@@ -55,7 +53,6 @@ export class HeaderComponent implements OnInit {
     console.log('this.email outside ' +   this.email );
     this.userService.getUserByEmail(this.email);
     this.storage.setItem('userEmail', (this.email));
-    this.loginService.userEntity();
 
 
 
