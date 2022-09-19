@@ -22,6 +22,7 @@ import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
 import com.hcl.ecommerce.dto.UserLoginDto;
 
+//@CrossOrigin(origins="https://ostrichmart.azurewebsites.net/")
 @CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class UserController {

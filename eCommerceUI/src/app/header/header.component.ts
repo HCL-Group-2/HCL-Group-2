@@ -15,9 +15,10 @@ export class HeaderComponent implements OnInit {
 
   itemsInCartCount: number = 0;
   storage: Storage = sessionStorage;
+  localStorage: Storage = localStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
-  loggedIn = true;
+  // loggedIn = true;
   isAdmin = false;
   public isAuthenticated$!: Observable<boolean>;
 
@@ -41,42 +42,38 @@ export class HeaderComponent implements OnInit {
 
     this._oktaStateService.authState$.subscribe(data =>{
       console.log('data.isAuthenticated ' + data.isAuthenticated);
-      this.isLoggedinFromOkta  = data.isAuthenticated !;
-    })
-
-      
-
-    console.log('loggedIn from header ngOnInit() ' + this.loggedIn);
-
-    if(this.userService.getLoggedIn() === null){
-      this.loggedIn = false;
-      console.log('user is not logged in');
-    }
-
-    console.log('this.userService.getLoggedIn() ' + this.userService.getLoggedIn());
-
-    let userRole = this.storage.getItem('userRole')!;
-    console.log('user role is ' + userRole);
-    if (userRole !== undefined && userRole === 'Admin') {
-      console.log('admin user');
-      this.isAdmin = true;
-    }
-
-    if (userRole !== 'Admin') {
-      let userId = +this.storage.getItem('userId')!;
-      if(userId !== undefined || userId !== null){
-        this.cartService.getCartItems(userId).subscribe(data => {
-          data.forEach((element: any) => {
-            this.itemsInCartCount += element.quantity;
+      this.isLoggedinFromOkta  = data.isAuthenticated !
+      console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
+      if (this.isLoggedinFromOkta) {
+        console.log('user is login with okta');
+        let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
+        let oktaUserRole = idToken.claims.groups[1];
+        console.log('okta user role ' + oktaUserRole);
+        let userId = +this.storage.getItem('userId')!;
+        if(oktaUserRole === 'customer'){
+          this.cartService.getCartItems(userId).subscribe(data => {
+            data.forEach((element: any) => {
+              this.itemsInCartCount += element.quantity;
+            });
           });
-        });
-  
-        this.searchForm = this.fb.group({
-          searchText: [null, [Validators.required]]
-        });
+    
+          this.searchForm = this.fb.group({
+            searchText: [null, [Validators.required]]
+          });
+        }else if(oktaUserRole === 'admin'){
+          console.log('admin loggin in okta');
+          this.isAdmin = true;
+
+
+        }
+       
       }
-     
-    }
+
+    });
+    console.log('this.isLoggedinFromOkta outside ' + this.isLoggedinFromOkta);
+
+
+
 
 
 
@@ -148,10 +145,9 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout() {
-    this.loggedIn = false;
+    // this.loggedIn = false;
     this.userService.clear();
     this.goToLogin();
-    //window.location.reload();
   }
 
 

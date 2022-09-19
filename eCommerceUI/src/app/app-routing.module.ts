@@ -22,6 +22,7 @@ import { EditProductComponent } from './admin/product-mangement/edit-product/edi
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
 
+
 const routes: Routes = [
 
   { path: 'welcome', component: WelcomeComponent },

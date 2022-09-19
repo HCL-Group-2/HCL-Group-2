@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
     this.getUserDetails();
+    console.log('hello from login ');
   }
 
   getUserDetails(){
@@ -48,9 +49,14 @@ export class LoginComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
+
+
+
+
   }
 
   public async oktaLogin() : Promise<void> {
+   console.log('okta login, hello !!!!!');
     await this._oktaAuth.signInWithRedirect({originalUri: "/home"});
   }
 
@@ -82,9 +88,6 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
-      // hardcoded role : backend may change
-      this.storage.setItem('userRole', 'Admin');
-
 
     }
     );
