@@ -34,8 +34,8 @@ public class OrderController {
 	@Value("${stripe.secret.key}") 
     private String stripeSecretKey;
 	
-	@PostMapping("/place_order")
-	public ResponseEntity<CreatePaymentResponse> placeOrder(@RequestBody Order order) {
+	@PostMapping("/create-intent")
+	public ResponseEntity<CreatePaymentResponse> createIntent(@RequestBody Order order) {
 		Stripe.apiKey = stripeSecretKey;
 		
 		//Convert cost to cents
@@ -47,6 +47,7 @@ public class OrderController {
 			PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
 					.setCurrency("usd")
 					.setAmount(totalAmount)
+					.setCustomer(order.getUser().getEmail())
 					.build();
 
 			PaymentIntent intent = PaymentIntent.create(createParams);
@@ -61,7 +62,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/order")
-	public ResponseEntity<Order> addOrder(@RequestBody Order order) {
+	public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
 		try {
 			order = orderService.addOrder(order);
 		} catch (AddEntityException e) {
