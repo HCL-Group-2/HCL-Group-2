@@ -46,10 +46,25 @@ export class LoginComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
+    console.log(this.name$);
   }
 
   public async oktaLogin() : Promise<void> {
     await this._oktaAuth.signInWithRedirect({originalUri: "/home"});
+    this.name$ = this._oktaStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
+      
+     this._oktaStateService.authState$.subscribe(data =>{
+      console.log('raw email ' + data.idToken?.claims.email);
+      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+      this.user.email = data.idToken?.claims.email!;
+      console.log('this.email ' +   this.user.email );
+      this.userEntity();
+    });
+    console.log('this.email outside ' +   this.user.email );
+
+    
   }
 
   public async oktaLogout(): Promise<void> {
@@ -86,7 +101,7 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('lastName', data.lastName);
       console.log('loggin in userEntity() in login component' + this.loggedIn);
       // hardcoded role : backend may change
-      this.storage.setItem('userRole', 'Admin');
+      //this.storage.setItem('userRole', 'Admin');
 
 
     }
