@@ -8,12 +8,14 @@ import { User } from './model/User';
   providedIn: 'root'
 })
 export class UserService {
+
   
   //test
-  private baseURL = 'http://localhost:7777/';
+  //private baseURL = 'http://localhost:7777/';
   
   // product
-  // private baseURL = location.href;
+  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+
 
   constructor(private http: HttpClient) { }
 
@@ -55,7 +57,9 @@ export class UserService {
   }
 
   public clear() {
-    localStorage.clear();
+    //localStorage.clear();
+    window.localStorage.clear();
+
   }
 
 }

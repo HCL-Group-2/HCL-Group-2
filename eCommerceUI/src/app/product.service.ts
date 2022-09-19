@@ -9,10 +9,10 @@ import { Product } from './model/Product';
 export class ProductService {
   
   // test
-  private baseURL = 'http://localhost:7777/';
+  //private baseURL = 'http://localhost:7777/';
 
   // production
-  // private baseURL = location.href;
+  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
 
 
   constructor(private http: HttpClient) { }

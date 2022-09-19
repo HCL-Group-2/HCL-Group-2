@@ -29,7 +29,16 @@ export class HeaderComponent implements OnInit {
      @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
     private userService: UserService) { }
 
+
   ngOnInit(): void {
+    console.log('loggedIn from header ngOnInit() ' + this.loggedIn);
+
+    if(this.userService.getLoggedIn() === null){
+      this.loggedIn = false;
+      console.log('user is not logged in');
+    }
+
+    console.log('this.userService.getLoggedIn() ' + this.userService.getLoggedIn());
 
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
       filter((s: AuthState) => !!s),
@@ -130,9 +139,13 @@ export class HeaderComponent implements OnInit {
 
   public logout() {
     this.loggedIn = false;
+    console.log('loggedIn from header logout() ' + this.loggedIn);
+
+    console.log('header logging out, before clear this.storage ' + JSON.stringify(this.storage));
     this.userService.clear();
+    this.storage.clear();
+    console.log('header logging out, after clear this.storage ' + JSON.stringify(this.storage));
     this.goToLogin();
-    //window.location.reload();
   }
 
 

@@ -10,8 +10,12 @@ import { CartItems, CartItems2 } from './model/CartItems';
   providedIn: 'root'
 })
 export class CartService {
+
   //private baseURL = 'http://localhost:7777/ecommerce/';
-  private baseURL = 'http://localhost:7777/';
+  //private baseURL = 'http://localhost:7777/';
+
+
+  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
 
 
   constructor(private http: HttpClient) { }

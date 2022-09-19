@@ -1,11 +1,35 @@
 .custom-toolbar {
     background-color: rgba(118, 118, 236, 0.598);
     padding: 0 20px;
-  }
+}
 
-  @media all and (min-width: 992px) {
-    .navbar .nav-item .dropdown-menu{ display: none; }
-    .navbar .nav-item:hover .nav-link{   }
-    .navbar .nav-item:hover .dropdown-menu{ display: block; }
-    .navbar .nav-item .dropdown-menu{ margin-top:0; }
-  }
+@media all and (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: none;
+    }
+    .navbar .nav-item:hover .nav-link {}
+    .navbar .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+    .navbar .nav-item .dropdown-menu {
+        margin-top: 0;
+    }
+}
+
+.d-flex {
+    position: relative;
+    margin-left: .5%;
+}
+
+.search input:focus {
+    box-shadow: none;
+    border: 2px solid black;
+}
+
+.search input {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 1%;
+}

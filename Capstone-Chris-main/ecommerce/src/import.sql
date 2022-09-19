@@ -342,5 +342,30 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+DROP TRIGGER IF EXISTS `ecommerce`.upd_check;
+
+DELIMITER $$
+CREATE TRIGGER upd_check 
+BEFORE UPDATE ON products
+FOR EACH ROW
+BEGIN 
+	IF NEW.prod_inventory <= 0 THEN
+		SET NEW.prod_inventory =  100 + NEW.prod_inventory;
+	END IF;
+END $$
+
+DROP TRIGGER IF EXISTS `ecommerce`.QuantityUpdate;
+
+DELIMITER |
+CREATE TRIGGER  QuantityUpdate
+AFTER INSERT
+ON order_item 
+FOR EACH ROW
+	BEGIN
+		UPDATE products
+		SET products.prod_inventory = products.prod_inventory - New.prod_inventory 
+		WHERE products.id = New.prod_id;
+END |
+
 -- Dump completed on 2022-09-06  9:40:24
 
