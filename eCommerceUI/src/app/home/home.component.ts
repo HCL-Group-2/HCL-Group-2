@@ -20,8 +20,9 @@ import { UserService } from '../user.service';
 export class HomeComponent implements OnInit {
 
   public name$!: Observable<string>;
+  public email$!: Observable<string>;
 
-  name: string = "";
+  email: string = "";
   products !: Array<Product>;
   searchProducts !: Array<Product>;
   user !: User;
@@ -83,43 +84,47 @@ export class HomeComponent implements OnInit {
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
+      
+     this._oktaAuthStateService.authState$.subscribe(data =>{
+      console.log('raw email ' + data.idToken?.claims.email);
+      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+      this.email = data.idToken?.claims.email!;
+      console.log('this.email ' +   this.email );
+    });
+    console.log('this.email outside ' +   this.email );
 
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
-    })
-
-
-
-
+    });
   }
+
   getUser(userId: number) {
     this.userService.getUser(userId).subscribe(data => {
       this.user = data;
     });
   }
+
   getSearchBool() {
     this.search = (this.storage.getItem('search') === 'true');
-
   }
+
   updateUser(user: User) {
-
     this.userService.updateUser(user).subscribe();
-
   }
+
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
-    }
-
-    );
+    });
   }
+
   enableAddCart(event: any) {
     if (event.option.value > 0) {
       this.turnOnAddToCart = true;
     }
   }
-  openCartDialog(event: any, productID: number) {
 
+  openCartDialog(event: any, productID: number) {
     if (productID != undefined) {
       console.log('product id selected ' + productID);
     
@@ -141,22 +146,18 @@ export class HomeComponent implements OnInit {
           console.log('edit product dialog box is closed.');
           window.location.reload();
         });
-        
       }
-
     }
     return undefined;
   }
-  getSearchProducts() {
-   
+
+  getSearchProducts() { 
     if(this.searchText !== null){
       this.productService.getProductsBySearch(this.searchText).subscribe(data => {
         this.searchProducts = data;
       }
       );
-
-    }
-  
+    } 
   }
 
   getProductsByCategory(category: string) {

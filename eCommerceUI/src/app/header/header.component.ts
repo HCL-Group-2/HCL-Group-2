@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../cart.service';
 import { UserService } from '../user.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,23 +18,12 @@ export class HeaderComponent implements OnInit {
   loggedIn = true;
   isAdmin = false;
 
-
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
     private fb: FormBuilder,
-    private userService: UserService) { 
-
-    }
+    private userService: UserService) { }
 
   ngOnInit(): void {
-    console.log('loggedIn from header ngOnInit() ' + this.loggedIn);
-
-    if(this.userService.getLoggedIn() === null){
-      this.loggedIn = false;
-      console.log('user is not logged in');
-    }
-
-    console.log('this.userService.getLoggedIn() ' + this.userService.getLoggedIn());
 
     let userRole = this.storage.getItem('userRole')!;
     console.log('user role is ' + userRole);
@@ -44,21 +34,25 @@ export class HeaderComponent implements OnInit {
 
     if (userRole !== 'Admin') {
       let userId = +this.storage.getItem('userId')!;
-      this.cartService.getCartItems(userId).subscribe(data => {
-        data.forEach((element: any) => {
-          this.itemsInCartCount += element.quantity;
+      if(userId !== undefined || userId !== null){
+        this.cartService.getCartItems(userId).subscribe(data => {
+          data.forEach((element: any) => {
+            this.itemsInCartCount += element.quantity;
+          });
         });
-      });
-
-      this.searchForm = this.fb.group({
-        searchText: [null, [Validators.required]]
-      });
+        this.searchForm = this.fb.group({
+          searchText: [null, [Validators.required]]
+        });
+      }
     }
-
-
-
-
   }
+
+    
+
+
+
+
+  
   goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
