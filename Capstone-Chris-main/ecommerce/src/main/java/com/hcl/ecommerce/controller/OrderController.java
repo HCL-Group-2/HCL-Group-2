@@ -35,7 +35,7 @@ public class OrderController {
     private String stripeSecretKey;
 	
 	@PostMapping("/place_order")
-	public CreatePaymentResponse placeOrder(@RequestBody Order order) {
+	public ResponseEntity<CreatePaymentResponse> placeOrder(@RequestBody Order order) {
 		Stripe.apiKey = stripeSecretKey;
 		
 		//Convert cost to cents
@@ -55,9 +55,10 @@ public class OrderController {
 		} catch (StripeException se) {
 			//DEBUG
 			se.printStackTrace();
+			return new ResponseEntity<CreatePaymentResponse>((CreatePaymentResponse)null, HttpStatus.CONFLICT);
 		}
 		
-		return paymentResponse;
+		return new ResponseEntity<CreatePaymentResponse>(paymentResponse, HttpStatus.OK);
 	}
 	
 	@PostMapping("/order")
