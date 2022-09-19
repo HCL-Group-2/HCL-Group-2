@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
+    console.log(this.name$);
   }
 
   public async oktaLogin() : Promise<void> {
