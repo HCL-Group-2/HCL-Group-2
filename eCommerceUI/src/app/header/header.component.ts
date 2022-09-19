@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { AuthState, OktaAuth } from '@okta/okta-auth-js';
+import { Observable, filter, map } from 'rxjs';
 import { CartService } from '../cart.service';
 import { UserService } from '../user.service';
 
@@ -15,15 +18,45 @@ export class HeaderComponent implements OnInit {
   storage: Storage = sessionStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
-  loggedIn = true;
+  public name$!: Observable<string>;
+  public email$!: Observable<string>;
+  public isAuthenticated$!: Observable<boolean>;
+
+  email: string = "";
+  loggedIn = false;
   isAdmin = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
-    private fb: FormBuilder,
-    private userService: UserService) { }
+    private fb: FormBuilder,  private _oktaStateService: OktaAuthStateService,
+    @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
+    private userService: UserService,
+    private _oktaAuthStateService: OktaAuthStateService) { }
 
   ngOnInit(): void {
+
+    this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
+      filter((s: AuthState) => !!s),
+      map((s: AuthState) => s.isAuthenticated ?? false)
+    );
+
+    this.name$ = this._oktaAuthStateService.authState$.pipe(
+      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
+      map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
+      
+     this._oktaAuthStateService.authState$.subscribe(data =>{
+      console.log('raw email ' + data.idToken?.claims.email);
+      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+      this.email = data.idToken?.claims.email!;
+      console.log('this.email ' +   this.email );
+    });
+    console.log('this.email outside ' +   this.email );
+    this.userService.getUserByEmail(this.email);
+    this.storage.setItem('userEmail', (this.email));
+
+
+
+
 
     let userRole = this.storage.getItem('userRole')!;
     console.log('user role is ' + userRole);

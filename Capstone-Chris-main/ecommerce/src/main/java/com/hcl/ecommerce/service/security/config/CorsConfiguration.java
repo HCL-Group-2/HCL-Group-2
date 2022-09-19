@@ -15,7 +15,7 @@ public class CorsConfiguration {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200", "http://localhost:8081")
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200", "http://localhost:8081", "https://ostrichmart.azurewebsites.net", "https://ostrichmart-backend.azurewebsites.net")
 						.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*")
 						.allowedOriginPatterns("*").allowCredentials(true).maxAge(MAX_AGE_SECS);
 			}
