@@ -25,7 +25,8 @@ export class CheckoutComponent implements OnInit {
   session: Storage = sessionStorage;
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService,
-    private checkOutService: CheckoutService, public checkoutDialog: MatDialog
+    private checkOutService: CheckoutService, public checkoutDialog: MatDialog,
+    private router: Router
   ) {
 
   }
@@ -75,11 +76,6 @@ export class CheckoutComponent implements OnInit {
 
     );
   }
-  deleteCartItem(userId: number){
-
-
-
-  }
 
   checkout(event: any) {
     let userFirstName = this.checkoutForm.get('firstname')?.value;
@@ -110,35 +106,28 @@ export class CheckoutComponent implements OnInit {
 
     // we don't store cvv in the database for security purpose
 
-    //   {
-    //     "user": {"firstName": "Test", "lastName": "User", "email": "testuser@gmail.com"},
-    //     "shippingAddress": {"address1": "1234 Test Address A", "address2": null, "city": "Frisco", "state": "Texas", "zipCode": "75034"},
-    //     "payment": {"name": "Test Name", "creditCardNumber": "1234567812345678", "expirationDate": "2024-01-01"}
-    // }
     this.userCheckout = { firstName: userFirstName, lastName: userLastName, email: userEmail };
     this.userShippingAddress = { "address1": address1, "address2": address2, "city": city, "state": state, "zipCode": zipcode };
     this.userPayment = { "name": nameOnCard, "creditCardNumber": creditCardNumber, "expirationDate": expirationDate };
     this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress, "payment": this.userPayment };
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
-    // orderCheckout
-    //    {"user":{"firstName":"Jane","lastName":"Doe","email":"jane.doe@hcl.com"},
-    //   "shippingAddress":{"address1":"1234 Test Address A","address2":null,"city":"Plano","state":"Texas","zipcode":"12345"},
-    //   "payment":{"name":"Jane Doe","creditCardNumber":"123456789","expirationDate":"2025-01-01"}
-    // }
-    // https://material.angular.io/components/dialog/exampless
 
     this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
 
-    this.checkoutDialog.open(CheckoutDialog, {
+    const dialogRef = this.checkoutDialog.open(CheckoutDialog, {
       data: {
         name: ' in the checkout placeholder',
       },
     });
 
-
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('edit product dialog box is closed.');
+      this.router.navigate(['/home']).then(() => {
+        window.location.reload();
+      });
+    });
 
   }
-
 
 }
 @Component({
@@ -151,8 +140,6 @@ export class CheckoutDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
-    window.location.reload();
-    // this.router.navigate(['/home']);
 
   }
 

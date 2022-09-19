@@ -74,8 +74,8 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
 
 const oktaAuth = new OktaAuth({
-  issuer: 'https://dev-06861319.okta.com/oauth2/default',
-  clientId: '0oa6b7ee0wwOnJzuz5d7',
+  issuer: "https://dev-34530608.okta.com/oauth2/default",
+  clientId: '0oa6batm961d386e25d7',
   redirectUri: window.location.origin + '/login/callback'
 });
 
