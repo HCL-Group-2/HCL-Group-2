@@ -107,47 +107,11 @@
 
                     <hr class="mb-4">
 
-                    <h4 class="mb-3">Payment</h4>
-                    <div formGroupName="payment">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <mat-form-field appearance="outline" style="width:80%;">
-                                    <mat-label>Name on card</mat-label>
-                                    <input type="text" matInput placeholder='Full name must match the login' formControlName="nameOnCard">
-                                    <mat-error> Name on card is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <mat-form-field appearance="outline" style="width:80%;">
-                                    <mat-label>card number</mat-label>
-                                    <input type="text" matInput formControlName="creditCardNumber">
-                                    <mat-error>Credit card number is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <mat-form-field appearance="outline" style="width:80%;">
-                                    <mat-label>Expiration Date</mat-label>
-                                    <input type="text" matInput placeholder='MM-YY' formControlName="expirationDate">
-                                    <mat-error> Expiration date required</mat-error>
-                                </mat-form-field> 
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <mat-form-field appearance="outline" style="width:80%;">
-                                    <mat-label>CVV</mat-label>
-                                    <input type="text" matInput formControlName="verificationCode">
-                                    <mat-error> Security code required</mat-error>
-                                </mat-form-field> 
-                            </div>
-
-                        </div>
-                    </div>      
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="stripeCheckoutPage()">Payment</button>
+                        <span class="flex-spacer"></span>
+                    </mat-card-actions>   
                 </form>
-
-                <hr class="mb-4">
-                <button mat-raised-button color="warn" (click)="checkout($event)">Continue to checkout</button>
 
             </div>
         </div>

@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 
 
 //import { OktaService } from './authenticate/okta.service';
-import { OAuthService } from 'angular-oauth2-oidc';
+// import { OAuthService } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 
-import {Cloudinary, CloudinaryImage} from '@cloudinary/url-gen';
+import { Cloudinary, CloudinaryImage } from '@cloudinary/url-gen';
 
 
 @Component({
@@ -24,24 +24,24 @@ export class AppComponent {
   //In constructor I have created the cloud connection to the 'demo' cloud, but we can choose which one is being connected
 
   constructor(private router: Router, public http: HttpClient) {
-      const cld = new Cloudinary({
-        cloud:{
-          cloudName: 'demo'
-        }
-      });
+    const cld = new Cloudinary({
+      cloud: {
+        cloudName: 'demo'
+      }
+    });
     //This is a demo image on a public cloud
     //this.img = cld.image('docs/models');
-   }
+  }
 
-   trigger(){
+  trigger() {
     this.http.get<any[]>('https://ostrichmart-backend.azurewebsites.net/')
       .subscribe(data => {
         console.log("get data")
       },
-      error => {
-      }
-    );
-   }
+        error => {
+        }
+      );
+  }
 
 
 }

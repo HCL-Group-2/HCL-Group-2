@@ -82,6 +82,7 @@ export class HeaderComponent implements OnInit {
 
 
   public userEntity(email: string){
+    this.storage.setItem('email', email); // remove?
     this.userService.getUserByEmail(email).subscribe(data =>{
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
