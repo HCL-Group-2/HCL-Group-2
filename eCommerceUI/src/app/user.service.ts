@@ -9,6 +9,8 @@ import { User } from './model/User';
 })
 export class UserService {
   private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+  // baseURL for local
+  //private baseURL = "localhost:8080/";
 
   constructor(private http: HttpClient) { }
 

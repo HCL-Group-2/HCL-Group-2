@@ -18,7 +18,7 @@ import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.CartItemService;
 
-@CrossOrigin(origins="https://ostrichmart.azurewebsites.net")
+@CrossOrigin(origins={"https://ostrichmart.azurewebsites.net", "http://localhost:4200"})
 @RestController
 public class CartItemController {
 	

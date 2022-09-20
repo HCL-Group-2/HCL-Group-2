@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
 
   private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
 
+  //private baseURL = "localhost:8080/";
+
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
   storage: Storage =sessionStorage;
