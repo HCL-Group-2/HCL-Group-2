@@ -19,8 +19,8 @@ import { OrdersManagementComponent } from './admin/orders-management/orders-mana
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
-import { EditUserComponent } from './admin/edit-user/edit-user.component';
-
+import { EditUserComponent } from './admin/edit-user/edit-user.component'
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const routes: Routes = [
 
@@ -41,7 +41,8 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
-  { path: "", redirectTo: "/login", pathMatch: "full" }
+  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: 'product-details/:id', component: ProductDetailsComponent},
 
 ];
 

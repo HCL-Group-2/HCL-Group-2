@@ -70,6 +70,7 @@ import { OrdersManagementComponent } from './admin/orders-management/orders-mana
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 
 
@@ -100,6 +101,7 @@ const oktaAuth = new OktaAuth({
     AddProductComponent,
     EditProductComponent,
     EditUserComponent,
+    ProductDetailsComponent,
 
 
   ],
