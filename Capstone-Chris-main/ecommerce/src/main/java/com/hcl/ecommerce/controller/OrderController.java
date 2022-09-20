@@ -32,7 +32,7 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@Value("${stripe.secret.key}") 
+	@Value("${stripe.api.key}") 
     private String stripeSecretKey;
 	
 	@PostMapping("/create-intent")
