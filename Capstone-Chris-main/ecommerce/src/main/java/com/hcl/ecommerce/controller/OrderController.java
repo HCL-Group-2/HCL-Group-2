@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.ecommerce.dto.CreatePaymentResponse;
+import com.hcl.ecommerce.dto.PaymentIntentDto;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
@@ -35,19 +36,20 @@ public class OrderController {
     private String stripeSecretKey;
 	
 	@PostMapping("/create-intent")
-	public ResponseEntity<CreatePaymentResponse> createIntent(@RequestBody Order order) {
+	public ResponseEntity<CreatePaymentResponse> createIntent(@RequestBody PaymentIntentDto intentDto) {
 		Stripe.apiKey = stripeSecretKey;
 		
 		//Convert cost to cents
-		BigDecimal tempTotal = order.getOrderTotal().multiply(new BigDecimal(100));
-		Long totalAmount =  tempTotal.longValue();
+		BigDecimal tempTotal = new BigDecimal(intentDto.getOrderTotal());
+		tempTotal = tempTotal.multiply(new BigDecimal(100));
+		Long totalAmount = tempTotal.longValue();
 		
 		CreatePaymentResponse paymentResponse = null;
 		try {
 			PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
 					.setCurrency("usd")
 					.setAmount(totalAmount)
-					.setCustomer(order.getUser().getEmail())
+					.setCustomer(intentDto.getEmail())
 					.build();
 
 			PaymentIntent intent = PaymentIntent.create(createParams);
