@@ -115,7 +115,18 @@ export class HomeComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
-    });
+    }
+    
+    );
+  }
+
+  
+  goProductDetails(product: Product) {
+    //console.log(' goProductDetails(productId: number) product: ' + JSON.stringify(product));
+    this.storage.setItem('productId', product.id!.toString());
+    this.router.navigateByUrl('home/productDetails', { state:product });
+
+    // this.router.navigate(['home/productDetails',product]);
   }
 
   enableAddCart(event: any) {

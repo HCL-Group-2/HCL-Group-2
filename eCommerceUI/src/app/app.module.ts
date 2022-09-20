@@ -70,17 +70,12 @@ import { OrdersManagementComponent } from './admin/orders-management/orders-mana
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
-<<<<<<< HEAD
-import { ProductDetailsComponent } from './product-details/product-details.component';
-
-=======
 import { AuthInterceptor } from './auth.interceptor';
->>>>>>> main
-
+import { ProductDetailsComponent } from './product-details/product-details.component'
 
 const oktaAuth = new OktaAuth({
-  issuer: "https://dev-34530608.okta.com/oauth2/default",
-  clientId: '0oa6batm961d386e25d7',
+  issuer: "https://dev-34479212.okta.com/oauth2/default",
+  clientId: '0oa6k6s96mW1KnQGt5d7',
   redirectUri: window.location.origin + '/login/callback'
 });
 
