@@ -50,10 +50,16 @@ export class HeaderComponent implements OnInit {
       console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
       if (this.isLoggedinFromOkta) {
         console.log('user is login with okta');
+        
         let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
+
         let email = idToken.claims.email;
         this.userEntity(email);
         this.storage.setItem('email', email);
+
+        let oktaFullName = idToken.claims.name;
+        console.log('okta full name ' + oktaFullName);
+
         let oktaUserRole = idToken.claims.groups[1];
         console.log('okta user role ' + oktaUserRole);
         let userId = +this.storage.getItem('userId')!;

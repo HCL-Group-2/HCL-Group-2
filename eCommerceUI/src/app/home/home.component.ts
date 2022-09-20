@@ -48,8 +48,6 @@ export class HomeComponent implements OnInit {
     console.log('at customer home page constructor');
   }
 
-
-
   ngOnInit(): void {
 
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
@@ -60,7 +58,7 @@ export class HomeComponent implements OnInit {
 
     this.getUser(userId);
 
-  
+
     if (this.storage.getItem('search') == 'true') {
       if (this.storage.getItem('category') == 'toys') {
         this.getProductsByCategory('toys');
@@ -84,18 +82,21 @@ export class HomeComponent implements OnInit {
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
-      
-     this._oktaAuthStateService.authState$.subscribe(data =>{
+
+    this._oktaAuthStateService.authState$.subscribe(data => {
       console.log('raw email ' + data.idToken?.claims.email);
       console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
       this.email = data.idToken?.claims.email!;
-      console.log('this.email ' +   this.email );
+      console.log('this.email ' + this.email);
     });
-    console.log('this.email outside ' +   this.email );
+    console.log('this.email outside ' + this.email);
 
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
     });
+
+
+
   }
 
   getUser(userId: number) {
@@ -115,7 +116,12 @@ export class HomeComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
+
     });
+  }
+
+  goProductDetails(productId: number) {
+    this.router.navigate(['home/productDetails', productId]);
   }
 
   enableAddCart(event: any) {
@@ -127,7 +133,7 @@ export class HomeComponent implements OnInit {
   openCartDialog(event: any, productID: number) {
     if (productID != undefined) {
       console.log('product id selected ' + productID);
-    
+
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value;
@@ -141,7 +147,7 @@ export class HomeComponent implements OnInit {
             name: ' in the cart placeholder',
           }, disableClose: true
         });
-    
+
         dialogRef.afterClosed().subscribe(() => {
           console.log('edit product dialog box is closed.');
           window.location.reload();
@@ -151,13 +157,13 @@ export class HomeComponent implements OnInit {
     return undefined;
   }
 
-  getSearchProducts() { 
-    if(this.searchText !== null){
+  getSearchProducts() {
+    if (this.searchText !== null) {
       this.productService.getProductsBySearch(this.searchText).subscribe(data => {
         this.searchProducts = data;
       }
       );
-    } 
+    }
   }
 
   getProductsByCategory(category: string) {
@@ -183,7 +189,7 @@ export class CartDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
-   // window.location.reload();
+    // window.location.reload();
 
   }
 
