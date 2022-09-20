@@ -5,6 +5,7 @@ import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
 import { Observable, filter, map } from 'rxjs';
 import { CartService } from '../cart.service';
+import { User } from '../model/User';
 import { UserService } from '../user.service';
 
 @Component({
@@ -16,11 +17,14 @@ export class HeaderComponent implements OnInit {
 
   itemsInCartCount: number = 0;
   storage: Storage = sessionStorage;
+  localStorage: Storage = localStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
-  public name$!: Observable<string>;
-  public email$!: Observable<string>;
+  user: User = new User();
+
   public isAuthenticated$!: Observable<boolean>;
+
+  isLoggedinFromOkta = false;
 
   email: string = "";
   loggedIn = false;
@@ -40,52 +44,54 @@ export class HeaderComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
 
-    this.name$ = this._oktaAuthStateService.authState$.pipe(
-      filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
-      map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
-      
-     this._oktaAuthStateService.authState$.subscribe(data =>{
-      console.log('raw email ' + data.idToken?.claims.email);
-      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
-      this.email = data.idToken?.claims.email!;
-      console.log('this.email ' +   this.email );
-    });
-    console.log('this.email outside ' +   this.email );
-    this.userService.getUserByEmail(this.email);
-    this.storage.setItem('userEmail', (this.email));
-
-
-
-
-
-    let userRole = this.storage.getItem('userRole')!;
-    console.log('user role is ' + userRole);
-    if (userRole !== undefined && userRole === 'Admin') {
-      console.log('admin user');
-      this.isAdmin = true;
-    }
-
-    if (userRole !== 'Admin') {
-      let userId = +this.storage.getItem('userId')!;
-      if(userId !== undefined || userId !== null){
-        this.cartService.getCartItems(userId).subscribe(data => {
-          data.forEach((element: any) => {
-            this.itemsInCartCount += element.quantity;
+    this._oktaStateService.authState$.subscribe(data =>{
+      console.log('data.isAuthenticated ' + data.isAuthenticated);
+      this.isLoggedinFromOkta  = data.isAuthenticated !
+      console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
+      if (this.isLoggedinFromOkta) {
+        console.log('user is login with okta');
+        let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
+        let email = idToken.claims.email;
+        this.userEntity(email);
+        let oktaUserRole = idToken.claims.groups[1];
+        console.log('okta user role ' + oktaUserRole);
+        let userId = +this.storage.getItem('userId')!;
+        if(oktaUserRole === 'customer'){
+          this.cartService.getCartItems(userId).subscribe(data => {
+            data.forEach((element: any) => {
+              this.itemsInCartCount += element.quantity;
+            });
           });
-        });
-        this.searchForm = this.fb.group({
-          searchText: [null, [Validators.required]]
-        });
+    
+          this.searchForm = this.fb.group({
+            searchText: [null, [Validators.required]]
+          });
+        }else if(oktaUserRole === 'admin'){
+          console.log('admin loggin in okta');
+          this.isAdmin = true;
+
+
+        }
+       
       }
-    }
+
+    });
+    console.log('this.isLoggedinFromOkta outside ' + this.isLoggedinFromOkta);
   }
 
-    
 
+  public userEntity(email: string){
+    this.userService.getUserByEmail(email).subscribe(data =>{
+      this.storage.setItem('userId', data.id as unknown as string);
+      this.storage.setItem('firstName', data.firstName);
+      this.storage.setItem('lastName', data.lastName);
+      console.log('loggin in userEntity() in login component' + this.loggedIn);
+      // hardcoded role : backend may change
+      //this.storage.setItem('userRole', 'Admin');
+    }
+    );
+  }
 
-
-
-  
   goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
