@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/model/Product';
+
 import { ProductService } from 'src/app/product.service';
-// import { openCartDialog} from './home/home.component';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +24,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getProductById(this.productId).subscribe(data =>{
       this.productToView = data
     });
+
   }
 
 }

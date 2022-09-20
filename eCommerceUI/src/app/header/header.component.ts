@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState, OktaAuth } from '@okta/okta-auth-js';
-import { Observable, filter, map } from 'rxjs';
+import { filter, map, Observable, of } from 'rxjs';
 import { CartService } from '../cart.service';
-import { User } from '../model/User';
 import { UserService } from '../user.service';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -20,22 +18,20 @@ export class HeaderComponent implements OnInit {
   localStorage: Storage = localStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
-  user: User = new User();
-
+  // loggedIn = true;
+  isAdmin = false;
   public isAuthenticated$!: Observable<boolean>;
 
   isLoggedinFromOkta = false;
 
-  email: string = "";
-  loggedIn = false;
-  isAdmin = false;
+
+
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
     private fb: FormBuilder,  private _oktaStateService: OktaAuthStateService,
-    @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
-    private userService: UserService,
-    private _oktaAuthStateService: OktaAuthStateService) { }
+     @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
+    private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -50,16 +46,7 @@ export class HeaderComponent implements OnInit {
       console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
       if (this.isLoggedinFromOkta) {
         console.log('user is login with okta');
-        
         let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
-
-        let email = idToken.claims.email;
-        this.userEntity(email);
-        this.storage.setItem('email', email);
-
-        let oktaFullName = idToken.claims.name;
-        console.log('okta full name ' + oktaFullName);
-
         let oktaUserRole = idToken.claims.groups[1];
         console.log('okta user role ' + oktaUserRole);
         let userId = +this.storage.getItem('userId')!;
@@ -84,21 +71,14 @@ export class HeaderComponent implements OnInit {
 
     });
     console.log('this.isLoggedinFromOkta outside ' + this.isLoggedinFromOkta);
+
+
+
+
+
+
+
   }
-
-
-  public userEntity(email: string){
-    this.userService.getUserByEmail(email).subscribe(data =>{
-      this.storage.setItem('userId', data.id as unknown as string);
-      this.storage.setItem('firstName', data.firstName);
-      this.storage.setItem('lastName', data.lastName);
-      console.log('loggin in userEntity() in login component' + this.loggedIn);
-      // hardcoded role : backend may change
-      //this.storage.setItem('userRole', 'Admin');
-    }
-    );
-  }
-
   goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
@@ -165,13 +145,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout() {
-    this.loggedIn = false;
-    console.log('loggedIn from header logout() ' + this.loggedIn);
-
-    console.log('header logging out, before clear this.storage ' + JSON.stringify(this.storage));
+    // this.loggedIn = false;
     this.userService.clear();
-    this.storage.clear();
-    console.log('header logging out, after clear this.storage ' + JSON.stringify(this.storage));
     this.goToLogin();
   }
 

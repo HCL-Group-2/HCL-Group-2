@@ -72,14 +72,19 @@ import { EditProductComponent } from './admin/product-mangement/edit-product/edi
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { AuthInterceptor } from './auth.interceptor';
 
+import { ProductDetailsComponent } from './home/product-details/product-details.component';
+
+
 
 const oktaAuth = new OktaAuth({
-  issuer: "https://dev-34530608.okta.com/oauth2/default",
+
+  issuer: 'https://dev-34530608.okta.com/oauth2/default',
+
   clientId: '0oa6k6s96mW1KnQGt5d7',
+
   redirectUri: window.location.origin + '/login/callback'
+
 });
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,6 +105,7 @@ const oktaAuth = new OktaAuth({
     AddProductComponent,
     EditProductComponent,
     EditUserComponent,
+    ProductDetailsComponent,
 
 
   ],

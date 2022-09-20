@@ -8,7 +8,9 @@ import { Product } from './model/Product';
 })
 export class ProductService {
 
-  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+  // private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+
+  private baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 

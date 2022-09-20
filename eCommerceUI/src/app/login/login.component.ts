@@ -19,7 +19,8 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
 
-  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+  private baseURL = 'http://localhost:8080/';
+
 
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
     this.getUserDetails();
-    console.log("Inside of login.")
+    console.log('hello from login ');
   }
 
   getUserDetails(){
@@ -47,10 +48,11 @@ export class LoginComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? '')
     );
+
   }
 
   public async oktaLogin() : Promise<void> {
-    console.log("Okta login function run.");
+   console.log('okta login, hello !!!!!');
     await this._oktaAuth.signInWithRedirect({originalUri: "/home"});
   }
 
@@ -69,16 +71,12 @@ export class LoginComponent implements OnInit {
       this.userService.setLoggedIn("true");
       this.storage.setItem('userEmail', (this.user.email));
       this.userEntity();
-      this._router.navigate(['/home']).then(() => {
-        window.location.reload();
-      });
-     
+      this._router.navigate(['/home'])
     },
     (error) => {
       console.log(error);
       this.msg = "Bad credentials! Please re-enter email and password.";
     })
-   // window.location.reload(); trying to get the new header to show depending on the user role
   }
 
   public userEntity(){
@@ -86,10 +84,6 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
-      console.log('loggin in userEntity() in login component' + this.loggedIn);
-      // hardcoded role : backend may change
-      //this.storage.setItem('userRole', 'Admin');
-
 
     }
     );
@@ -98,14 +92,12 @@ export class LoginComponent implements OnInit {
   public logout() {
     this.loggedIn = false;
     this.userService.clear();
-    console.log('before session storage clear ' + this.storage);
     this.storage.clear();
-    console.log('after session storage clear ' + this.storage);
-
     window.location.reload();
   }
 
-  public isLoggedIn() { 
+  public isLoggedIn() {
+ 
     return this.userService.getLoggedIn() === "true";
   }
 

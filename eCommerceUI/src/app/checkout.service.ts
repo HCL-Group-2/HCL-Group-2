@@ -8,7 +8,10 @@ import { CheckoutOrder } from './model/CheckoutOrder';
   providedIn: 'root'
 })
 export class CheckoutService {
-  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+
+  // private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+
+  private baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
   
