@@ -126,6 +126,7 @@ export class CheckoutComponent implements OnInit {
     this.paymentIntent.total = this.checkoutTotal;
 
     var clientSecret = this.checkOutService.paymentIntent(this.paymentIntent);
+    console.log('paymentIntent' +JSON.stringify(clientSecret));
 
     if (clientSecret) {
       this.router.navigate(['/checkout-payment']);
