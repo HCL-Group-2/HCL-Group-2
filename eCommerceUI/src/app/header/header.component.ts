@@ -53,6 +53,7 @@ export class HeaderComponent implements OnInit {
         let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
         let email = idToken.claims.email;
         this.userEntity(email);
+        this.storage.setItem('email', email);
         let oktaUserRole = idToken.claims.groups[1];
         console.log('okta user role ' + oktaUserRole);
         let userId = +this.storage.getItem('userId')!;
