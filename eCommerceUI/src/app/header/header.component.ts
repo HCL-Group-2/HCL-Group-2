@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+import { AuthState, OktaAuth } from '@okta/okta-auth-js';
+import { Observable, filter, map } from 'rxjs';
 import { CartService } from '../cart.service';
+import { User } from '../model/User';
 import { UserService } from '../user.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,53 +17,81 @@ export class HeaderComponent implements OnInit {
 
   itemsInCartCount: number = 0;
   storage: Storage = sessionStorage;
+  localStorage: Storage = localStorage;
   searchText: string = '';
   searchForm: FormGroup = new FormGroup([]);
-  loggedIn = true;
-  isAdmin = false;
+  user: User = new User();
 
+  public isAuthenticated$!: Observable<boolean>;
+
+  isLoggedinFromOkta = false;
+
+  email: string = "";
+  loggedIn = false;
+  isAdmin = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
-    private fb: FormBuilder,
-    private userService: UserService) { 
-
-    }
+    private fb: FormBuilder,  private _oktaStateService: OktaAuthStateService,
+    @Inject(OKTA_AUTH) private _oktaAuth: OktaAuth,
+    private userService: UserService,
+    private _oktaAuthStateService: OktaAuthStateService) { }
 
   ngOnInit(): void {
-    console.log('loggedIn from header ngOnInit() ' + this.loggedIn);
 
-    if(this.userService.getLoggedIn() === null){
-      this.loggedIn = false;
-      console.log('user is not logged in');
-    }
+    this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
+      filter((s: AuthState) => !!s),
+      map((s: AuthState) => s.isAuthenticated ?? false)
+    );
 
-    console.log('this.userService.getLoggedIn() ' + this.userService.getLoggedIn());
+    this._oktaStateService.authState$.subscribe(data =>{
+      console.log('data.isAuthenticated ' + data.isAuthenticated);
+      this.isLoggedinFromOkta  = data.isAuthenticated !
+      console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
+      if (this.isLoggedinFromOkta) {
+        console.log('user is login with okta');
+        let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
+        let email = idToken.claims.email;
+        this.userEntity(email);
+        let oktaUserRole = idToken.claims.groups[1];
+        console.log('okta user role ' + oktaUserRole);
+        let userId = +this.storage.getItem('userId')!;
+        if(oktaUserRole === 'customer'){
+          this.cartService.getCartItems(userId).subscribe(data => {
+            data.forEach((element: any) => {
+              this.itemsInCartCount += element.quantity;
+            });
+          });
+    
+          this.searchForm = this.fb.group({
+            searchText: [null, [Validators.required]]
+          });
+        }else if(oktaUserRole === 'admin'){
+          console.log('admin loggin in okta');
+          this.isAdmin = true;
 
-    let userRole = this.storage.getItem('userRole')!;
-    console.log('user role is ' + userRole);
-    if (userRole !== undefined && userRole === 'Admin') {
-      console.log('admin user');
-      this.isAdmin = true;
-    }
 
-    if (userRole !== 'Admin') {
-      let userId = +this.storage.getItem('userId')!;
-      this.cartService.getCartItems(userId).subscribe(data => {
-        data.forEach((element: any) => {
-          this.itemsInCartCount += element.quantity;
-        });
-      });
+        }
+       
+      }
 
-      this.searchForm = this.fb.group({
-        searchText: [null, [Validators.required]]
-      });
-    }
-
-
-
-
+    });
+    console.log('this.isLoggedinFromOkta outside ' + this.isLoggedinFromOkta);
   }
+
+
+  public userEntity(email: string){
+    this.userService.getUserByEmail(email).subscribe(data =>{
+      this.storage.setItem('userId', data.id as unknown as string);
+      this.storage.setItem('firstName', data.firstName);
+      this.storage.setItem('lastName', data.lastName);
+      console.log('loggin in userEntity() in login component' + this.loggedIn);
+      // hardcoded role : backend may change
+      //this.storage.setItem('userRole', 'Admin');
+    }
+    );
+  }
+
   goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
