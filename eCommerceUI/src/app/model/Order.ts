@@ -1,5 +1,5 @@
 export class Order{
-    orderId !: number;
+    id !: number;
     orderDate !: Date;
     orderTotal !: number;
     orderStatus !: string;

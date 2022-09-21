@@ -2,13 +2,13 @@
     font-size:1em;
      height: 100%;
   }
-  
+
   h3 {
     font-family: Lato;
     text-align: center;
     color:	#0080ff;
   }
-  
+
   .circles{
     height: 0.938em;
     width: 0.938em;
@@ -16,15 +16,15 @@
     border-radius: 50%;
     display: inline-block;
   }
-  
+
   .active{
       background-color:#ff5e00cb;
   }
-  
+
   .circle-desc-active{
   font-weight: bold;
   }
-  
+
   .bar{
     width: 16%;
     height: 0.063em;
@@ -37,15 +37,15 @@
     margin:"0 auto";
     margin-top: 20px;
   }
-  
+
   .container{
     min-width:320px;
     margin: "0px auto";
     text-align: center;
   }
-  
+
   .circle-desc{
-   position: absolute;
+   position: relative;
    top:5.000em;
    font-size: 1.125em;
    width: auto;
@@ -53,3 +53,33 @@
    margin-left:-0.750em;
    margin-top: 0px;
   }
+
+  @media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+
+    .horizontal-timeline .items {
+    border-top: 2px solid #ddd;
+    }
+
+    .horizontal-timeline .items .items-list {
+    position: relative;
+    margin-right: 0;
+    }
+
+    .horizontal-timeline .items .items-list:before {
+    content: "";
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #ddd;
+    top: 0;
+    margin-top: -5px;
+    }
+
+    .horizontal-timeline .items .items-list {
+    padding-top: 15px;
+    }
