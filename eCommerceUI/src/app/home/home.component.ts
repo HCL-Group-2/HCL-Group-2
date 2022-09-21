@@ -56,9 +56,9 @@ export class HomeComponent implements OnInit {
     this.getSearchBool();
     console.log(this.search);
 
-    console.log('userId ' + userId);
+    console.log('userId from home component ' + userId);
     
-    this.getUser(1);
+    // this.getUser(1);
     if(this.storage.getItem('search')=='true'){
       if(this.storage.getItem('category')=='toys'){
         this.getProductsByCategory('toys');
@@ -150,9 +150,10 @@ export class HomeComponent implements OnInit {
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value; 
-      if (itemCount != null && this.user.id !== undefined) {
+      let userId = +this.storage.getItem('userId')!;
+      if (itemCount != null &&  userId !== undefined) {
         console.log('user id from cookies ' + this.user.id); 
-        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': userId }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
       }
