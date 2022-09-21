@@ -3,6 +3,7 @@
 .product-details-container{
     width: 100%;
     box-sizing: border-box;
+    margin-top: 10%;
 }
 
 .product-details-content{
@@ -13,11 +14,11 @@
 
 img{
         width: 100%;
+        margin-bottom: 20%;
 }
 
 .image-section {
-    width: 50%;
-    
+    width: 80%;    
 }
 
  .product-specs-section{
@@ -41,6 +42,8 @@ img{
 .product-description{
     font-size: 18px;
     color: gray;
+    margin-top: 20%;
+    
 }
 
 .select{
@@ -53,9 +56,11 @@ img{
 }
 
 .btn-add-cart{
-    height: 70px;
+    display: flex;
+    margin-top: 50px;
+    height: 200px;
     width: 100px;
     border: 1px solid black;
     color: #000;
-    
+    position: relative;
 }
