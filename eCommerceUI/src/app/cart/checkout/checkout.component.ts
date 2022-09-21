@@ -24,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   userPayment !: CheckoutCard;
   orderCheckOut !: CheckoutOrder;
   session: Storage = sessionStorage;
+  clientSecret: any;
 
   paymentIntent: PaymentIntent = new PaymentIntent();
 
@@ -58,6 +59,8 @@ export class CheckoutComponent implements OnInit {
 
     this.getCartItems(userId);
 
+
+
   }
 
 
@@ -72,7 +75,19 @@ export class CheckoutComponent implements OnInit {
         this.checkoutTotal = Math.round(this.checkoutTotal * 100) / 100;
 
         // for backend
-        this.session.setItem('total', this.checkoutTotal.toString());
+        
+        
+        this.paymentIntent.email = this.session.getItem('email')!;
+        this.paymentIntent.orderTotal = this.checkoutTotal;
+        console.log(this.paymentIntent);
+        console.log(this.clientSecret);
+    
+        this.checkOutService.paymentIntent(this.paymentIntent).subscribe(data=>{
+          //console.log(data.clientSecret);
+          this.clientSecret=data.clientSecret;
+          //console.log('clientSecret ' +this.clientSecret);
+        });
+        
 
       }
 
@@ -122,15 +137,8 @@ export class CheckoutComponent implements OnInit {
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
 
     // call
-    this.paymentIntent.email = this.userCheckout.email;
-    this.paymentIntent.total = this.checkoutTotal;
 
-    var clientSecret = this.checkOutService.paymentIntent(this.paymentIntent);
-    console.log('paymentIntent' +JSON.stringify(clientSecret));
 
-    if (clientSecret) {
-      this.router.navigate(['/checkout-payment']);
-    }
 
     this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
 
@@ -150,8 +158,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   stripeCheckoutPage(){
+    if (this.clientSecret) {
+      this.router.navigate(['/checkout-payment']);
+    }
  
-    this.router.navigate(['/checkout-payment']);
   }
 
 }

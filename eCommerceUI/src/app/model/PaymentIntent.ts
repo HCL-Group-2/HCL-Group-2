@@ -1,5 +1,5 @@
 export class PaymentIntent{
-    total !: number;
+    orderTotal !: number;
     email !: String;
 
   }
