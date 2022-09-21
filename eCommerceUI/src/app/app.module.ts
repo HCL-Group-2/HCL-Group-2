@@ -74,8 +74,8 @@ import { AuthInterceptor } from './auth.interceptor';
 import { ProductDetailsComponent } from './product-details/product-details.component'
 
 const oktaAuth = new OktaAuth({
-  issuer: "https://dev-34479212.okta.com/oauth2/default",
-  clientId: '0oa6k6s96mW1KnQGt5d7',
+  issuer: "https://dev-34530608.okta.com/oauth2/default",
+  clientId: '0oa6batm961d386e257',
   redirectUri: window.location.origin + '/login/callback'
 });
 
