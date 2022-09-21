@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Address } from './model/Address';
-import { User } from './model/User';
+import { OktaUser, User } from './model/User';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,9 @@ export class UserService {
     return this.http.post<User>(this.baseURL + 'user', user)
   }
 
-
+  saveOktaUser(user: OktaUser): Observable<OktaUser> {
+    return this.http.post<OktaUser>(this.baseURL + 'user', user)
+  }
 
   saveAddress(address: Address): Observable<Address> {
     return this.http.post<Address>(this.baseURL + 'address', address)
