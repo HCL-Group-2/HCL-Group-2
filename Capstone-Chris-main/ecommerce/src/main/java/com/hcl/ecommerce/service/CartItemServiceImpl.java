@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,12 +43,12 @@ public class CartItemServiceImpl implements CartItemService {
 			CartItem item = getCartItemById(cartItemId);
 			int currentQuantity = item.getQuantity();
 			item.setQuantity(currentQuantity + cartItem.getQuantity());
-			double subtotal = product.getPrice() * item.getQuantity();
+			BigDecimal subtotal = product.getPrice().multiply(new BigDecimal(item.getQuantity()));
 			item.setSubtotal(subtotal);
 			item.setProduct(product);
 			return cartItemRepository.save(item);
 		}
-		double subtotal = product.getPrice() * cartItem.getQuantity();
+		BigDecimal subtotal = product.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
 		cartItem.setSubtotal(subtotal);
 		cartItem.setUser(user);
 		cartItem.setProduct(product);

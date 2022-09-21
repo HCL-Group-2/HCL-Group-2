@@ -45,17 +45,18 @@ export class HeaderComponent implements OnInit {
     );
 
     this._oktaStateService.authState$.subscribe(data =>{
-      console.log('data.isAuthenticated ' + data.isAuthenticated);
+      //console.log('data.isAuthenticated ' + data.isAuthenticated);
       this.isLoggedinFromOkta  = data.isAuthenticated !
-      console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
+      //console.log('this.isLoggedinFromOkta inside ' + this.isLoggedinFromOkta);
       if (this.isLoggedinFromOkta) {
         console.log('user is login with okta');
         let idToken = JSON.parse( this.localStorage.getItem('okta-token-storage') !).idToken;
         let email = idToken.claims.email;
+        this.storage.setItem('email', email);
         this.userEntity(email);
         this.storage.setItem('email', email);
         let oktaUserRole = idToken.claims.groups[1];
-        console.log('okta user role ' + oktaUserRole);
+        //console.log('okta user role ' + oktaUserRole);
         let userId = +this.storage.getItem('userId')!;
         if(oktaUserRole === 'customer'){
           this.cartService.getCartItems(userId).subscribe(data => {
@@ -86,7 +87,7 @@ export class HeaderComponent implements OnInit {
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
-      console.log('loggin in userEntity() in login component' + this.loggedIn);
+      //console.log('loggin in userEntity() in login component' + this.loggedIn);
       // hardcoded role : backend may change
       //this.storage.setItem('userRole', 'Admin');
     }
@@ -160,12 +161,12 @@ export class HeaderComponent implements OnInit {
 
   public logout() {
     this.loggedIn = false;
-    console.log('loggedIn from header logout() ' + this.loggedIn);
+    //console.log('loggedIn from header logout() ' + this.loggedIn);
 
-    console.log('header logging out, before clear this.storage ' + JSON.stringify(this.storage));
+    //console.log('header logging out, before clear this.storage ' + JSON.stringify(this.storage));
     this.userService.clear();
     this.storage.clear();
-    console.log('header logging out, after clear this.storage ' + JSON.stringify(this.storage));
+    //console.log('header logging out, after clear this.storage ' + JSON.stringify(this.storage));
     this.goToLogin();
   }
 
