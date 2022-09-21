@@ -151,8 +151,9 @@ export class HomeComponent implements OnInit {
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value; 
       let userId = +this.storage.getItem('userId')!;
+      console.log('item count ' + itemCount + ' user id ' + userId);
       if (itemCount != null &&  userId !== undefined) {
-        console.log('user id from cookies ' + this.user.id); 
+        console.log('user id from cookies ' + userId); 
         this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': userId }, 'product': { 'id': productID } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
@@ -175,8 +176,6 @@ export class HomeComponent implements OnInit {
     );
     }
     
-
-
 }
 @Component({
   selector: 'cartDialog-dialog',

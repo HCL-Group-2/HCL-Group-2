@@ -56,19 +56,19 @@ export class HeaderComponent implements OnInit {
         let oktaFirstName = oktaName[0];
         let oktaLastName = oktaName[1];
         // adding okta name and email to the backend, then get the generated user ID
-        // this.oktaUser = {
-        //   "firstName": oktaFirstName,
-        //   "lastName": oktaLastName,
-        //   "email": oktaUserEmail,
-        //   "password": "xxxxx"
-        // };
-
         this.oktaUser = {
-          "firstName": 'Ollie6',
-          "lastName": 'O6',
-          "email": 'ollie6.ostrich6@hcl.com',
+          "firstName": oktaFirstName,
+          "lastName": oktaLastName,
+          "email": oktaUserEmail,
           "password": "xxxxx"
         };
+
+        // this.oktaUser = {
+        //   "firstName": 'Ollie6',
+        //   "lastName": 'O6',
+        //   "email": 'ollie6.ostrich6@hcl.com',
+        //   "password": "xxxxx"
+        // };
 
 
         console.log('oktaUser obj ' + JSON.stringify(this.oktaUser));
