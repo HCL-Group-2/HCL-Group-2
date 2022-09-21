@@ -49,7 +49,6 @@ public class OrderController {
 			PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
 					.setCurrency("usd")
 					.setAmount(totalAmount)
-					.setCustomer(intentDto.getEmail())
 					.build();
 
 			PaymentIntent intent = PaymentIntent.create(createParams);
