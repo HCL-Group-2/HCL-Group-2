@@ -2,9 +2,11 @@ package com.hcl.ecommerce.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +67,7 @@ public class OrderServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -73,7 +75,7 @@ public class OrderServiceImplTest {
 		CartItem cartItem = new CartItem();
 		cartItem.setId(1);
 		cartItem.setQuantity(1);
-		cartItem.setSubtotal(50.0);
+		cartItem.setSubtotal(new BigDecimal(50.0));
 		cartItem.setUser(user);
 		cartItem.setProduct(product);
 		
@@ -98,7 +100,7 @@ public class OrderServiceImplTest {
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
 		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
+		mockOrder.setOrderTotal(new BigDecimal(50.0));
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
@@ -123,7 +125,8 @@ public class OrderServiceImplTest {
 		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
+		//assertEquals(50.0, order.getOrderTotal(), 0.001);
+		assertTrue(order.getOrderTotal().equals(new BigDecimal(50.0)));
 		assertEquals("", order.getOrderStatus());
 		
 	}
@@ -142,7 +145,7 @@ public class OrderServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -150,7 +153,7 @@ public class OrderServiceImplTest {
 		CartItem cartItem = new CartItem();
 		cartItem.setId(1);
 		cartItem.setQuantity(1);
-		cartItem.setSubtotal(50.0);
+		cartItem.setSubtotal(new BigDecimal(50.0));
 		cartItem.setUser(user);
 		cartItem.setProduct(product);
 		
@@ -175,7 +178,7 @@ public class OrderServiceImplTest {
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
 		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
+		mockOrder.setOrderTotal(new BigDecimal(50.0));
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
@@ -188,7 +191,8 @@ public class OrderServiceImplTest {
 		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
+		//assertEquals(50.0, order.getOrderTotal(), 0.001);
+		assertTrue(order.getOrderTotal().equals(new BigDecimal(50.0)));
 		assertEquals("", order.getOrderStatus());
 		
 	}
@@ -207,7 +211,7 @@ public class OrderServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -215,7 +219,7 @@ public class OrderServiceImplTest {
 		CartItem cartItem = new CartItem();
 		cartItem.setId(1);
 		cartItem.setQuantity(1);
-		cartItem.setSubtotal(50.0);
+		cartItem.setSubtotal(new BigDecimal(50.0));
 		cartItem.setUser(user);
 		cartItem.setProduct(product);
 		
@@ -240,7 +244,7 @@ public class OrderServiceImplTest {
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
 		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
+		mockOrder.setOrderTotal(new BigDecimal(50.0));
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
@@ -255,7 +259,8 @@ public class OrderServiceImplTest {
 		assertNotNull(order);
 		
 		assertEquals(LocalDate.now(), order.getOrderDate());
-		assertEquals(50.0, order.getOrderTotal(), 0.001);
+		//assertEquals(50.0, order.getOrderTotal(), 0.001);
+		assertTrue(order.getOrderTotal().equals(new BigDecimal(50.0)));
 		assertEquals("", order.getOrderStatus());
 		
 	}
@@ -274,7 +279,7 @@ public class OrderServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -282,7 +287,7 @@ public class OrderServiceImplTest {
 		CartItem cartItem = new CartItem();
 		cartItem.setId(1);
 		cartItem.setQuantity(1);
-		cartItem.setSubtotal(50.0);
+		cartItem.setSubtotal(new BigDecimal(50.0));
 		cartItem.setUser(user);
 		cartItem.setProduct(product);
 		
@@ -307,7 +312,7 @@ public class OrderServiceImplTest {
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
 		mockOrder.setOrderDate(LocalDate.now());
-		mockOrder.setOrderTotal(50.0);
+		mockOrder.setOrderTotal(new BigDecimal(50.0));
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);

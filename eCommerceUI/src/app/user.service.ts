@@ -1,17 +1,15 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Address } from './model/Address';
-import { OktaUser, User } from './model/User';
+import { User } from './model/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
-
-  // private baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
@@ -37,12 +35,6 @@ export class UserService {
     return this.http.post<User>(this.baseURL + 'user', user)
   }
 
-  saveOktaUser(user: OktaUser): Observable<OktaUser> {
-    return this.http.post<User>(this.baseURL + 'user', user)
-  }
-
-
-
 
 
   saveAddress(address: Address): Observable<Address> {
@@ -65,3 +57,4 @@ export class UserService {
   }
 
 }
+

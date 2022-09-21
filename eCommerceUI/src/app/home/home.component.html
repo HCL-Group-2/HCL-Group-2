@@ -1,126 +1,108 @@
+
 <div class="profile-card">
   <div class="shield"></div>
   <h2 *ngIf="name$ | async as name">
     Hello {{name}}!
   </h2>
 
-
-  <body>
-    <!-- Header-->
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Shop in style</h1>
-          <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p>
-        </div>
+<body>
+  <!-- Header-->
+  <header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Shop in style</h1>
+        <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p>
       </div>
-    </header>
+    </div>
+  </header>
     <!-- Section-->
     <section class="py-5">
-      <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-          <ng-container *ngIf="search, else searchResult">
-            <div class="col mb-5" *ngFor="let p of products; let i = index">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src={{p.image}} alt="..." />
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{p.name}}</h5>
-                    <!-- Product price-->
-                    ${{p.price}}
-                  </div>
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+              <ng-container *ngIf="search, else searchResult">
+                <div class="col mb-5"*ngFor="let p of products; let i = index">
+                    <div class="card h-100">
+                    <!-- Product image-->
+                        <img class="card-img-top" src={{p.image}} alt="..." />
+                    <!-- Product details-->
+                      <div class="card-body p-4">
+                          <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{p.name}}</h5>
+                            <!-- Product price-->
+                            ${{p.price}}
+                          </div>
+                      </div>
+                    <!-- Product actions-->
+                    <form [formGroup]="cartQuantityForm" >
+                        <div class="text-center"><button class="btn btn-outline-dark mt-auto" value="p.id"
+                          (click)="openCartDialog($event, p.id!)" [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart</button></div>
+                        <mat-form-field appearance="outline"  >
+                          <mat-label  >Select a quantity</mat-label>
+                          <mat-select formControlName="quantity">
+                            <mat-option value="1"> 1 </mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                            <mat-option value="5">5</mat-option>
+                            <mat-option value="6">6</mat-option>
+                            <mat-option value="7">7</mat-option>
+                            <mat-option value="8">8</mat-option>
+                            <mat-option value="9">9</mat-option>
+                            <mat-option value="10">10</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>
+                        </mat-form-field>
+                    </form>                        
+                    </div>
                 </div>
-            
-                <!-- Product actions-->
-                <form [formGroup]="cartQuantityForm">
-                  <div class="text-center">
-                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="goProductDetails(p!)">
-                      View
-                    </button>
-                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="openCartDialog($event, p.id!)"
-                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart
-                    </button>
-                  </div>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Select a quantity</mat-label>
-                    <mat-select formControlName="quantity">
-                      <mat-option value="1"> 1 </mat-option>
-                      <mat-option value="2">2</mat-option>
-                      <mat-option value="3">3</mat-option>
-                      <mat-option value="4">4</mat-option>
-                      <mat-option value="5">5</mat-option>
-                      <mat-option value="6">6</mat-option>
-                      <mat-option value="7">7</mat-option>
-                      <mat-option value="8">8</mat-option>
-                      <mat-option value="9">9</mat-option>
-                      <mat-option value="10">10</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required
-                    </mat-error>
-                  </mat-form-field>
-                </form>
-              </div>
+              </ng-container>
+                <ng-template #searchResult>
+                  <div class="col mb-5"*ngFor="let p of searchProducts; let i = index">
+                      <div class="card h-100">
+                      <!-- Product image-->
+                          <img class="card-img-top" src={{p.image}} alt="..." />
+                      <!-- Product details-->
+                      <div class="card-body p-4">
+                          <div class="text-center">
+                          <!-- Product name-->
+                          <h5 class="fw-bolder">{{p.name}}</h5>
+                          <!-- Product price-->
+                          ${{p.price}}
+                          </div>
+                      </div>
+                      <!-- Product actions-->
+                      <form [formGroup]="cartQuantityForm" >
+                          <div class="text-center"><button class="btn btn-outline-dark mt-auto" value="p.id"
+                            (click)="openCartDialog($event, p.id!)" [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart</button></div>
+                          <mat-form-field appearance="outline"  >
+                            <mat-label  >Select a quantity</mat-label>
+                            <mat-select formControlName="quantity">
+                              <mat-option value="1"> 1 </mat-option>
+                              <mat-option value="2">2</mat-option>
+                              <mat-option value="3">3</mat-option>
+                              <mat-option value="4">4</mat-option>
+                              <mat-option value="5">5</mat-option>
+                              <mat-option value="6">6</mat-option>
+                              <mat-option value="7">7</mat-option>
+                              <mat-option value="8">8</mat-option>
+                              <mat-option value="9">9</mat-option>
+                              <mat-option value="10">10</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required</mat-error>              
+                          </mat-form-field>  
+                        </form>
+                      </div> 
+                    </div>
+                </ng-template>
             </div>
-          </ng-container>
-          <ng-template #searchResult>
-            <div class="col mb-5" *ngFor="let p of searchProducts; let i = index">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src={{p.image}} alt="..." />
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{p.name}}</h5>
-                    <!-- Product price-->
-                    ${{p.price}}
-                  </div>
-               
-                </div>
-              
-                <!-- Product actions-->
-                <form [formGroup]="cartQuantityForm">
-                  <div class="text-center">
-                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="goProductDetails(p!)">
-                      View
-                    </button>
-            
-                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="openCartDialog($event, p.id!)"
-                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">
-                      Add to cart
-                    </button>
-                  </div>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Select a quantity</mat-label>
-                    <mat-select formControlName="quantity">
-                      <mat-option value="1"> 1 </mat-option>
-                      <mat-option value="2">2</mat-option>
-                      <mat-option value="3">3</mat-option>
-                      <mat-option value="4">4</mat-option>
-                      <mat-option value="5">5</mat-option>
-                      <mat-option value="6">6</mat-option>
-                      <mat-option value="7">7</mat-option>
-                      <mat-option value="8">8</mat-option>
-                      <mat-option value="9">9</mat-option>
-                      <mat-option value="10">10</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required
-                    </mat-error>
-                  </mat-form-field>
-                </form>
-              </div>
-            </div>
-          </ng-template>
         </div>
-      </div>
     </section>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
-      </div>
-    </footer>
-    <router-outlet></router-outlet>
+  <!-- Footer-->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+    </div>
+  </footer>
+  <router-outlet></router-outlet>
+

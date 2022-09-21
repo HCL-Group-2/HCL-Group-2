@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -9,8 +10,6 @@ import { Product } from './model/Product';
 export class ProductService {
 
   private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
-
-  //private baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
@@ -42,7 +41,6 @@ export class ProductService {
     return this.http.delete(this.baseURL + 'product/' + productId);
   }
 
-  
- 
 
 }
+

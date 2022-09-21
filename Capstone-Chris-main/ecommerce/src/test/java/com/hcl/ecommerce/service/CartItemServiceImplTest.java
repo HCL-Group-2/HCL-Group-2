@@ -2,9 +2,11 @@ package com.hcl.ecommerce.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -52,7 +54,7 @@ public class CartItemServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -60,7 +62,7 @@ public class CartItemServiceImplTest {
 		CartItem mockCartItem = new CartItem();
 		mockCartItem.setId(1);
 		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
+		mockCartItem.setSubtotal(new BigDecimal(50.0));
 		mockCartItem.setUser(user);
 		mockCartItem.setProduct(product);
 		
@@ -75,7 +77,8 @@ public class CartItemServiceImplTest {
 		assertNotNull(cartItem);
 		
 		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		//assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		assertTrue(cartItem.getSubtotal().equals(new BigDecimal(50.0)));
 		
 	}
 	
@@ -93,7 +96,7 @@ public class CartItemServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -101,7 +104,7 @@ public class CartItemServiceImplTest {
 		CartItem mockCartItem = new CartItem();
 		mockCartItem.setId(1);
 		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
+		mockCartItem.setSubtotal(new BigDecimal(50.0));
 		mockCartItem.setUser(user);
 		mockCartItem.setProduct(product);
 		
@@ -112,7 +115,8 @@ public class CartItemServiceImplTest {
 		assertNotNull(cartItem);
 		
 		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		//assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		assertTrue(cartItem.getSubtotal().equals(new BigDecimal(50.0)));
 		
 	}
 	
@@ -130,7 +134,7 @@ public class CartItemServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -138,7 +142,7 @@ public class CartItemServiceImplTest {
 		CartItem mockCartItem = new CartItem();
 		mockCartItem.setId(1);
 		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
+		mockCartItem.setSubtotal(new BigDecimal(50.0));
 		mockCartItem.setUser(user);
 		mockCartItem.setProduct(product);
 		
@@ -151,8 +155,8 @@ public class CartItemServiceImplTest {
 		assertNotNull(cartItem);
 		
 		assertEquals(1, cartItem.getQuantity());
-		assertEquals(50.0, cartItem.getSubtotal(), 0.001);
-		
+		//assertEquals(50.0, cartItem.getSubtotal(), 0.001);
+		assertTrue(cartItem.getSubtotal().equals(new BigDecimal(50.0)));
 	}
 	
 	@Test
@@ -169,7 +173,7 @@ public class CartItemServiceImplTest {
 		product.setId(1);
 		product.setName("Test Product");
 		product.setDescription("A test product.");
-		product.setPrice(50.0);
+		product.setPrice(new BigDecimal(50.0));
 		product.setImage("Test Image");
 		product.setCategory("Test Category");
 		product.setInventory(300);
@@ -177,7 +181,7 @@ public class CartItemServiceImplTest {
 		CartItem mockCartItem = new CartItem();
 		mockCartItem.setId(1);
 		mockCartItem.setQuantity(1);
-		mockCartItem.setSubtotal(50.0);
+		mockCartItem.setSubtotal(new BigDecimal(50.0));
 		mockCartItem.setUser(user);
 		mockCartItem.setProduct(product);
 		

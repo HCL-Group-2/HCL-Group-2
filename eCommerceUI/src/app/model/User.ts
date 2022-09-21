@@ -1,5 +1,4 @@
 
-
 export class User{
     
     id !: number;
@@ -26,3 +25,4 @@ export class UserOnAdmin{
     pendingOrders ?: number;
 	
 }
+
