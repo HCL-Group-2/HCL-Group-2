@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class Product {
 	private String description;
 	
 	@Column(name = "prod_price", nullable = false)
-	private double price;
+	private BigDecimal price;
 	
 	@Column(name = "prod_image", nullable = false)
 	private String image;
@@ -83,11 +84,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

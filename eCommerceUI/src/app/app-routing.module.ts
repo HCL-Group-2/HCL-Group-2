@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { CartComponent } from './cart/cart.component';
 
 import { CheckoutComponent } from './cart/checkout/checkout.component';
-
+import { StripeComponent } from './cart/checkout/stripe/stripe.component';
 
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -22,6 +22,7 @@ import { EditProductComponent } from './admin/product-mangement/edit-product/edi
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
 
+
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout-payment', component: StripeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/editUser/:userId', component: EditUserComponent },
   { path: 'admin/productManagement', component: ProductMangementComponent  },
@@ -42,6 +44,7 @@ const routes: Routes = [
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full" }
+  
 
 ];
 

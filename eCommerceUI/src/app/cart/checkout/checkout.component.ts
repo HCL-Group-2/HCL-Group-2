@@ -7,6 +7,7 @@ import { CheckoutService } from 'src/app/checkout.service';
 import { Address } from 'src/app/model/Address';
 import { CartItems2 } from 'src/app/model/CartItems';
 import { CheckoutAddress, CheckoutCard, CheckoutOrder, CheckoutUser } from 'src/app/model/CheckoutOrder';
+import { PaymentIntent } from 'src/app/model/PaymentIntent';
 
 @Component({
   selector: 'app-checkout',
@@ -23,6 +24,8 @@ export class CheckoutComponent implements OnInit {
   userPayment !: CheckoutCard;
   orderCheckOut !: CheckoutOrder;
   session: Storage = sessionStorage;
+
+  paymentIntent: PaymentIntent = new PaymentIntent();
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService,
     private checkOutService: CheckoutService, public checkoutDialog: MatDialog,
@@ -68,6 +71,9 @@ export class CheckoutComponent implements OnInit {
         //this.cartItemsCheckout[cc].subtotal = Math.round(this.cartItemsCheckout[cc].subtotal * 100) / 100;
         this.checkoutTotal = Math.round(this.checkoutTotal * 100) / 100;
 
+        // for backend
+        this.session.setItem('total', this.checkoutTotal.toString());
+
       }
 
       Source: https://www.holadevs.com/pregunta/107232/how-can-i-add-up-the-total-in-ngfor
@@ -97,20 +103,34 @@ export class CheckoutComponent implements OnInit {
     console.log('state ' + state);
     let zipcode = this.checkoutForm.get('shippingaddress')?.get('zipcode')?.value;
     console.log('zipcode ' + zipcode);
-    let nameOnCard = this.checkoutForm.get('payment')?.get('nameOnCard')?.value;
-    console.log('nameOnCard ' + nameOnCard);
-    let creditCardNumber = this.checkoutForm.get('payment')?.get('creditCardNumber')?.value;
-    console.log('creditCardNumber ' + creditCardNumber);
-    let expirationDate = this.checkoutForm.get('payment')?.get('expirationDate')?.value;
-    console.log('expirationDate  ' + expirationDate);
+    // let nameOnCard = this.checkoutForm.get('payment')?.get('nameOnCard')?.value;
+    // console.log('nameOnCard ' + nameOnCard);
+    // let creditCardNumber = this.checkoutForm.get('payment')?.get('creditCardNumber')?.value;
+    // console.log('creditCardNumber ' + creditCardNumber);
+    // let expirationDate = this.checkoutForm.get('payment')?.get('expirationDate')?.value;
+    // console.log('expirationDate  ' + expirationDate);
 
     // we don't store cvv in the database for security purpose
 
-    this.userCheckout = { firstName: userFirstName, lastName: userLastName, email: userEmail };
-    this.userShippingAddress = { "address1": address1, "address2": address2, "city": city, "state": state, "zipCode": zipcode };
-    this.userPayment = { "name": nameOnCard, "creditCardNumber": creditCardNumber, "expirationDate": expirationDate };
-    this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress, "payment": this.userPayment };
+    // this.userCheckout = { firstName: userFirstName, lastName: userLastName, email: userEmail };
+    // this.userShippingAddress = { "address1": address1, "address2": address2, "city": city, "state": state, "zipCode": zipcode };
+    // this.userPayment = { "name": nameOnCard, "creditCardNumber": creditCardNumber, "expirationDate": expirationDate };
+
+    
+
+    this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress/*, "payment": this.userPayment */ };
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
+
+    // call
+    this.paymentIntent.email = this.userCheckout.email;
+    this.paymentIntent.total = this.checkoutTotal;
+
+    var clientSecret = this.checkOutService.paymentIntent(this.paymentIntent);
+    console.log('paymentIntent' +JSON.stringify(clientSecret));
+
+    if (clientSecret) {
+      this.router.navigate(['/checkout-payment']);
+    }
 
     this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
 
@@ -129,6 +149,11 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+  stripeCheckoutPage(){
+ 
+    this.router.navigate(['/checkout-payment']);
+  }
+
 }
 @Component({
   selector: 'checkoutDialog-dialog',
@@ -144,4 +169,3 @@ export class CheckoutDialog {
   }
 
 }
-

@@ -5,7 +5,7 @@ export class CheckoutOrder{
    
     user !: CheckoutUser;
     shippingAddress !:  CheckoutAddress;
-    payment !: CheckoutCard;
+    // payment !: CheckoutCard;
 
 }
 export class CheckoutUser{
