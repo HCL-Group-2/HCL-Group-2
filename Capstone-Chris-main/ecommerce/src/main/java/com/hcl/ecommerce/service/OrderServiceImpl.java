@@ -1,6 +1,7 @@
 package com.hcl.ecommerce.service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new AddEntityException("There aren't any cart items");
 		}
 		List<OrderItem> orderItems = new ArrayList<>();
-		double total = 0.0;
+		BigDecimal total = new BigDecimal("0.00");
 		for (CartItem cartItem : cartItems) {
 			Product prod = getProductById(cartItem.getProduct().getId());
 			prod.setInventory(prod.getInventory() - cartItem.getQuantity());
@@ -61,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 			BeanUtils.copyProperties(cartItem, orderItem, "id");
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
-			total += orderItem.getSubtotal();
+			total.add(orderItem.getSubtotal());
 		}
 		order.setUser(user);
 		order.setOrderItems(orderItems);
