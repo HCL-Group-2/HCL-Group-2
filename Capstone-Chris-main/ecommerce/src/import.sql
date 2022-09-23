@@ -349,8 +349,8 @@ CREATE TRIGGER upd_check
 BEFORE UPDATE ON products
 FOR EACH ROW
 BEGIN 
-	IF NEW.prod_inventory <= 0 THEN
-		SET NEW.prod_inventory =  100 + NEW.prod_inventory;
+	IF NEW.prod_inventory <= 100 THEN
+		SET NEW.prod_inventory =  200 + NEW.prod_inventory;
 	END IF;
 END $$
 
