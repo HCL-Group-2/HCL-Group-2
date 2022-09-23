@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Order {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate orderDate;
 	
-	private double orderTotal;
+	private BigDecimal orderTotal;
 	
 	private String orderStatus;
 	
@@ -77,11 +78,11 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public double getOrderTotal() {
+	public BigDecimal getOrderTotal() {
 		return orderTotal;
 	}
 
-	public void setOrderTotal(double orderTotal) {
+	public void setOrderTotal(BigDecimal orderTotal) {
 		this.orderTotal = orderTotal;
 	}
 

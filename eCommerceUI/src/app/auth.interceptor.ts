@@ -24,9 +24,9 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!!allowedOrigins.find(origin => request.url.includes(origin))) {
       const authToken = this._oktaAuth.getAccessToken();
       req = request.clone({ setHeaders: { 'Authorization': `Bearer ${authToken}` } });
-      console.log('req inside ' + JSON.stringify(req));
+      //console.log('req inside ' + JSON.stringify(req));
     }
-    console.log('req outside ' + JSON.stringify(req));
+    //console.log('req outside ' + JSON.stringify(req));
 
 
     return req;

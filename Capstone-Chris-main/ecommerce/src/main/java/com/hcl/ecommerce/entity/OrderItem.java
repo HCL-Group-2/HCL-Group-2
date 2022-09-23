@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +37,7 @@ public class OrderItem {
 	private int quantity;
 	
 	@Column(nullable = false)
-	private double subtotal;
+	private BigDecimal subtotal;
 	
 	@ManyToOne
 	@JoinColumn(name = "order_id")
@@ -62,11 +64,11 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
 

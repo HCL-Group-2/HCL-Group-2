@@ -86,12 +86,12 @@ export class HomeComponent implements OnInit {
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
       
      this._oktaAuthStateService.authState$.subscribe(data =>{
-      console.log('raw email ' + data.idToken?.claims.email);
-      console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+      //console.log('raw email ' + data.idToken?.claims.email);
+      //console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
       this.email = data.idToken?.claims.email!;
-      console.log('this.email ' +   this.email );
+      //console.log('this.email ' +   this.email );
     });
-    console.log('this.email outside ' +   this.email );
+    //console.log('this.email outside ' +   this.email );
 
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
@@ -115,18 +115,7 @@ export class HomeComponent implements OnInit {
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
-    }
-    
-    );
-  }
-
-  
-  goProductDetails(product: Product) {
-    //console.log(' goProductDetails(productId: number) product: ' + JSON.stringify(product));
-    this.storage.setItem('productId', product.id!.toString());
-    this.router.navigateByUrl('home/productDetails', { state:product });
-
-    // this.router.navigate(['home/productDetails',product]);
+    });
   }
 
   enableAddCart(event: any) {
