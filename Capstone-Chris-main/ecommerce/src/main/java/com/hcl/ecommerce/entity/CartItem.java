@@ -50,7 +50,7 @@ public class CartItem {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(product, user);
+		return Objects.hash(product.getId(), user.getId());
 	}
 
 	@Override
