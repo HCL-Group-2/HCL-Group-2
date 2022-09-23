@@ -20,15 +20,15 @@ import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component'
-import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductDetailsComponent} from './product-details/product-details.component'
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: RegisterComponent },
- // { path: 'home', component: HomeComponent },
- { path: 'home/productDetails', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
+  // { path: 'home/productDetails/:productId', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
+  { path: 'home/productDetails', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', component: AdminComponent },
@@ -43,7 +43,6 @@ const routes: Routes = [
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  { path: 'product-details/:id', component: ProductDetailsComponent},
 
 ];
 

@@ -71,6 +71,7 @@ import { AddProductComponent } from './admin/product-mangement/add-product/add-p
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 
 const oktaAuth = new OktaAuth({
@@ -100,7 +101,7 @@ const oktaAuth = new OktaAuth({
     AddProductComponent,
     EditProductComponent,
     EditUserComponent,
-
+    ProductDetailsComponent,
 
   ],
   imports: [
