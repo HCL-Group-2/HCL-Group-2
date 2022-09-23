@@ -33,7 +33,7 @@ export class OrderComponent{
       });
     }
 
-  public status = ["Received","In Progress","Shipping","Arriving","Delivered"];
+  public status = ["Ordered","In Progress","Shipping","Arriving","Delivered"];
 
 
 }

@@ -61,16 +61,17 @@
     }
 
     .horizontal-timeline .items {
-    border-top: 2px solid #ddd;
+    border-top: 3-px solid #ddd;
     }
 
     .horizontal-timeline .items .items-list {
-    position: relative;
+    position: fixed;
     margin-right: 0;
     }
 
     .horizontal-timeline .items .items-list:before {
     content: "";
+    text-align: center;
     position: absolute;
     height: 8px;
     width: 8px;
@@ -81,5 +82,6 @@
     }
 
     .horizontal-timeline .items .items-list {
+      text-align: center;
     padding-top: 15px;
     }
