@@ -26,12 +26,12 @@ export class CheckoutComponent implements OnInit {
   userPayment !: CheckoutCard;
   orderCheckOut !: CheckoutOrder;
   session: Storage = sessionStorage;
-  
-  
+
+
   clientSecret: any;
   cardElement: any;
-   // paymentIntent: PaymentIntent = new PaymentIntent();
-  paymentItent2 !: PaymentIntent2;
+  // paymentIntent: PaymentIntent = new PaymentIntent();
+  paymentItent2: PaymentIntent2 = new PaymentIntent2();
   stripe = Stripe(environment.stripePublishableKey);
 
 
@@ -84,25 +84,25 @@ export class CheckoutComponent implements OnInit {
         this.checkoutTotal = Math.round(this.checkoutTotal * 100) / 100;
 
         // for backend
-        
+
         // this.paymentIntent.email = this.session.getItem('email')!;
         // this.paymentIntent.orderTotal = this.checkoutTotal;
         // console.log(this.paymentIntent);
         // console.log(this.clientSecret);
-    
+
         // this.checkOutService.paymentIntent(this.paymentIntent).subscribe(data=>{
         //   //console.log(data.clientSecret);
         //   this.clientSecret=data.clientSecret;
         //   //console.log('clientSecret ' +this.clientSecret);
         // });
 
-        this.paymentItent2.amount =  Math.round(this.checkoutTotal * 100);
-        this.paymentItent2.currency = "USD"; 
-        this.paymentItent2.receiptEmail =this.session.getItem('email')!;
+        this.paymentItent2.amount = Math.round(this.checkoutTotal * 100);
+        this.paymentItent2.currency = "USD";
+        this.paymentItent2.receiptEmail = this.session.getItem('email')!;
 
         console.log('paymentItent 2 ' + JSON.stringify(this.paymentItent2));
 
-        
+
 
       }
 
@@ -113,7 +113,7 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  
+
   setupStripePaymentForm() {
 
     // get a handle to stripe elements
@@ -160,13 +160,32 @@ export class CheckoutComponent implements OnInit {
     // this.userShippingAddress = { "address1": address1, "address2": address2, "city": city, "state": state, "zipCode": zipcode };
     // this.userPayment = { "name": nameOnCard, "creditCardNumber": creditCardNumber, "expirationDate": expirationDate };
 
-    
+
 
     this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress/*, "payment": this.userPayment */ };
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
 
     // call
 
+    this.checkOutService.createPaymentIntent(this.paymentItent2).subscribe(
+      (paymentIntentResponse) => {
+        this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+          {
+            payment_method: {
+              card: this.cardElement,
+              billing_details: {
+                email: userEmail,
+                name: `${userFirstName} ${userLastName}`,
+                address: {
+                  line1: address1,
+                  city: city,
+                  state: state,
+                  postal_code: zipcode
+                }
+              }
+            }
+          }, { handleActions: false })
+      });
 
 
     this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
@@ -186,11 +205,11 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  stripeCheckoutPage(){
+  stripeCheckoutPage() {
     if (this.clientSecret) {
       this.router.navigate(['/checkout-payment']);
     }
- 
+
   }
 
 }
