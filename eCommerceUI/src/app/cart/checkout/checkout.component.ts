@@ -7,7 +7,9 @@ import { CheckoutService } from 'src/app/checkout.service';
 import { Address } from 'src/app/model/Address';
 import { CartItems2 } from 'src/app/model/CartItems';
 import { CheckoutAddress, CheckoutCard, CheckoutOrder, CheckoutUser } from 'src/app/model/CheckoutOrder';
-import { PaymentIntent } from 'src/app/model/PaymentIntent';
+import { PaymentIntent, PaymentIntent2 } from 'src/app/model/PaymentIntent';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-checkout',
@@ -24,9 +26,14 @@ export class CheckoutComponent implements OnInit {
   userPayment !: CheckoutCard;
   orderCheckOut !: CheckoutOrder;
   session: Storage = sessionStorage;
+  
+  
   clientSecret: any;
+  cardElement: any;
+   // paymentIntent: PaymentIntent = new PaymentIntent();
+  paymentItent2 !: PaymentIntent2;
+  stripe = Stripe(environment.stripePublishableKey);
 
-  paymentIntent: PaymentIntent = new PaymentIntent();
 
   constructor(private formBuilder: FormBuilder, private cartService: CartService,
     private checkOutService: CheckoutService, public checkoutDialog: MatDialog,
@@ -36,6 +43,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.setupStripePaymentForm();
 
     this.checkoutForm = this.formBuilder.group({
       firstname: ['', [Validators.required]],
@@ -49,10 +58,10 @@ export class CheckoutComponent implements OnInit {
         zipcode: ['', [Validators.required]]
       }),
       payment: this.formBuilder.group({
-        nameOnCard: ['', [Validators.required]],
-        creditCardNumber: ['', [Validators.required]],
-        expirationDate: ['', [Validators.required]],
-        verificationCode: ['']
+        // nameOnCard: ['', [Validators.required]],
+        // creditCardNumber: ['', [Validators.required]],
+        // expirationDate: ['', [Validators.required]],
+        // verificationCode: ['']
       })
     })
     let userId = +this.session.getItem('userId')!;
@@ -76,17 +85,23 @@ export class CheckoutComponent implements OnInit {
 
         // for backend
         
-        
-        this.paymentIntent.email = this.session.getItem('email')!;
-        this.paymentIntent.orderTotal = this.checkoutTotal;
-        console.log(this.paymentIntent);
-        console.log(this.clientSecret);
+        // this.paymentIntent.email = this.session.getItem('email')!;
+        // this.paymentIntent.orderTotal = this.checkoutTotal;
+        // console.log(this.paymentIntent);
+        // console.log(this.clientSecret);
     
-        this.checkOutService.paymentIntent(this.paymentIntent).subscribe(data=>{
-          //console.log(data.clientSecret);
-          this.clientSecret=data.clientSecret;
-          //console.log('clientSecret ' +this.clientSecret);
-        });
+        // this.checkOutService.paymentIntent(this.paymentIntent).subscribe(data=>{
+        //   //console.log(data.clientSecret);
+        //   this.clientSecret=data.clientSecret;
+        //   //console.log('clientSecret ' +this.clientSecret);
+        // });
+
+        this.paymentItent2.amount =  Math.round(this.checkoutTotal * 100);
+        this.paymentItent2.currency = "USD"; 
+        this.paymentItent2.receiptEmail =this.session.getItem('email')!;
+
+        console.log('paymentItent 2 ' + JSON.stringify(this.paymentItent2));
+
         
 
       }
@@ -96,6 +111,20 @@ export class CheckoutComponent implements OnInit {
     }
 
     );
+  }
+
+  
+  setupStripePaymentForm() {
+
+    // get a handle to stripe elements
+    var elements = this.stripe.elements();
+
+    // Create a card element ... and hide the zip-code field
+    this.cardElement = elements.create('card', { hidePostalCode: true });
+
+    // Add an instance of card UI component into the 'card-element' div
+    this.cardElement.mount('#card-element');
+
   }
 
   checkout(event: any) {
