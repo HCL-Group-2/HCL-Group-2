@@ -55,13 +55,12 @@ public class OrderController {
 			paymentResponse = new CreatePaymentResponse(intent.getClientSecret());
 
 		} catch (StripeException se) {
-			se.printStackTrace();//DEBUG
 			return new ResponseEntity<CreatePaymentResponse>((CreatePaymentResponse)null, HttpStatus.CONFLICT);
 		}
 		
 		return new ResponseEntity<CreatePaymentResponse>(paymentResponse, HttpStatus.OK);
 	}
-	
+	//this comment is a test of commiting for github actions
 	@PostMapping("/order")
 	public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
 		try {
