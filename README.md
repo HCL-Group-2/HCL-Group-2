@@ -28,3 +28,4 @@ SonarCloud link: https://sonarcloud.io/project/overview?id=HCL-Group-2_HCL-Group
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-orange.svg)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
