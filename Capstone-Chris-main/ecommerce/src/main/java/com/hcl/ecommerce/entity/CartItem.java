@@ -1,6 +1,7 @@
 package com.hcl.ecommerce.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +48,11 @@ public class CartItem {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(product, user);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		CartItem item = null;
