@@ -18,7 +18,7 @@ img{
 }
 
 .image-section {
-    width: 80%;    
+    width: 60%;    
 }
 
  .product-specs-section{
@@ -43,16 +43,20 @@ img{
 .product-description{
     font-size: 18px;
     color: gray;
-    margin-top: 30%;
+    margin-top: 10%;
 }
 
 .btn-add-cart{
     display: flex;
-    margin-top: 20;
-    height: 200px;
+    height: 30px;
     width: 100px;
-    border: 1px solid black;
     color: #000;
-    position: relative;
     margin-top: 20%;
 }
+
+footer{
+    width:100%;
+    position:fixed;
+    bottom:0;
+    left:0;
+    }
