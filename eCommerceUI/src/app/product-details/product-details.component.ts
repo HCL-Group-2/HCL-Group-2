@@ -25,6 +25,8 @@ export class ProductDetailsComponent implements OnInit {
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
   
+  turnOnAddToCart: boolean = false;
+
    constructor(  private router: Router,
      private route: ActivatedRoute,
       private productService: ProductService,
@@ -36,6 +38,39 @@ export class ProductDetailsComponent implements OnInit {
 
      // console.log('product ' + JSON.stringify(this.product));
    }
+
+   enableAddCart(event: any) {
+    if (event.option.value > 0) {
+      this.turnOnAddToCart = true;
+    }
+  }
+
+   openCartDialog(event: any, productID: number) {
+    if (productID != undefined) {
+      console.log('product id selected ' + productID);
+    
+      console.log('selected item quantity ' + this.selectedQuantity);
+
+      let itemCount = this.cartQuantityForm.get('quantity')?.value;
+      if (itemCount != null && this.user.id !== undefined) {
+        console.log('user id from cookies ' + this.user.id);
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
+        this.cartService.addOneCartItem(this.selectedProduct).subscribe();
+
+        const dialogRef = this.cartDialog.open(CartDialog, {
+          data: {
+            name: ' in the cart placeholder',
+          }, disableClose: true
+        });
+    
+        dialogRef.afterClosed().subscribe(() => {
+          console.log('edit product dialog box is closed.');
+          window.location.reload();
+        });
+      }
+    }
+    return undefined;
+  }
 
   ngOnInit(): void {
     this.getProduct();
