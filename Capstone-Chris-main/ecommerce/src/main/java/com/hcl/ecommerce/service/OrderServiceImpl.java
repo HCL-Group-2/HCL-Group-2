@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
 			BeanUtils.copyProperties(cartItem, orderItem, "id");
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
-			total.add(orderItem.getSubtotal());
+			total = total.add(orderItem.getSubtotal());
 		}
 		order.setUser(user);
 		order.setOrderItems(orderItems);
