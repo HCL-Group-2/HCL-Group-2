@@ -26,6 +26,8 @@
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.java.source>1.8</sonar.java.source>
   		<okta.version>1.2.1</okta.version>
+  		<maven.compiler.source>1.8</maven.compiler.source>
+ 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	
 	<dependencies>	
@@ -199,6 +201,9 @@
 		    <plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                	<mainClass>com.hcl.ecommerce</mainClass>
+            </configuration>
 		    </plugin>
 		    
 		    <plugin>
@@ -229,6 +234,7 @@
             <!--<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>3.0.0-M6</version>
 			    <configuration>
 			        <testFailureIgnore>true</testFailureIgnore>
 			    </configuration>
