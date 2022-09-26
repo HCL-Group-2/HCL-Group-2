@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -13,6 +15,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import org.springframework.beans.factory.annotation.Value;
+
+
+import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
@@ -26,22 +35,28 @@ import com.hcl.ecommerce.repository.UserRepository;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-	
+
 	@Autowired
 	OrderRepository orderRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	CartItemRepository cartItemRepository;
-	
+
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	@Autowired
 	private MailSenderService mailSenderService;
-	
+
+	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
+
+		// initialize Stripe API with secret key
+		Stripe.apiKey = secretKey;
+	}
+
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
 		User user = userRepository.findByEmail(order.getUser().getEmail());
@@ -78,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
 //		}
 		return orderRepository.save(order);
 	}
-	
+
 	@Override
 	public Order getOrderById(Integer orderId) {
 		Optional<Order> order = orderRepository.findById(orderId);
@@ -86,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 			return order.get();
 		return null;
 	}
-	
+
 	@Override
 	public Order updateOrder(Order order) {
 		Order ord = getOrderById(order.getId());
@@ -100,17 +115,34 @@ public class OrderServiceImpl implements OrderService {
 	public void deleteOrder(Integer orderId) {
 		orderRepository.deleteById(orderId);
 	}
-	
+
 	@Override
 	public Product getProductById(Integer productId) {
 		Optional<Product> product = productRepository.findById(productId);
-		if (product.isPresent()) return product.get();
+		if (product.isPresent())
+			return product.get();
 		return null;
 	}
-	
+
 	@Override
 	public List<CartItem> getAllCartItemsByUserId(Integer userId) {
 		return cartItemRepository.getAllCartItemsByUserId(userId);
+	}
+
+	@Override
+	public PaymentIntent createPaymentIntent(PaymentInfoDTO paymentInfo) throws StripeException {
+
+		List<String> paymentMethodTypes = new ArrayList<>();
+		paymentMethodTypes.add("card");
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("amount", paymentInfo.getAmount());
+		params.put("currency", paymentInfo.getCurrency());
+		params.put("payment_method_types", paymentMethodTypes);
+		params.put("description", "ostrichMart purchase");
+		params.put("receipt_email", paymentInfo.getReceiptEmail());
+
+		return PaymentIntent.create(params);
 	}
 
 }

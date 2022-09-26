@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -74,11 +73,21 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { AuthInterceptor } from './auth.interceptor';
 
 
-const oktaAuth = new OktaAuth({
-  issuer: "https://dev-34530608.okta.com/oauth2/default",
-  clientId: '0oa6batm961d386e25d7',
-  redirectUri: window.location.origin + '/login/callback'
-});
+ const oktaAuth = new OktaAuth({
+   issuer: "https://dev-34530608.okta.com/oauth2/default",
+   clientId: '0oa6batm961d386e25d7',
+   redirectUri: window.location.origin + '/login/callback'
+ });
+
+//0oa6k6s96mW1KnQGt5d7
+
+
+//const oktaAuth = new OktaAuth({
+ // issuer: "https://dev-34530608.okta.com/oauth2/default",
+ // clientId: '0oa6k6s96mW1KnQGt5d7',
+ // redirectUri: window.location.origin + '/login/callback'
+//});
+
 
 
 @NgModule({
@@ -140,3 +149,4 @@ const oktaAuth = new OktaAuth({
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
