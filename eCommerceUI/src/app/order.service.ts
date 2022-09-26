@@ -7,7 +7,7 @@ import { Order } from "./model/Order";
   providedIn: 'root'
 })
 export class OrderService {
-  private baseURL = 'http://ostrichmart-backend.azurewebsites.net/ecommerce/';
+  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/ecommerce/';
 
   constructor(private http: HttpClient) { }
 
