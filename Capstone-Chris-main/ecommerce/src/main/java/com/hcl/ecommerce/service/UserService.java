@@ -29,6 +29,8 @@ public interface UserService {
 	Role getRoleById(Integer roleId);
 	
 	User getUserByEmail(String email);
+	
+	List<Order> getOrdersByUserId(Integer userId);
 
 	List<Order> getOrdersByUserId(Integer userId);
 

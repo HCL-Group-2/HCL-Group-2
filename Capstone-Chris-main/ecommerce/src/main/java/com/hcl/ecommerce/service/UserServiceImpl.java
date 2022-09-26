@@ -125,6 +125,19 @@ public class UserServiceImpl implements UserService {
         return user.getOrders();
     }
 
+	@Override
+	public List<Order> getOrdersByUserId(Integer userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		
+		if(userOptional.isPresent()) {
+			return userOptional.get().getOrders();
+		}
+		else {
+			return (List<Order>) null;
+		}
+
+	}
+
 //	@Override
 //	public User registerUser(UserDto userDto) {
 //		User user = new User();

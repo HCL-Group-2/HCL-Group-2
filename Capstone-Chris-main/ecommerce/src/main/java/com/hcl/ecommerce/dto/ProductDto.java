@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.dto;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,7 +22,7 @@ public class ProductDto {
 	
 	@NotNull
 	@Size(min = 0)
-	private double price;
+	private BigDecimal price;
 	
 	@NotNull
 	private String image;
@@ -56,11 +58,11 @@ public class ProductDto {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

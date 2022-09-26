@@ -1,1 +1,42 @@
-<p>admin works!</p>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Users Management</h1>
+            <!-- <p class="lead fw-normal text-white-50 mb-0">With the best deals you can find</p> -->
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th> Id</th>
+                <th> First Name </th>
+                <th> Last Name</th>
+                <th >Email</th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of usersOnAdmin">
+                <td> {{ u.id }} </td>
+                <td> {{ u.firstName }} </td>
+                <td> {{ u.lastName }} </td>
+                <td > {{ u.email }} </td>
+        
+                <td>
+                    <button class="btn btn-info" (click)="goToEditUserForm(u.id!)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+    </div>
+</footer>
+<router-outlet></router-outlet>

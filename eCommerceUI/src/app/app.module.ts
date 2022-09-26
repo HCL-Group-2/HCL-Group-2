@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -65,12 +65,17 @@ import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
 import { OktaAuth } from '@okta/okta-auth-js';
-
+import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
+import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
+import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
+import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
+import { EditUserComponent } from './admin/edit-user/edit-user.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 const oktaAuth = new OktaAuth({
-  issuer: 'https://dev-06861319.okta.com/oauth2/default',
-  clientId: '0oa6b7ee0wwOnJzuz5d7',
+  issuer: "https://dev-34530608.okta.com/oauth2/default",
+  clientId: '0oa6batm961d386e25d7',
   redirectUri: window.location.origin + '/login/callback'
 });
 
@@ -90,6 +95,11 @@ const oktaAuth = new OktaAuth({
     LoginComponent,
     NavComponent,
     WelcomeComponent,
+    ProductMangementComponent,
+    OrdersManagementComponent,
+    AddProductComponent,
+    EditProductComponent,
+    EditUserComponent,
 
 
   ],
@@ -123,7 +133,8 @@ const oktaAuth = new OktaAuth({
   ],
 
   providers: [
-    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

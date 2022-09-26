@@ -2,9 +2,11 @@ package com.hcl.ecommerce.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -35,7 +37,7 @@ public class ProductServiceImplTest {
 		mockProduct.setId(1);
 		mockProduct.setName("Test Product");
 		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
+		mockProduct.setPrice(new BigDecimal(50.0));
 		mockProduct.setImage("Test Image");
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
@@ -50,7 +52,8 @@ public class ProductServiceImplTest {
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
+		//assertEquals(50.0, product.getPrice(), 0.001);
+		assertTrue(product.getPrice().equals(new BigDecimal(50.0)));
 		assertEquals("Test Image", product.getImage());
 		assertEquals("Test Category", product.getCategory());
 		assertEquals(300, product.getInventory());
@@ -64,7 +67,7 @@ public class ProductServiceImplTest {
 		mockProduct.setId(1);
 		mockProduct.setName("Test Product");
 		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
+		mockProduct.setPrice(new BigDecimal(50.0));
 		mockProduct.setImage("Test Image");
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
@@ -77,7 +80,8 @@ public class ProductServiceImplTest {
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
+		//assertEquals(50.0, product.getPrice(), 0.001);
+		assertTrue(product.getPrice().equals(new BigDecimal(50.0)));
 		assertEquals("Test Image", product.getImage());
 		assertEquals("Test Category", product.getCategory());
 		assertEquals(300, product.getInventory());
@@ -91,7 +95,7 @@ public class ProductServiceImplTest {
 		mockProduct.setId(1);
 		mockProduct.setName("Test Product");
 		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
+		mockProduct.setPrice(new BigDecimal(50.0));
 		mockProduct.setImage("Test Image");
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);
@@ -106,7 +110,8 @@ public class ProductServiceImplTest {
 		
 		assertEquals("Test Product", product.getName());
 		assertEquals("A test product.", product.getDescription());
-		assertEquals(50.0, product.getPrice(), 0.001);
+		//assertEquals(50.0, product.getPrice(), 0.001);
+		assertTrue(product.getPrice().equals(new BigDecimal(50.0)));
 		assertEquals("Test Image", product.getImage());
 		assertEquals("Test Category", product.getCategory());
 		assertEquals(300, product.getInventory());
@@ -120,7 +125,7 @@ public class ProductServiceImplTest {
 		mockProduct.setId(1);
 		mockProduct.setName("Test Product");
 		mockProduct.setDescription("A test product.");
-		mockProduct.setPrice(50.0);
+		mockProduct.setPrice(new BigDecimal(50.0));
 		mockProduct.setImage("Test Image");
 		mockProduct.setCategory("Test Category");
 		mockProduct.setInventory(300);

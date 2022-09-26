@@ -8,7 +8,7 @@ import { Product } from './model/Product';
 })
 export class ProductService {
 
-  private baseURL = 'http://localhost:8081/ecommerce/';
+  private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +24,22 @@ export class ProductService {
   getProductByCategory(category: string):Observable<any>{
     return this.http.get(this.baseURL + 'productsbycategory?category='+category);
   }
+  
+  getProductById(productId: number):Observable<any>{
+    return this.http.get(this.baseURL + 'product/'+productId);
+  }
+  addProduct(newProduct: Product):Observable<any>{
+    return this.http.post(this.baseURL + 'product', newProduct);
+  }
+  updateProduct(newProduct: Product): Observable<any> {
+    return this.http.put<Product>(this.baseURL + 'product', newProduct);
+  }
+
+  deleteProduct(productId: number): Observable<any>{
+    //localhost:8081/ecommerce/product/1
+    return this.http.delete(this.baseURL + 'product/' + productId);
+  }
+
   
  
 

@@ -1,5 +1,8 @@
 package com.hcl.ecommerce.entity;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +38,7 @@ public class CartItem {
 	@Column(nullable = false)
 	private int quantity;
 	
-	private double subtotal;
+	private BigDecimal subtotal;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
@@ -45,6 +48,11 @@ public class CartItem {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(product.getId(), user.getId());
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		CartItem item = null;
@@ -78,11 +86,11 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 
-	public double getSubtotal() {
+	public BigDecimal getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
 
