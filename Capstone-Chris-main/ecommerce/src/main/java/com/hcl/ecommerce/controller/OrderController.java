@@ -27,7 +27,8 @@ import com.stripe.param.PaymentIntentCreateParams;
 
 
 
-@CrossOrigin(origins="https://ostrichmart.azurewebsites.net/")
+
+@CrossOrigin(origins="https://ostrichmart.azurewebsites.net")
 @RestController
 public class OrderController {
 	
@@ -57,7 +58,6 @@ public class OrderController {
 			paymentResponse = new CreatePaymentResponse(intent.getClientSecret());
 
 		} catch (StripeException se) {
-			se.printStackTrace();//DEBUG
 			return new ResponseEntity<CreatePaymentResponse>((CreatePaymentResponse)null, HttpStatus.CONFLICT);
 		}
 		
@@ -69,6 +69,7 @@ public class OrderController {
 		try {
 			order = orderService.addOrder(order);
 		} catch (AddEntityException e) {
+			e.printStackTrace();
 			return new ResponseEntity<Order>(order, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<Order>(order, HttpStatus.CREATED);

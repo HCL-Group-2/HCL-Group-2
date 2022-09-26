@@ -117,12 +117,19 @@ public class UserServiceImpl implements UserService {
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+	
 
 	@Override
 	public List<Order> getOrdersByUserId(Integer userId) {
-		User user = userRepository.findById(userId).get();
+		Optional<User> userOptional = userRepository.findById(userId);
 		
-		return user.getOrders();
+		if(userOptional.isPresent()) {
+			return userOptional.get().getOrders();
+		}
+		else {
+			return (List<Order>) null;
+		}
+
 	}
 
 //	@Override

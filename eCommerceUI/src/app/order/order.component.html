@@ -1,15 +1,79 @@
 <html>
 <body>
-<h3> Order Status</h3>
+  <section class="h-100 h-custom" style="background-color: #eee;">
+    <div *ngFor="let o of allOrders; let i = index">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card border-top border-bottom border-3" style="border-color: #2a27f3 !important;">
+            <div class="card-body p-5">
 
-  <div class="container">
-  <span *ngFor="let item of status;let i = index">
-    <span class="circle-desc" [class.circle-desc-active]="orderStatus == item">{{ item }}</span>
-    <span class="circles" [class.active]="orderStatus == item"></span>
-    <span class="bar" *ngIf="(i != status.length-1)"></span>
-  </span>
+              <p class="lead fw-bold mb-5" style="color: #2a27f3;">Purchase Receipt</p>
+
+              <div class="row">
+                <div class="col mb-3">
+                  <p class="small text-muted mb-1">Date Ordered</p>
+                  <p>{{o.orderDate}}</p>
+                </div>
+                <div class="col mb-3">
+                  <p class="small text-muted mb-1">Order No.</p>
+                  <p>{{o.id}}</p>
+                </div>
+              </div>
+
+              <p class="lead fw-bold mb-4 pb-2" style="color: #2a27f3;" text-align="left">Tracking Order</p>
+
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="horizontal-timeline">
+
+        <ul  class="list-inline items d-flex justify-content-between" text-align="center">
+          <li class="items-list">
+            <p class="py-1 px-2 rounded text-white" style="background-color: #2a27f3;">{{o.orderStatus}}</p>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
   </div>
 
+              <div class="row my-4">
+                <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                  <p class="lead fw-bold mb-0" style="color: #2a27f3;">${{o.orderTotal}}</p>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>
+
+  </section>
+
+<!--<div class="container">
+  <div *ngFor="let o of allOrders; let i = index">
+  <span *ngFor="let item of status;let i = index">
+    <span class="circles" [class.active]="o.orderStatus == item"></span>
+    <span class="circle-desc" [class.circle-desc-active]="o.orderStatus == item">{{ item }}</span>
+    <span class="bar" *ngIf="(i != status.length-1)"></span>
+  </span>
+
+  Display Order Total -->
+
+
+
   </body>
+
   </html>
+
 
