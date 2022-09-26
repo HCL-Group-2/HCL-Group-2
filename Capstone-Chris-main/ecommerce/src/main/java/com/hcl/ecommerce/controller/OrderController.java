@@ -27,7 +27,7 @@ import com.stripe.param.PaymentIntentCreateParams;
 
 
 
-
+@CrossOrigin
 @RestController
 public class OrderController {
 	
