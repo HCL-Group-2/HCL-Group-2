@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Product } from 'src/app/model/Product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../model/User';
 import { CartItems } from '../model/CartItems';
-import { CartDialog } from '../home/home.component';
-import { MatDialog } from '@angular/material/dialog';
 import { CartService } from '../cart.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 
 
@@ -28,10 +27,11 @@ export class ProductDetailsComponent implements OnInit {
   turnOnAddToCart: boolean = false;
 
    constructor(  private router: Router,
-     private route: ActivatedRoute,
+      private route: ActivatedRoute,
       private productService: ProductService,
       private cartService: CartService,
-      public cartDialog: MatDialog) { 
+      private formBuilder: FormBuilder,
+      public atcDialog: MatDialog) { 
 
      // this.product = this.route.snapshot.params['product'];
      console.log('passing product object test ' +  JSON.stringify(this.router.getCurrentNavigation()?.extras.state));
@@ -45,19 +45,19 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-   openCartDialog(event: any, productID: number) {
-    if (productID != undefined) {
-      console.log('product id selected ' + productID);
+  openAtcDialog(event: any) {
+    if (this.product.id != undefined) {
+      console.log('product id selected ' + this.product.id);
     
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value;
       if (itemCount != null && this.user.id !== undefined) {
         console.log('user id from cookies ' + this.user.id);
-        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': productID } };
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': this.product.id } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
-        const dialogRef = this.cartDialog.open(CartDialog, {
+        const dialogRef = this.atcDialog.open(AtcDialog, {
           data: {
             name: ' in the cart placeholder',
           }, disableClose: true
@@ -76,7 +76,9 @@ export class ProductDetailsComponent implements OnInit {
     this.getProduct();
     console.log(this.product);
     
-  
+    this.cartQuantityForm = this.formBuilder.group({
+      quantity: ['', [Validators.required]]
+    });
   }
 
   getProduct(){
@@ -87,6 +89,24 @@ export class ProductDetailsComponent implements OnInit {
       
     }); 
   }
-
   
+}
+
+@Component({
+  selector: 'atcDialog-dialog',
+  templateUrl: 'atcDialog-dialog.html',
+})
+export class AtcDialog {
+  constructor(public dialogRef: MatDialogRef<AtcDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
+    dialogRef.disableClose = true;
+
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+   // window.location.reload();
+
+  }
+
 }

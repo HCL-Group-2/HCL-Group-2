@@ -86,12 +86,18 @@ img{
     margin-top: 10%;
 }
 
+.mat-form-field {
+    width: 100px;
+    margin-top: 5%;
+}
+
 .btn-add-cart{
     display: flex;
     height: 30px;
     width: 100px;
-    color: #000;
-    margin-top: 10%;
+    border-radius: 20px;
+    color: rgb(27, 26, 26);
+    margin-top: 7%;
     float: right;
 }
 

@@ -27,9 +27,32 @@
 
             <h4>{{product.description}}</h4>
 
-          <div class="btn-add-cart" ><button class="btn-add-cart" >Add To Cart</button>
+          <div class="btn-add-cart" >
+            <button class="btn-add-cart" (click)="openAtcDialog($event)"
+            [disabled]="cartQuantityForm.get('quantity')?.hasError('required')" >Add To Cart
+          </button>
           </div>
-        </div>
+
+          <form [formGroup]="cartQuantityForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <mat-select formControlName="quantity">
+              <mat-option value="1"> 1 </mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+              <mat-option value="8">8</mat-option>
+              <mat-option value="9">9</mat-option>
+              <mat-option value="10">10</mat-option>
+            </mat-select>
+            <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required
+            </mat-error>
+          </mat-form-field>
+        </form>
+
     </div>
 </div>
  <!-- Footer-->
