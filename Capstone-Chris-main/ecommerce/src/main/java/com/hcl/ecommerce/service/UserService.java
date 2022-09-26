@@ -32,6 +32,8 @@ public interface UserService {
 	
 	List<Order> getOrdersByUserId(Integer userId);
 
+	List<Order> getOrdersByUserId(Integer userId);
+
 //	User loginUser(String username, String password);
 
 //	User registerUser(UserDto userDto);
