@@ -26,7 +26,6 @@ export class UserService {
   }
 
   getUserByEmail(email: string): Observable<User> {
-    // localhost:8081/ecommerce/byEmail?email=testuser@gmail.com
     return this.http.get<User>(this.baseURL + 'byEmail?email=' + email);
   }
 

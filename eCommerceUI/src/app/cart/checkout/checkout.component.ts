@@ -158,11 +158,12 @@ export class CheckoutComponent implements OnInit {
 
     this.userCheckout = { firstName: userFirstName, lastName: userLastName, email: userEmail };
     this.userShippingAddress = { "address1": address1, "address2": address2, "city": city, "state": state, "zipCode": zipcode };
-    this.userPayment = { "name": "xxxxx", "creditCardNumber": "xxxxx", "expirationDate": "xxxxx" };
+    // this.userPayment = { "name": "xxxxx", "creditCardNumber": "xxxxx", "expirationDate": "xxxxx" };
 
 
+    this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress };
 
-    this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress, "payment": this.userPayment  };
+    // this.orderCheckOut = { "user": this.userCheckout, "shippingAddress": this.userShippingAddress, "payment": this.userPayment  };
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
 
     // call
@@ -183,7 +184,7 @@ export class CheckoutComponent implements OnInit {
                   postal_code: zipcode
                 }
               }
-            }
+            },
           }, { handleActions: false })
       });
 
