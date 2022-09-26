@@ -19,13 +19,10 @@ import com.hcl.ecommerce.entity.OrderItem;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
-import com.hcl.ecommerce.message.MessagingRabbitmqApplication;
 import com.hcl.ecommerce.repository.CartItemRepository;
 import com.hcl.ecommerce.repository.OrderRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
 import com.hcl.ecommerce.repository.UserRepository;
-
-
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -60,9 +57,6 @@ public class OrderServiceImpl implements OrderService {
 		for (CartItem cartItem : cartItems) {
 			Product prod = getProductById(cartItem.getProduct().getId());
 			prod.setInventory(prod.getInventory() - cartItem.getQuantity());
-			if(prod.getInventory() < 100) {
-				System.out.println("Order more " + prod.getName());
-			}
 			productRepository.save(prod);
 			OrderItem orderItem = new OrderItem();
 			BeanUtils.copyProperties(cartItem, orderItem, "id");
