@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -40,7 +41,6 @@ export class ProductService {
     return this.http.delete(this.baseURL + 'product/' + productId);
   }
 
-  
- 
 
 }
+
