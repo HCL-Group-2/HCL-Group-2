@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <h3> Edit User</h3>
 
 <div [formGroup]="userEditForm" >
@@ -30,3 +31,43 @@
     
     </div>
 <button mat-raised-button color="warn" (click)="editUserSubmit($event)">Submit</button>
+=======
+<!-- Header of third level importance that says 'Edit User' -->
+<h3> Edit User</h3>
+
+<!-- A division of code tht collects control names together into a formGroup to use in the userEditForm class of the edit-user.component.ts -->
+<div [formGroup]="userEditForm" >
+
+        <!-- Input Form Field for getting the User ID and inputting it into the formGroup under the formControlName "id" -->
+        <mat-form-field appearance="outline" style="width:80%;">
+            <mat-label>User ID</mat-label>
+            <input type="text" matInput   formControlName="id">
+            <mat-error>User ID is required and cannot be changed</mat-error>
+        </mat-form-field>
+    
+        <!-- Input Form Field for getting the First Name and inputting it into the formGroup under the formControlName "firstName" -->
+        <mat-form-field appearance="outline" style="width:80%;">
+            <mat-label>First Name</mat-label>
+            <input type="text" matInput  formControlName="firstName">
+            <mat-error>First name is required</mat-error>
+        </mat-form-field>
+
+        <!-- Input Form Field for getting the Last Name and inputting it into the formGroup under the formControlName "lastName" -->
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Last Name</mat-label>
+            <input type="text" matInput formControlName="lastName">
+            <mat-error>Last Name is required</mat-error>
+        </mat-form-field>
+ 
+        <!-- Input Form Field for getting the Email and inputting it into the formGroup under the formControlName "email" -->
+        <mat-form-field appearance="outline" style="width:80%; ">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="email">
+            <mat-error>Email is required</mat-error>
+        </mat-form-field>
+    
+    </div>
+
+<!-- Rectangular button w/ elevation, color = 'warn', and with a click event that runs the editUserSubmit method after the button is pushed -->
+<button mat-raised-button color="warn" (click)="editUserSubmit($event)">Submit</button>
+>>>>>>> Stashed changes

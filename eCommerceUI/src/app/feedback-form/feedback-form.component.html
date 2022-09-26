@@ -1,0 +1,29 @@
+<form novalidate [formGroup]="feedbackForm" >
+    <mat-form-field appearance="outline" style="width:20%;">
+      <mat-label>User ID</mat-label>
+      <input type="text" matInput   formControlName="id">
+      <mat-error>User ID is required and cannot be changed</mat-error>
+    </mat-form-field>
+
+    <section class="more-feedbacks" formArrayName="morefeedbacks">
+      <h1>Any Suggestions?</h1>
+      <ul>
+        <li *ngFor="let item of morefeedbacksControls.controls; let i = index">
+          <input type="text" formControlName="{{i}}">
+          <button type="button" title="Delete Feedback" (click)="deleteMoreFeedback(i)">Delete</button>
+        </li>
+      </ul>
+      <button type="button" (click)="addMoreFeedback()">Add Feedback</button>
+    </section>
+    <button type="submit" [disabled]='!feedbackForm.valid'>Submit Feedback</button>
+    <button type="button" (click)="clearForm()">Clear Form</button>
+  </form>
+  
+  <!-- Form Data -->
+<!--  <section>
+    <hr>
+    <h1>Developers area</h1>
+    <pre>{{ feedbackForm.value | json }}</pre>
+  </section>
+
+  <router-outlet></router-outlet> -->
