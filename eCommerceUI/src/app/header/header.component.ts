@@ -80,6 +80,7 @@ export class HeaderComponent implements OnInit {
             console.log('oh yes.... user email is in the database ' + data.email);
             // get userId right away
             this.storage.setItem('userId', data.id.toString());
+            this.storage.setItem('email', this.oktaUser.email);
 
           } else {
             console.log('email in the database cannot be found');
