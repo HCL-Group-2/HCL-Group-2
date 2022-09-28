@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hcl.ecommerce.dto.AddressDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,16 @@ import lombok.ToString;
 @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
 public class Address {
 
+	public Address(AddressDto dto) {
+		id = dto.getId();
+		address1 = dto.getAddress1();
+		address2 =dto.getAddress2();
+		city = dto.getCity();
+		state = dto.getState();
+		zipCode = dto.getZipCode();
+		user = new User(dto.getUserDto());
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -46,5 +57,11 @@ public class Address {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
+	public AddressDto toDto() {
+		AddressDto dto = new AddressDto(id, address1, address2, city, state, zipCode, user.toDto());
+		
+		return dto;
+	}
 	
 }

@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hcl.ecommerce.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,14 @@ import lombok.ToString;
 @JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
 public class User {
 
+	public User(UserDto dto) {
+		id = dto.getId();
+		firstName = dto.getFirstName();
+		lastName = dto.getLastName();
+		email = dto.getEmail();
+		password = dto.getPassword();
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -88,6 +97,12 @@ public class User {
 	public void addRole(Role role) {
 		this.roles.add(role);
 	}
+	
+	public UserDto toDto() {
+		UserDto dto = new UserDto(id, firstName, lastName, email, password);
+		return dto;
+	}
+	
 
 	public Integer getId() {
 		return id;

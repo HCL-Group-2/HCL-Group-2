@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.AddressDto;
 import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.AddressService;
+
+
 
 @RestController
 public class AddressController {
@@ -24,25 +28,29 @@ public class AddressController {
 	AddressService addressService;
 	
 	@PostMapping("/address")
-	public ResponseEntity<Address> addAddress(@RequestBody Address address) {
+	public ResponseEntity<AddressDto> addAddress(@RequestBody AddressDto addressDto) {
+		Address address = new Address(addressDto);
+		
 		try {
 			address = addressService.addAddress(address);
 		} catch (AddEntityException e) {
-			return new ResponseEntity<Address>(address, HttpStatus.CONFLICT);
+			return new ResponseEntity<AddressDto>((AddressDto)null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Address>(address, HttpStatus.CREATED);
+		AddressDto responseDto = address.toDto();
+		
+		return new ResponseEntity<AddressDto>(responseDto, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/address/{id}")
-	public ResponseEntity<Address> getAddressById(@PathVariable("id") Integer id) {
+	public ResponseEntity<AddressDto> getAddressById(@PathVariable("id") Integer id) {
 		Address address = addressService.getAddressById(id);
-		return new ResponseEntity<Address>(address, HttpStatus.OK);
+		return new ResponseEntity<AddressDto>(address.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/address")
-	public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
+	public ResponseEntity<AddressDto> updateAddress(@RequestBody Address address) {
 		address = addressService.updateAddress(address);
-		return new ResponseEntity<Address>(address, HttpStatus.OK);
+		return new ResponseEntity<AddressDto>(address.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/address/{id}")
@@ -52,9 +60,14 @@ public class AddressController {
 	}
 	
 	@GetMapping("/addresses/{userid}")
-	public ResponseEntity<List<Address>> getAllAddressesByUserId(@PathVariable("userid") Integer userid) {
-		List<Address> list = addressService.getAllAddressesByUserId(userid);
-		return new ResponseEntity<List<Address>>(list, HttpStatus.OK);
+	public ResponseEntity<List<AddressDto>> getAllAddressesByUserId(@PathVariable("userid") Integer userid) {
+		List<Address> tempList = addressService.getAllAddressesByUserId(userid);
+		List<AddressDto> list = new ArrayList();
+		for(Address a : tempList) {
+			list.add(a.toDto());
+		}
+		return new ResponseEntity<List<AddressDto>>(list, HttpStatus.OK);
 	}
+	
 	
 }
