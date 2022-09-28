@@ -9,8 +9,6 @@ import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface UserService {
 	
-	boolean login(UserLoginDto userLoginDto);
-	
 	User addUser(User user) throws AddEntityException;
 
 	User getUserById(Integer userId);

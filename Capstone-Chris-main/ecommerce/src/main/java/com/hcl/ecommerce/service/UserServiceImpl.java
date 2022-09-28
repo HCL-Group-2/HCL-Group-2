@@ -28,14 +28,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private MailSenderService mailSenderService;
 	
-	@Override
-	public boolean login(UserLoginDto userLoginDto) {
-		if (userRepository.findByEmailAndPassword(userLoginDto.getEmail(), userLoginDto.getPassword()) != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	@Override
 	public synchronized User addUser(User user) throws AddEntityException {
@@ -81,6 +73,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByEmail(String email) {
+		
 		return userRepository.findByEmail(email);
 	}
 	
