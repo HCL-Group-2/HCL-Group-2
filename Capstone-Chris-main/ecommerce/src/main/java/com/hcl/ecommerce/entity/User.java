@@ -58,9 +58,6 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Address> addresses = new ArrayList<>();
-	
 	
 //	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //	private List<CreditCard> creditCards = new ArrayList<>();
@@ -110,13 +107,6 @@ public class User {
 		this.email = email;
 	}
 
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
-	}
 
 //	public List<CreditCard> getCreditCards() {
 //		return creditCards;

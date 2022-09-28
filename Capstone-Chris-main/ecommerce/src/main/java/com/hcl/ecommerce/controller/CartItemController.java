@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ecommerce.dto.AddressDto;
 import com.hcl.ecommerce.dto.CartItemDto;
-import com.hcl.ecommerce.entity.Address;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.CartItemService;
@@ -64,7 +62,7 @@ public class CartItemController {
 	@GetMapping("/cartitems/{userid}")
 	public ResponseEntity<List<CartItemDto>> getAllCartItemsByUserId(@PathVariable("userid") Integer userid) {
 		List<CartItem> tempList = cartItemService.getAllCartItemsByUserId(userid);
-		List<CartItemDto> list = new ArrayList();
+		List<CartItemDto> list = new ArrayList<CartItemDto>();
 		for(CartItem a : tempList) {
 			list.add(a.toDto());
 		}
