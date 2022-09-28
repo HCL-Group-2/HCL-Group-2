@@ -29,7 +29,7 @@ public interface UserService {
 	Role getRoleById(Integer roleId);
 	
 	User getUserByEmail(String email);
-	
+
 	List<Order> getOrdersByUserId(Integer userId);
 
 //	User loginUser(String username, String password);

@@ -104,7 +104,7 @@ public class OrderServiceImplTest {
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		//mockOrder.setPayment(payment);
 		
 		Mockito.when(userRepository.findByEmail(mockOrder.getUser().getEmail())).thenReturn(user);
 		
@@ -182,7 +182,7 @@ public class OrderServiceImplTest {
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		//mockOrder.setPayment(payment);
 		
 		Mockito.when(orderRepository.findById(1)).thenReturn(Optional.of(mockOrder));
 		
@@ -248,7 +248,7 @@ public class OrderServiceImplTest {
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		//mockOrder.setPayment(payment);
 		
 		Mockito.when(orderRepository.findById(1)).thenReturn(Optional.of(mockOrder));
 		
@@ -316,7 +316,7 @@ public class OrderServiceImplTest {
 		mockOrder.setOrderStatus("");
 		mockOrder.setUser(user);
 		mockOrder.setShippingAddress(shippingAddress);
-		mockOrder.setPayment(payment);
+		//mockOrder.setPayment(payment);
 		
 		orderServiceImpl.deleteOrder(1);
 		

@@ -1,47 +1,12 @@
 {"properties": [
   {
-    "name": "stripe.api.key",
+    "name": "stripe.key.secret",
     "type": "java.lang.String",
-    "description": "A description for 'stripe.api.key'"
+    "description": "A description for 'stripe.key.secret'"
   },
   {
-    "name": "stripe.public.key",
+    "name": "allowed.origins",
     "type": "java.lang.String",
-    "description": "A description for 'stripe.public.key'"
-  },
-  {
-    "name": "azure.application-insights.instrumentation-key",
-    "type": "java.lang.String",
-    "description": "A description for 'azure.application-insights.instrumentation-key'"
-  },
-  {
-    "name": "okta.oauth2.issuer",
-    "type": "java.lang.String",
-    "description": "A description for 'okta.oauth2.issuer'"
-  },
-  {
-    "name": "okta.oauth2.client-id",
-    "type": "java.lang.String",
-    "description": "A description for 'okta.oauth2.client-id'"
-  },
-  {
-    "name": "okta.oauth2.client-secret",
-    "type": "java.lang.String",
-    "description": "A description for 'okta.oauth2.client-secret'"
-  },
-  {
-    "name": "grant_type",
-    "type": "java.lang.String",
-    "description": "A description for 'grant_type'"
-  },
-  {
-    "name": "redirecturi",
-    "type": "java.lang.String",
-    "description": "A description for 'redirecturi'"
-  },
-  {
-    "name": "user-info-uri",
-    "type": "java.lang.String",
-    "description": "A description for 'user-info-uri'"
+    "description": "A description for 'allowed.origins'"
   }
 ]}
