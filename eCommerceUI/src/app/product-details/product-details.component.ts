@@ -23,6 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   user !: User;
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
+  userId: number = -1;
   
   turnOnAddToCart: boolean = false;
 
@@ -38,6 +39,15 @@ export class ProductDetailsComponent implements OnInit {
 
      // console.log('product ' + JSON.stringify(this.product));
    }
+   ngOnInit(): void {
+    this.getProduct();
+    this.userId = Number(this.storage.getItem('userId'));
+    console.log(this.product);
+    
+    this.cartQuantityForm = this.formBuilder.group({
+      quantity: ['', [Validators.required]]
+    });
+  }
 
    enableAddCart(event: any) {
     if (event.option.value > 0) {
@@ -52,9 +62,9 @@ export class ProductDetailsComponent implements OnInit {
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value;
-      if (itemCount != null && this.user.id !== undefined) {
-        console.log('user id from cookies ' + this.user.id);
-        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.user.id }, 'product': { 'id': this.product.id } };
+      if (itemCount != null && this.userId !== -1) {
+        console.log('user id from cookies ' + this.userId);
+        this.selectedProduct = { 'quantity': +itemCount, 'user': { 'id': this.userId }, 'product': { 'id': this.product.id } };
         this.cartService.addOneCartItem(this.selectedProduct).subscribe();
 
         const dialogRef = this.atcDialog.open(AtcDialog, {
@@ -72,14 +82,7 @@ export class ProductDetailsComponent implements OnInit {
     return undefined;
   }
 
-  ngOnInit(): void {
-    this.getProduct();
-    console.log(this.product);
-    
-    this.cartQuantityForm = this.formBuilder.group({
-      quantity: ['', [Validators.required]]
-    });
-  }
+
 
   getProduct(){
     this.productService.getProductById(Number(this.storage.getItem('productId'))).subscribe(data => {
