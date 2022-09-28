@@ -35,8 +35,7 @@ public class MessagingRabbitmqApplication {
   }
 
   @Bean
-  SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-      MessageListenerAdapter listenerAdapter) {
+  SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
     SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
     container.setConnectionFactory(connectionFactory);
     container.setQueueNames(queueName);
@@ -49,8 +48,8 @@ public class MessagingRabbitmqApplication {
     return new MessageListenerAdapter(receiver, "receiveMessage");
   }
 
-  public static void main(String[] args) throws InterruptedException {
-    SpringApplication.run(MessagingRabbitmqApplication.class, args).close();
-  }
+//  public static void main(String[] args) throws InterruptedException {
+//    SpringApplication.run(MessagingRabbitmqApplication.class, args).close();
+//  }
 
 }
