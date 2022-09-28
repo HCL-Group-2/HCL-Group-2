@@ -22,7 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
-import com.hcl.ecommerce.entity.Payment;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
@@ -91,11 +90,6 @@ public class OrderServiceImplTest {
 		shippingAddress.setState("Texas");
 		shippingAddress.setZipCode("75034");
 		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -169,11 +163,6 @@ public class OrderServiceImplTest {
 		shippingAddress.setState("Texas");
 		shippingAddress.setZipCode("75034");
 		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -234,12 +223,6 @@ public class OrderServiceImplTest {
 		shippingAddress.setCity("Frisco");
 		shippingAddress.setState("Texas");
 		shippingAddress.setZipCode("75034");
-		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);
@@ -303,11 +286,6 @@ public class OrderServiceImplTest {
 		shippingAddress.setState("Texas");
 		shippingAddress.setZipCode("75034");
 		
-		Payment payment = new Payment();
-		payment.setId(1);
-		payment.setName("Test Name");
-		payment.setCreditCardNumber("1234123412341234");
-		payment.setExpirationDate("01-24");
 		
 		Order mockOrder = new Order();
 		mockOrder.setId(1);

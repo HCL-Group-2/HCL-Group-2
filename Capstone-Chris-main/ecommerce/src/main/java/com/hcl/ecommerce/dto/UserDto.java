@@ -22,9 +22,6 @@ public class UserDto {
 	
 	@Email
 	private String email;
-	
-	@NotNull
-	private String password;
 
 	public Integer getId() {
 		return id;
@@ -58,14 +55,5 @@ public class UserDto {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 
 }
