@@ -49,5 +49,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd Capstone-Chris-main/ecommerce
-          mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=HCL-Group-2_HCL-Group-2
+          mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=HCL-Group-2_HCL-Group-2 -Dsonar.coverage.jacoco.xmlReportPaths=./target/site/jacoco.xml
       
