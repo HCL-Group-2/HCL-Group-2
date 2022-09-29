@@ -36,6 +36,11 @@ public class ProductDto {
 	@Size(min = 0)
 	private int inventory;
 
+	public ProductDto(Integer id2, String name2, String description2, BigDecimal price2, String image2,
+			String category2, int inventory2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -72,7 +72,7 @@
     .horizontal-timeline .items .items-list:before {
     content: "";
     text-align: center;
-    position: absolute;
+    position: relative;
     height: 8px;
     width: 8px;
     border-radius: 50%;
