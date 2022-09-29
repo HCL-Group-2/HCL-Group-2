@@ -25,31 +25,31 @@ import static org.springframework.http.HttpMethod.POST;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+public class OrderContollerTest {
 	
 	@Test
-	public void testAddUser() throws Exception {
+	public void testAddOrder() throws Exception {
 		
 		
 		
 	}
 	
 	@Test
-	public void testGetUserById() throws Exception {
+	public void testGetOrderById() throws Exception {
 		
 		
 		
 	}
 	
 	@Test
-	public void testUpdateUser() throws Exception {
+	public void testUpdateOrder() throws Exception {
 		
 		
 		
 	}
 	
 	@Test
-	public void testDeleteUser() throws Exception {
+	public void testDeleteOrder() throws Exception {
 		
 		
 		
