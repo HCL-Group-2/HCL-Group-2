@@ -25,8 +25,10 @@ public class OrderDto {
 	
 	private String orderStatus;
 	
+	@JsonProperty("user")
 	private UserDto userDto;
 	
+	@JsonProperty("shippingAddress")
 	private ShipDto shipDto;
 	
 	@JsonProperty("orderItems")
