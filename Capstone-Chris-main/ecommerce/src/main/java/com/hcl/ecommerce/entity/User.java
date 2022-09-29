@@ -1,6 +1,5 @@
 package com.hcl.ecommerce.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,8 +13,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.dto.CartItemDto;
-import com.hcl.ecommerce.dto.OrderDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,14 +35,6 @@ public class User {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		email = dto.getEmail();
-		cartItems = new ArrayList<>();
-		for(CartItemDto cid : dto.getCartItems()) {
-			cartItems.add(new CartItem(cid));
-		}
-		orders = new ArrayList<>();
-		for(OrderDto o : dto.getOrders()) {
-			orders.add(new Order(o));
-		}
 	}
 	
 	@Id
@@ -70,15 +59,7 @@ public class User {
 	
 	
 	public UserDto toDto() {
-		List<CartItemDto> dtoListCart = new ArrayList<>();
-		for(CartItem c : cartItems) {
-			dtoListCart.add(c.toDto());
-		}
-		List<OrderDto> dtoListOrder = new ArrayList<>();
-		for(Order o : orders) {
-			dtoListOrder.add(o.toDto());
-		}
-		return new UserDto(id, firstName, lastName, email, dtoListCart, dtoListOrder);
+		return new UserDto(id, firstName, lastName, email);
 	}
 
 	public Integer getId() {

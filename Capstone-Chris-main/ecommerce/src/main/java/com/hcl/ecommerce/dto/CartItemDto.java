@@ -30,6 +30,4 @@ public class CartItemDto {
 	@NotNull
 	private ProductDto productDto;
 	
-
-
 }

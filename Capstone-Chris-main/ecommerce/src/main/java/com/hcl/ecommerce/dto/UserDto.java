@@ -1,7 +1,5 @@
 package com.hcl.ecommerce.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -26,9 +24,5 @@ public class UserDto {
 	
 	@Email
 	private String email;
-
-	private List<CartItemDto> cartItems;
-	
-	private List<OrderDto> orders;
 
 }
