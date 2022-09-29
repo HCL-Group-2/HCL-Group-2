@@ -20,6 +20,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.UserDto;
+import com.hcl.ecommerce.dto.CartItemDto;
+import com.hcl.ecommerce.dto.OrderDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +44,14 @@ public class User {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		email = dto.getEmail();
+		cartItems = new ArrayList<CartItem>();
+		for(CartItemDto cid : dto.getCartItems()) {
+			cartItems.add(new CartItem(cid));
+		}
+		orders = new ArrayList<Order>();
+		for(OrderDto o : dto.getOrders()) {
+			orders.add(new Order(o));
+		}
 	}
 	
 	@Id
@@ -63,15 +73,40 @@ public class User {
 //	private List<CreditCard> creditCards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
+	private List<CartItem> cartItems;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
+	private List<Order> orders;
 	
 	
 	public UserDto toDto() {
-		UserDto dto = new UserDto(id, firstName, lastName, email);
+		List<CartItemDto> dtoListCart = new ArrayList<CartItemDto>();
+		for(CartItem c : cartItems) {
+			dtoListCart.add(c.toDto());
+		}
+		List<OrderDto> dtoListOrder = new ArrayList<OrderDto>();
+		for(Order o : orders) {
+			dtoListOrder.add(o.toDto());
+		}
+		UserDto dto = new UserDto(id, firstName, lastName, email, dtoListCart, dtoListOrder);
 		return dto;
+	}
+	
+	public List<CartItemDto> cartDto(){
+		List<CartItemDto> cartList = new ArrayList<CartItemDto>();
+		
+		
+		
+		return cartList;
+		
+	}
+	
+	public List<OrderDto> orderDto(){
+		List<OrderDto> orderList = new ArrayList<OrderDto>();
+		for(Order o : orders) {
+			orderList.add(o.toDto());
+		}
+		return orderList;
 	}
 	
 

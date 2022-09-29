@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ecommerce.dto.CreatePaymentResponse;
 import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
@@ -35,11 +34,9 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-//	@Value("${stripe.api.key}") 
-//    private String stripeSecretKey;
 	
-	 @PostMapping("/payment-intent")
-	    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
+	@PostMapping("/payment-intent")
+	public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
 
 	        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfo);
 
