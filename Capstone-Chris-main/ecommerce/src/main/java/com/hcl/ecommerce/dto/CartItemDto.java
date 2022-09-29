@@ -5,13 +5,14 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -26,9 +27,11 @@ public class CartItemDto {
 	private BigDecimal subtotal;
 	
 	@NotNull
+	@JsonProperty("user")
 	private UserDto userDto;
 	
 	@NotNull
+	@JsonProperty("product")
 	private ProductDto productDto;
 
 	public CartItemDto(Integer id2, int quantity2, BigDecimal subtotal2, UserDto dto, ProductDto dto2) {
@@ -75,6 +78,4 @@ public class CartItemDto {
 		this.productDto = productDto;
 	}
 	
-
-
 }

@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import com.hcl.ecommerce.dto.ShipDto;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +21,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ShippingAddress {
+	
+	public ShippingAddress(ShipDto dto) {
+		id = dto.getId();
+		address1 = dto.getAddress1();
+		address2 = dto.getAddress2();
+		city = dto.getCity();
+		state = dto.getState();
+		zipCode = dto.getZipCode();
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +49,10 @@ public class ShippingAddress {
 	@Column(nullable = false)
 	private String zipCode;
 
+	public ShipDto toDto() {
+		return new ShipDto(id, address1, address2, city, state, zipCode);
+	}
+	
 	public Integer getId() {
 		return id;
 	}

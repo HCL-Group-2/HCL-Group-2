@@ -1,6 +1,6 @@
 package com.hcl.ecommerce.service;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 
-	@Autowired
-	private MailSenderService mailSenderService;
+//	@Autowired
+//	private MailSenderService mailSenderService;
 
 	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
 

@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.ProductDto;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.ProductService;
@@ -29,49 +31,62 @@ public class ProductController {
 	ProductService productService;
 	
 	@PostMapping("/product")
-	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+	public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) {
+		Product product = null;
 		try {
-			product = productService.addProduct(product);
+			product = productService.addProduct(new Product(productDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<Product>(product, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((ProductDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Product>(product, HttpStatus.CREATED);
+		return new ResponseEntity<>(product.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/product/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable("id") Integer id) {
+	public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Integer id) {
 		Product product = productService.getProductById(id);
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
+		return new ResponseEntity<>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/product")
-	public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-		product = productService.updateProduct(product);
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
+	public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+		Product product = productService.updateProduct(new Product(productDto));
+		return new ResponseEntity<>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/product/{id}")
 	public ResponseEntity<Void> deleteProduct(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getAllProducts() {
+	public ResponseEntity<List<ProductDto>> getAllProducts() {
 		List<Product> list = productService.getAllProducts();
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbyname")
-	public ResponseEntity<List<Product>> getAllProductsByName(@RequestParam String name) {
+	public ResponseEntity<List<ProductDto>> getAllProductsByName(@RequestParam String name) {
 		List<Product> list = productService.getAllProductsByName(name);
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbycategory")
-	public ResponseEntity<List<Product>> getAllProductsByCategory(@RequestParam String category) {
+	public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@RequestParam String category) {
 		List<Product> list = productService.getAllProductsByCategory(category);
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 }
