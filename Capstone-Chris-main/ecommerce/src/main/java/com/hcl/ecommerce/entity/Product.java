@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hcl.ecommerce.dto.ProductDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,17 @@ import lombok.ToString;
 @Table(name = "products")
 @JsonIgnoreProperties(value = { "cartItems", "orderItems" }, allowSetters = true)
 public class Product {
+	
+	public Product(ProductDto dto) {
+		id = dto.getId();
+		name = dto.getName();
+		description = dto.getDescription();
+		price = dto.getPrice();
+		image = dto.getImage();
+		category = dto.getCategory();
+		inventory = dto.getInventory();
+		
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +71,11 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
+	
+	public ProductDto toDto() {
+		ProductDto dto = new ProductDto(id, name, description, price, image, category, inventory);
+		return dto;
+	}
 
 	public Integer getId() {
 		return id;

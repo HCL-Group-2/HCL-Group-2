@@ -3,6 +3,8 @@ package com.hcl.ecommerce.entity;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import com.hcl.ecommerce.dto.CartItemDto;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,14 @@ import lombok.ToString;
 @Table(name = "cart_items")
 public class CartItem {
 	
+	public CartItem(CartItemDto dto) {
+		id = dto.getId();
+		quantity = dto.getQuantity();
+		subtotal = dto.getSubtotal();
+		user = new User(dto.getUserDto());
+		product = new Product(dto.getProductDto());
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_item_id")
@@ -47,6 +57,11 @@ public class CartItem {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+	
+	public CartItemDto toDto() {
+		CartItemDto dto =  new CartItemDto(id, quantity, subtotal, user.toDto(), product.toDto());
+		return dto;
+	}
 	
 	@Override
 	public int hashCode() {

@@ -14,13 +14,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	User findByEmail(String email);
 	
-	User findByEmailAndPassword(String email, String password);
 	
 	@Query("select u from User u order by u.lastName")
 	List<User> getAllUsers();
 
-	@Query("select r.users from Role r where r.id = :roleId")
-	List<User> getUsersByRoleId(Integer roleId);
 	
 
 }
