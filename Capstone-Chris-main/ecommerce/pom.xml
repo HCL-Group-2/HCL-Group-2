@@ -47,11 +47,12 @@
             		<version>1.6.9</version>
         	</dependency>
         
-        <dependency>
-        	<groupId>junit</groupId>
-            	<artifactId>junit</artifactId>
-            	<scope>test</scope>
-        </dependency>
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
+		</dependency>
+
         <!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
 		<dependency>
 		    <groupId>com.stripe</groupId>
@@ -178,19 +179,8 @@
 		    	<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<dependencies>
-        			<dependency>
-            			<groupId>org.junit.platform</groupId>
-           				<artifactId>junit-platform-surefire-provider</artifactId>
-           				<version>1.2.0-M1</version>
-						</dependency>
-       				<dependency>
-            			<groupId>org.junit.jupiter</groupId>
-            			<artifactId>junit-jupiter-engine</artifactId>
-            			<version>5.2.0-M1</version>
-        			</dependency>
-    			</dependencies>
-		    </plugin>
+				
+		    	</plugin>
 		    
 		    	<plugin>
 				<groupId>org.jacoco</groupId>
