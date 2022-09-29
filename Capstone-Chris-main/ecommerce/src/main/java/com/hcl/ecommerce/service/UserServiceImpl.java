@@ -12,14 +12,10 @@ import org.springframework.stereotype.Service;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.UserRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
