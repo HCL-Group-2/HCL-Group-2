@@ -1,7 +1,5 @@
 package com.hcl.ecommerce.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,13 +14,10 @@ public class UserDto {
 	
 	private Integer id;
 	
-	@NotNull
 	private String firstName;
-	
-	@NotNull
+
 	private String lastName;
 	
-	@Email
 	private String email;
 
 }

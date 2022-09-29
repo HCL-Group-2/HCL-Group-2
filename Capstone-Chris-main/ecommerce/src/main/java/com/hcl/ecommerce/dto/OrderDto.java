@@ -2,7 +2,6 @@ package com.hcl.ecommerce.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,8 +29,5 @@ public class OrderDto {
 	
 	@JsonProperty("shippingAddress")
 	private ShipDto shipDto;
-	
-	@JsonProperty("orderItems")
-	private List<OrderItemDto> orderItemsDto;
 
 }

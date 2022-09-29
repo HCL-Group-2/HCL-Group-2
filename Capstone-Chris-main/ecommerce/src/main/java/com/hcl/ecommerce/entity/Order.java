@@ -20,7 +20,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hcl.ecommerce.dto.OrderDto;
-import com.hcl.ecommerce.dto.OrderItemDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,10 +44,6 @@ public class Order {
 		user = new User(dto.getUserDto());
 		shippingAddress = new ShippingAddress(dto.getShipDto());
 		orderItems = new ArrayList<>();
-		for(OrderItemDto o : dto.getOrderItemsDto()) {
-			orderItems.add(new OrderItem(o));
-		}
-		
 	}
 	
 	
@@ -77,12 +72,7 @@ public class Order {
 
 	public OrderDto toDto() {
 		
-		List<OrderItemDto> dtoList = new ArrayList<>();
-		for(OrderItem oi : orderItems) {
-			dtoList.add(oi.toDto());
-		}
-		
-		return new OrderDto(id, orderDate, orderTotal, orderStatus, user.toDto(), shippingAddress.toDto(), dtoList);
+		return new OrderDto(id, orderDate, orderTotal, orderStatus, user.toDto(), shippingAddress.toDto());
 	}
 	
 	
