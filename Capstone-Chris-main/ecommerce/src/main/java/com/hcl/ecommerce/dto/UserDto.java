@@ -3,9 +3,11 @@ package com.hcl.ecommerce.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class UserDto {
@@ -20,9 +22,6 @@ public class UserDto {
 	
 	@Email
 	private String email;
-	
-	@NotNull
-	private String password;
 
 	public Integer getId() {
 		return id;
@@ -56,14 +55,5 @@ public class UserDto {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 
 }

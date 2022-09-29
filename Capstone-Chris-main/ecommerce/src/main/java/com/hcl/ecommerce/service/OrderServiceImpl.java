@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderItems(orderItems);
 		order.setOrderTotal(total);
 		order.setOrderDate(LocalDate.now());
-		order.setOrderStatus("");
+		order.setOrderStatus("In Progress");
 		cartItemRepository.deleteAll(cartItems);
 //		mailSenderService.sendEmail(user.getEmail());
 //		try {

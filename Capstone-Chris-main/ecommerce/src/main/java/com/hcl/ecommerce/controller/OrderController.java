@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.ecommerce.dto.CreatePaymentResponse;
 import com.hcl.ecommerce.dto.PaymentInfoDTO;
-import com.hcl.ecommerce.dto.PaymentIntentDto;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
@@ -49,33 +48,6 @@ public class OrderController {
 
 	        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
 	}
-	
-//	@PostMapping("/create-intent")
-//	public ResponseEntity<CreatePaymentResponse> createIntent(@RequestBody PaymentIntentDto intentDto) {
-//		Stripe.apiKey = stripeSecretKey;
-//		
-//		//Convert cost to cents
-//		BigDecimal tempTotal = new BigDecimal(intentDto.getOrderTotal());
-//		tempTotal = tempTotal.multiply(new BigDecimal(100));
-//		Long totalAmount = tempTotal.longValue();
-//		
-//		CreatePaymentResponse paymentResponse = null;
-//		try {
-//			PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
-//					.setCurrency("usd")
-//					.setAmount(totalAmount)
-//					.build();
-//
-//			PaymentIntent intent = PaymentIntent.create(createParams);
-//			paymentResponse = new CreatePaymentResponse(intent.getClientSecret());
-//
-//		} catch (StripeException se) {
-//			se.printStackTrace();//DEBUG
-//			return new ResponseEntity<CreatePaymentResponse>((CreatePaymentResponse)null, HttpStatus.CONFLICT);
-//		}
-//		
-//		return new ResponseEntity<CreatePaymentResponse>(paymentResponse, HttpStatus.OK);
-//	}
 	
 	@PostMapping("/order")
 	public ResponseEntity<Order> placeOrder(@RequestBody Order order) {

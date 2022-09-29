@@ -15,9 +15,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.hcl.ecommerce.entity.Role;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.repository.RoleRepository;
 import com.hcl.ecommerce.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -30,8 +28,6 @@ public class UserServiceImplTest {
 	@Mock
 	UserRepository userRepository;
 	
-	@Mock
-	RoleRepository roleRepository;
 	
 	@Mock
 	MailSenderService mailSenderService;
@@ -39,29 +35,17 @@ public class UserServiceImplTest {
 	@Test
 	public void testAddUser() throws Exception {
 		
-		Role role = new Role();
-		role.setId(1);
-		role.setName("Customer");
-		
 		User mockUser = new User();
 		mockUser.setId(1);
 		mockUser.setFirstName("Test");
 		mockUser.setLastName("User");
 		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
-		mockUser.addRole(role);
 		
 		Mockito.when(userRepository.findByEmail(mockUser.getEmail())).thenReturn(null);
-		
-		Mockito.when(roleRepository.findByName(role.getName())).thenReturn(role);
-		
-		Mockito.when(roleRepository.save(any(Role.class))).thenReturn(role);
 		
 		Mockito.when(userRepository.save(any(User.class))).thenReturn(mockUser);
 		
 		Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
-		
-		Mockito.when(roleRepository.findById(1)).thenReturn(Optional.of(role));
 		
 		Mockito.doNothing().when(mailSenderService).sendEmail(null);
 		
@@ -74,7 +58,6 @@ public class UserServiceImplTest {
 		assertEquals("Test", user.getFirstName());
 		assertEquals("User", user.getLastName());
 		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
 		
 	}
 	
@@ -86,7 +69,6 @@ public class UserServiceImplTest {
 		mockUser.setFirstName("Test");
 		mockUser.setLastName("User");
 		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
 		
 		Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
 		
@@ -97,7 +79,6 @@ public class UserServiceImplTest {
 		assertEquals("Test", user.getFirstName());
 		assertEquals("User", user.getLastName());
 		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
 		
 	}
 	
@@ -109,7 +90,6 @@ public class UserServiceImplTest {
 		mockUser.setFirstName("Test");
 		mockUser.setLastName("User");
 		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
 		
 		Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
 		
@@ -122,7 +102,6 @@ public class UserServiceImplTest {
 		assertEquals("Test", user.getFirstName());
 		assertEquals("User", user.getLastName());
 		assertEquals("testuser@gmail.com", user.getEmail());
-		assertEquals("test", user.getPassword());
 		
 	}
 	
@@ -134,7 +113,6 @@ public class UserServiceImplTest {
 		mockUser.setFirstName("Test");
 		mockUser.setLastName("User");
 		mockUser.setEmail("testuser@gmail.com");
-		mockUser.setPassword("test");
 		
 		userServiceImpl.deleteUser(1);
 		
