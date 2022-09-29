@@ -9,10 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 class EcommerceApplicationTests {
 	
-	/*
 	@Test
 	void contextLoads() {
 	}
-	*/
 
 }
