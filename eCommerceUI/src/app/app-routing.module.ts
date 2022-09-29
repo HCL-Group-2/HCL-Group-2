@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { CartComponent } from './cart/cart.component';
 
 import { CheckoutComponent } from './cart/checkout/checkout.component';
-import { StripeComponent } from './cart/checkout/stripe/stripe.component';
 
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -31,7 +30,6 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'checkout-payment', component: StripeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/editUser/:userId', component: EditUserComponent },
   { path: 'admin/productManagement', component: ProductMangementComponent  },
