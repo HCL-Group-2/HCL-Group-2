@@ -57,7 +57,6 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders;
 	
-	
 	public UserDto toDto() {
 		return new UserDto(id, firstName, lastName, email);
 	}
