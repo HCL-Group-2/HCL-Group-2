@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +27,11 @@ public class CartItemDto {
 	private BigDecimal subtotal;
 	
 	@NotNull
+	@JsonProperty("user")
 	private UserDto userDto;
 	
 	@NotNull
+	@JsonProperty("product")
 	private ProductDto productDto;
 	
 }
