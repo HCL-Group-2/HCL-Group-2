@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 			return userOptional.get().getOrders();
 		}
 		else {
-			return (List<Order>) null;
+			return null;
 		}
 
 	}

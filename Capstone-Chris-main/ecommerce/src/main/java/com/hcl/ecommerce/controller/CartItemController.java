@@ -36,7 +36,7 @@ public class CartItemController {
 		try {
 			cartItem = cartItemService.addCartItem(new CartItem(cartItemDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<CartItemDto>((CartItemDto)null, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((CartItemDto)null, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(cartItem.toDto() , HttpStatus.CREATED);
 	}
@@ -62,7 +62,7 @@ public class CartItemController {
 	@GetMapping("/cartitems/{userid}")
 	public ResponseEntity<List<CartItemDto>> getAllCartItemsByUserId(@PathVariable("userid") Integer userid) {
 		List<CartItem> tempList = cartItemService.getAllCartItemsByUserId(userid);
-		List<CartItemDto> list = new ArrayList<CartItemDto>();
+		List<CartItemDto> list = new ArrayList<>();
 		for(CartItem a : tempList) {
 			list.add(a.toDto());
 		}

@@ -56,8 +56,7 @@ public class CartItem {
 	private Product product;
 	
 	public CartItemDto toDto() {
-		CartItemDto dto =  new CartItemDto(id, quantity, subtotal, user.toDto(), product.toDto());
-		return dto;
+		return new CartItemDto(id, quantity, subtotal, user.toDto(), product.toDto());
 	}
 	
 	@Override
