@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.ProductDto;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.ProductService;
@@ -29,13 +30,14 @@ public class ProductController {
 	ProductService productService;
 	
 	@PostMapping("/product")
-	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+	public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) {
+		Product product = null;
 		try {
-			product = productService.addProduct(product);
+			product = productService.addProduct(new Product(productDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<Product>(product, HttpStatus.CONFLICT);
+			return new ResponseEntity<ProductDto>((ProductDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Product>(product, HttpStatus.CREATED);
+		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/product/{id}")

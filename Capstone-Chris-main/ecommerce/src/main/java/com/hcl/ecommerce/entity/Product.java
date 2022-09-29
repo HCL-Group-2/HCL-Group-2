@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hcl.ecommerce.dto.CartItemDto;
+import com.hcl.ecommerce.dto.OrderDto;
+import com.hcl.ecommerce.dto.OrderItemDto;
 import com.hcl.ecommerce.dto.ProductDto;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +43,14 @@ public class Product {
 		image = dto.getImage();
 		category = dto.getCategory();
 		inventory = dto.getInventory();
-		
+		cartItems = new ArrayList<CartItem>();
+		for(CartItemDto cid : dto.getCartListDto()) {
+			cartItems.add(new CartItem(cid));
+		}
+		orderItems = new ArrayList<OrderItem>();
+		for(OrderItemDto o : dto.getOrderListDto()) {
+			orderItems.add(new OrderItem(o));
+		}
 	}
 	
 	@Id
@@ -73,7 +83,16 @@ public class Product {
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	public ProductDto toDto() {
-		ProductDto dto = new ProductDto(id, name, description, price, image, category, inventory);
+		List<CartItemDto> dtoListCart = new ArrayList<CartItemDto>();
+		for(CartItem c : cartItems) {
+			dtoListCart.add(c.toDto());
+		}
+		List<OrderItemDto> dtoListOrder = new ArrayList<OrderItemDto>();
+		for(OrderItem o : orderItems) {
+			dtoListOrder.add(o.toDto());
+		}
+		
+		ProductDto dto = new ProductDto(id, name, description, price, image, category, inventory, dtoListCart, dtoListOrder);
 		return dto;
 	}
 
