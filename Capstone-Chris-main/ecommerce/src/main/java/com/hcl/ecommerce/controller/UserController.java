@@ -33,7 +33,7 @@ public class UserController {
 	
 	
 	@PostMapping("/user")
-	public ResponseEntity<User> addUser(@RequestBody User user) {
+	public ResponseEntity<UserDto> addUser(@RequestBody User user) {
 		try {
 			user = userService.addUser(user);
 		} catch (AddEntityException e) {

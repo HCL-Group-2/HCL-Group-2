@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,15 +42,15 @@ public class ProductController {
 	}
 	
 	@GetMapping("/product/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable("id") Integer id) {
+	public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Integer id) {
 		Product product = productService.getProductById(id);
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
+		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/product")
-	public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-		product = productService.updateProduct(product);
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
+	public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+		Product product = productService.updateProduct(new Product(productDto));
+		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/product/{id}")
@@ -59,21 +60,33 @@ public class ProductController {
 	}
 	
 	@GetMapping("/products")
-	public ResponseEntity<List<Product>> getAllProducts() {
+	public ResponseEntity<List<ProductDto>> getAllProducts() {
 		List<Product> list = productService.getAllProducts();
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbyname")
-	public ResponseEntity<List<Product>> getAllProductsByName(@RequestParam String name) {
+	public ResponseEntity<List<ProductDto>> getAllProductsByName(@RequestParam String name) {
 		List<Product> list = productService.getAllProductsByName(name);
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbycategory")
-	public ResponseEntity<List<Product>> getAllProductsByCategory(@RequestParam String category) {
+	public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@RequestParam String category) {
 		List<Product> list = productService.getAllProductsByCategory(category);
-		return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
+		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		for(Product p : list) {
+			dtoList.add(p.toDto());
+		}
+		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
 	}
 	
 }
