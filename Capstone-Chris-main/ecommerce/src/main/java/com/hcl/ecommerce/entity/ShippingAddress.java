@@ -50,8 +50,7 @@ public class ShippingAddress {
 	private String zipCode;
 
 	public ShipDto toDto() {
-		ShipDto dto = new ShipDto(id, address1, address2, city, state, zipCode);
-		return dto;
+		return new ShipDto(id, address1, address2, city, state, zipCode);
 	}
 	
 	public Integer getId() {

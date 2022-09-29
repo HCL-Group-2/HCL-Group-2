@@ -41,25 +41,25 @@ public class UserController {
 		} catch (AddEntityException e) {
 			return new ResponseEntity<UserDto>((UserDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<UserDto>(user.toDto(), HttpStatus.CREATED);
+		return new ResponseEntity<>(user.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/user/{id}")
 	public ResponseEntity<UserDto> getUserById(@PathVariable("id") Integer id) {
 		User user = userService.getUserById(id);
-		return new ResponseEntity<UserDto>(user.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(user.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/user")
 	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
 		User user = userService.updateUser(new User(userDto));
-		return new ResponseEntity<UserDto>(user.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(user.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/user/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable("id") Integer id) {
 		userService.deleteUser(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/users")
@@ -69,12 +69,12 @@ public class UserController {
 		for(User u : list) {
 			dtoList.add(u.toDto());
 		}
-		return new ResponseEntity<List<UserDto>>(dtoList, HttpStatus.OK);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/byEmail")
 	public ResponseEntity<UserDto> getUserByEmail(@RequestParam String email) {
-		return new ResponseEntity<UserDto>(userService.getUserByEmail(email).toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(userService.getUserByEmail(email).toDto(), HttpStatus.OK);
 	}
 	
 
@@ -85,7 +85,7 @@ public class UserController {
 		for(Order o : list) {
 			dtoList.add(o.toDto());
 		}
-        return new ResponseEntity<List<OrderDto>>(dtoList, HttpStatus.OK);
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }
 
 }

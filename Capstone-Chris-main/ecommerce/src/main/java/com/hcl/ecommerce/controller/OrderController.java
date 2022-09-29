@@ -39,7 +39,7 @@ public class OrderController {
 
 	        String paymentStr = paymentIntent.toJson();
 
-	        return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
+	        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
 	}
 	
 	@PostMapping("/order")
@@ -50,25 +50,25 @@ public class OrderController {
 		} catch (AddEntityException e) {
 			return new ResponseEntity<OrderDto>((OrderDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.CREATED);
+		return new ResponseEntity<>(order.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/order/{id}")
 	public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Integer id) {
 		Order order = orderService.getOrderById(id);
-		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/order")
 	public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
 		Order order = orderService.updateOrder(new Order(orderDto));
-		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/order/{id}")
 	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Integer id) {
 		orderService.deleteOrder(id);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

@@ -59,8 +59,7 @@ public class OrderItem {
 	private Product product;
 	
 	public OrderItemDto toDto() {
-		OrderItemDto dto = new OrderItemDto(id, quantity, subtotal, order.toDto(), product.toDto());
-		return dto;
+		return new OrderItemDto(id, quantity, subtotal, order.toDto(), product.toDto());
 	}
 
 	public Integer getId() {

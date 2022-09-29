@@ -38,25 +38,25 @@ public class ProductController {
 		} catch (AddEntityException e) {
 			return new ResponseEntity<ProductDto>((ProductDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.CREATED);
+		return new ResponseEntity<>(product.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/product/{id}")
 	public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Integer id) {
 		Product product = productService.getProductById(id);
-		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/product")
 	public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
 		Product product = productService.updateProduct(new Product(productDto));
-		return new ResponseEntity<ProductDto>(product.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(product.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/product/{id}")
 	public ResponseEntity<Void> deleteProduct(@PathVariable("id") Integer id) {
 		productService.deleteProduct(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/products")
@@ -66,7 +66,7 @@ public class ProductController {
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}
-		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbyname")
@@ -76,7 +76,7 @@ public class ProductController {
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}
-		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/productsbycategory")
@@ -86,7 +86,7 @@ public class ProductController {
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}
-		return new ResponseEntity<List<ProductDto>>(dtoList, HttpStatus.OK);
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
 	}
 	
 }

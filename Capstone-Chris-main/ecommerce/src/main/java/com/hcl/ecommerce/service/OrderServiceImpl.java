@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 		if (cartItems.isEmpty()) {
 			throw new AddEntityException("There aren't any cart items");
 		}
-		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		List<OrderItem> orderItems = new ArrayList<>();
 		BigDecimal total = new BigDecimal("0.00");
 		for (CartItem cartItem : cartItems) {
 			Product prod = getProductById(cartItem.getProduct().getId());

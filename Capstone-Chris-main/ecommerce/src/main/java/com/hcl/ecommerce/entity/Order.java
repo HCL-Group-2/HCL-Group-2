@@ -44,7 +44,7 @@ public class Order {
 		orderStatus = dto.getOrderStatus();
 		user = new User(dto.getUserDto());
 		shippingAddress = new ShippingAddress(dto.getShipDto());
-		orderItems = new ArrayList<OrderItem>();
+		orderItems = new ArrayList<>();
 		for(OrderItemDto o : dto.getOrderItemsDto()) {
 			orderItems.add(new OrderItem(o));
 		}
@@ -77,7 +77,7 @@ public class Order {
 
 	public OrderDto toDto() {
 		
-		List<OrderItemDto> dtoList = new ArrayList<OrderItemDto>();
+		List<OrderItemDto> dtoList = new ArrayList<>();
 		for(OrderItem oi : orderItems) {
 			dtoList.add(oi.toDto());
 		}

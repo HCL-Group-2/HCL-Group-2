@@ -42,11 +42,11 @@ public class Product {
 		image = dto.getImage();
 		category = dto.getCategory();
 		inventory = dto.getInventory();
-		cartItems = new ArrayList<CartItem>();
+		cartItems = new ArrayList<>();
 		for(CartItemDto cid : dto.getCartListDto()) {
 			cartItems.add(new CartItem(cid));
 		}
-		orderItems = new ArrayList<OrderItem>();
+		orderItems = new ArrayList<>();
 		for(OrderItemDto o : dto.getOrderListDto()) {
 			orderItems.add(new OrderItem(o));
 		}
@@ -82,17 +82,17 @@ public class Product {
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	public ProductDto toDto() {
-		List<CartItemDto> dtoListCart = new ArrayList<CartItemDto>();
+		List<CartItemDto> dtoListCart = new ArrayList<>();
 		for(CartItem c : cartItems) {
 			dtoListCart.add(c.toDto());
 		}
-		List<OrderItemDto> dtoListOrder = new ArrayList<OrderItemDto>();
+		List<OrderItemDto> dtoListOrder = new ArrayList<>();
 		for(OrderItem o : orderItems) {
 			dtoListOrder.add(o.toDto());
 		}
 		
-		ProductDto dto = new ProductDto(id, name, description, price, image, category, inventory, dtoListCart, dtoListOrder);
-		return dto;
+		return new ProductDto(id, name, description, price, image, category, inventory, dtoListCart, dtoListOrder);
+		
 	}
 
 	public Integer getId() {
