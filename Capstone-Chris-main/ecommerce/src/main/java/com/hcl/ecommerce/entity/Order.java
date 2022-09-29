@@ -54,9 +54,9 @@ public class Order {
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private ShippingAddress shippingAddress;
-	
-	@OneToOne(cascade = CascadeType.PERSIST)
-	private Payment payment;
+//	
+//	@OneToOne(cascade = CascadeType.PERSIST)
+//	private Payment payment;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference
@@ -110,13 +110,13 @@ public class Order {
 		this.shippingAddress = shippingAddress;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
+//	public Payment getPayment() {
+//		return payment;
+//	}
+//
+//	public void setPayment(Payment payment) {
+//		this.payment = payment;
+//	}
 
 	public List<OrderItem> getOrderItems() {
 		return orderItems;

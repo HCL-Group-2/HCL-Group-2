@@ -1,4 +1,7 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Order } from '../model/Order';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-order',
@@ -7,14 +10,31 @@ import { Component} from '@angular/core';
 })
 export class OrderComponent{
 
+  order !: Order;
+
+  allOrders !: Array<Order>;
   name = 'Order Status';
 
-  public status = ["Received","In Progress","Shipping","Arriving","Delivered"];
-  public orderStatus = "In Progress"
-  //constructor() { }
+  storage: Storage =sessionStorage;
 
-  //TODO
-  //Pass the values represented in the order post
-  processOrder(){}
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private OrderService: OrderService) {}
+
+    ngOnInit(): void {
+      let userId = +this.storage.getItem('userId')!;
+      this.getUserOrders(userId);
+
+    }
+
+    getUserOrders(userId: number) {
+      this.OrderService.getUserOrders(userId).subscribe(data => {
+        this.allOrders = data;
+      });
+    }
+
+  public status = ["Ordered","In Progress","Shipping","Arriving","Delivered"];
+
 
 }
+

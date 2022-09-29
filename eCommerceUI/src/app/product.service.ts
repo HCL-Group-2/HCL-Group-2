@@ -9,12 +9,12 @@ import { Product } from './model/Product';
 export class ProductService {
 
   private baseURL = 'https://ostrichmart-backend.azurewebsites.net/';
+  //private baseURL = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
   getProducts():Observable<any>{
     return this.http.get(this.baseURL + 'products');
-
   }
 
   getProductsBySearch(searchText: string):Observable<any>{
@@ -39,8 +39,5 @@ export class ProductService {
     //localhost:8081/ecommerce/product/1
     return this.http.delete(this.baseURL + 'product/' + productId);
   }
-
-  
- 
-
 }
+
