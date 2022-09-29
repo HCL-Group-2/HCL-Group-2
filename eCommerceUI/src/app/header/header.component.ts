@@ -61,7 +61,6 @@ export class HeaderComponent implements OnInit {
           "firstName": oktaFirstName,
           "lastName": oktaLastName,
           "email": oktaUserEmail,
-          "password": "xxxxx"
         };
 
         // this.oktaUser = {
@@ -74,7 +73,7 @@ export class HeaderComponent implements OnInit {
 
         console.log('oktaUser obj ' + JSON.stringify(this.oktaUser));
         // check if okta email is in the database, then we can add 
-     
+
         this.userService.getUserByEmail(this.oktaUser.email).subscribe(data => {
           if (data) {
             console.log('oh yes.... user email is in the database ' + data.email);
@@ -85,7 +84,7 @@ export class HeaderComponent implements OnInit {
           } else {
             console.log('email in the database cannot be found');
             // adding user info to the database
-              this.userService.saveOktaUser(this.oktaUser).subscribe();
+            this.userService.saveOktaUser(this.oktaUser).subscribe();
           }
         }
         );
@@ -93,10 +92,10 @@ export class HeaderComponent implements OnInit {
         let userId = +this.storage.getItem('userId')!;
         console.log('user id from session storage ' + userId);
 
-        if(userId === 0){
+        if (userId === 0) {
           console.log('user Id was not in the database in the first place, but it will be obtain from the database again');
           this.userService.getUserByEmail(this.oktaUser.email).subscribe(data => {
-            console.log('getting the id from database ' +  data.id.toString());
+            console.log('getting the id from database ' + data.id.toString());
             this.storage.setItem('userId', data.id.toString());
           }
           );

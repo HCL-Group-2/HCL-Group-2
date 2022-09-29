@@ -1,5 +1,6 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.CartItemDto;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.CartItemService;
@@ -29,25 +31,26 @@ public class CartItemController {
 	CartItemService cartItemService;
 	
 	@PostMapping("/cartitem")
-	public ResponseEntity<CartItem> addCartItem(@RequestBody CartItem cartItem) {
+	public ResponseEntity<CartItemDto> addCartItem(@RequestBody CartItemDto cartItemDto) {
+		CartItem cartItem = null;
 		try {
-			cartItem = cartItemService.addCartItem(cartItem);
+			cartItem = cartItemService.addCartItem(new CartItem(cartItemDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<CartItem>(cartItem, HttpStatus.CONFLICT);
+			return new ResponseEntity<CartItemDto>((CartItemDto)null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<CartItem>(cartItem, HttpStatus.CREATED);
+		return new ResponseEntity<CartItemDto>(cartItem.toDto() , HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/cartitem/{id}")
-	public ResponseEntity<CartItem> getCartItemById(@PathVariable("id") Integer id) {
+	public ResponseEntity<CartItemDto> getCartItemById(@PathVariable("id") Integer id) {
 		CartItem cartItem = cartItemService.getCartItemById(id);
-		return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
+		return new ResponseEntity<CartItemDto>(cartItem.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/cartitem")
-	public ResponseEntity<CartItem> updateCartItem(@RequestBody CartItem cartItem) {
-		cartItem = cartItemService.updateCartItem(cartItem);
-		return new ResponseEntity<CartItem>(cartItem, HttpStatus.OK);
+	public ResponseEntity<CartItemDto> updateCartItem(@RequestBody CartItemDto cartItemDto) {
+		CartItem cartItem = cartItemService.updateCartItem(new CartItem(cartItemDto));
+		return new ResponseEntity<CartItemDto>(cartItem.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/cartitem/{id}")
@@ -57,9 +60,13 @@ public class CartItemController {
 	}
 	
 	@GetMapping("/cartitems/{userid}")
-	public ResponseEntity<List<CartItem>> getAllCartItemsByUserId(@PathVariable("userid") Integer userid) {
-		List<CartItem> list = cartItemService.getAllCartItemsByUserId(userid);
-		return new ResponseEntity<List<CartItem>>(list, HttpStatus.OK);
+	public ResponseEntity<List<CartItemDto>> getAllCartItemsByUserId(@PathVariable("userid") Integer userid) {
+		List<CartItem> tempList = cartItemService.getAllCartItemsByUserId(userid);
+		List<CartItemDto> list = new ArrayList<CartItemDto>();
+		for(CartItem a : tempList) {
+			list.add(a.toDto());
+		}
+		return new ResponseEntity<List<CartItemDto>>(list, HttpStatus.OK);
 	}
 
 }

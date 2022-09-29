@@ -48,7 +48,6 @@ public class CartItemServiceImplTest {
 		user.setFirstName("Test");
 		user.setLastName("User");
 		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
 		
 		Product product = new Product();
 		product.setId(1);
@@ -90,7 +89,6 @@ public class CartItemServiceImplTest {
 		user.setFirstName("Test");
 		user.setLastName("User");
 		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
 		
 		Product product = new Product();
 		product.setId(1);
@@ -128,7 +126,6 @@ public class CartItemServiceImplTest {
 		user.setFirstName("Test");
 		user.setLastName("User");
 		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
 		
 		Product product = new Product();
 		product.setId(1);
@@ -167,7 +164,6 @@ public class CartItemServiceImplTest {
 		user.setFirstName("Test");
 		user.setLastName("User");
 		user.setEmail("testuser@gmail.com");
-		user.setPassword("test");
 		
 		Product product = new Product();
 		product.setId(1);

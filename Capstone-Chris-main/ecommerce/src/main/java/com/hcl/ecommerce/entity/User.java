@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hcl.ecommerce.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,13 @@ import lombok.ToString;
 @JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
 public class User {
 
+	public User(UserDto dto) {
+		id = dto.getId();
+		firstName = dto.getFirstName();
+		lastName = dto.getLastName();
+		email = dto.getEmail();
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -50,14 +58,9 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
-	private String password;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Address> addresses = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CreditCard> creditCards = new ArrayList<>();
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	private List<CreditCard> creditCards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
@@ -65,29 +68,12 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade =
-			{
-					CascadeType.DETACH,
-					CascadeType.MERGE,
-					CascadeType.REFRESH,
-					CascadeType.PERSIST
-			},
-			targetEntity = Role.class)
-	@JoinTable(name = "user_roles",
-		inverseJoinColumns = @JoinColumn(name = "role_id",
-			nullable = false,
-			updatable = false),
-		joinColumns = @JoinColumn(name = "user_id",
-			nullable = false,
-			updatable = false),
-		foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
-		inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
-	private List<Role> roles = new ArrayList<>();
 	
-	public void addRole(Role role) {
-		this.roles.add(role);
+	public UserDto toDto() {
+		UserDto dto = new UserDto(id, firstName, lastName, email);
+		return dto;
 	}
+	
 
 	public Integer getId() {
 		return id;
@@ -121,29 +107,14 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public List<CreditCard> getCreditCards() {
+//		return creditCards;
+//	}
 
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	public List<CreditCard> getCreditCards() {
-		return creditCards;
-	}
-
-	public void setCreditCards(List<CreditCard> creditCards) {
-		this.creditCards = creditCards;
-	}
+//	public void setCreditCards(List<CreditCard> creditCards) {
+//		this.creditCards = creditCards;
+//	}
 
 	public List<CartItem> getCartItems() {
 		return cartItems;
@@ -161,12 +132,5 @@ public class User {
 		this.orders = orders;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
 
 }
