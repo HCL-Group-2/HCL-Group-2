@@ -1,22 +1,24 @@
 package com.hcl.ecommerce.service;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
-import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
-import org.springframework.stereotype.Component;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.entity.Product;
 
+@Service
 public class RabbitMqService {
-	@Component
-	public class RabbitMqReceiver implements RabbitListenerConfigurer {
-	    private final org.jboss.logging.Logger logger = LoggerFactory.logger(RabbitMqReceiver.class);
-	    public void configureRabbitListeners(RabbitListenerEndpointRegistrar rabbitListenerEndpointRegistrar) {
+	 private RabbitTemplate rabbitTemplate;
+	    @Autowired
+	    public RabbitMqService(RabbitTemplate rabbitTemplate) {
+	        this.rabbitTemplate = rabbitTemplate;
 	    }
-	    @RabbitListener(queues = "${spring.rabbitmq.queue}")
-	    public void receivedMessage(Product product) {
-	        logger.info("Inventory is low on " + product);
+	    @Value("${spring.rabbitmq.exchange}")
+	    private String exchange;
+	    @Value("${spring.rabbitmq.routingkey}")
+	    private String routingkey;
+	    public void send(Product product){
+	        rabbitTemplate.convertAndSend(exchange,routingkey, product);
 	    }
-	}
 }

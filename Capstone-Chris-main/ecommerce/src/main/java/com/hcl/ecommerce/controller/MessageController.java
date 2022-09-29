@@ -1,23 +1,28 @@
 package com.hcl.ecommerce.controller;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@CrossOrigin("http://localhost:4200")
-public class MessageController {
-	private final RabbitTemplate rabbitTemplate;
-	static final String topicExchangeName = "spring-boot-exchange";
+import com.hcl.ecommerce.entity.Product;
+import com.hcl.ecommerce.service.RabbitMqService;
 
-	public MessageController(RabbitTemplate rabbitTemplate) {
-		this.rabbitTemplate = rabbitTemplate;
-	}
-	
-	@GetMapping("hello")
-	public void hello() {
-		System.out.println("Sending message...");
-		rabbitTemplate.convertAndSend(topicExchangeName, "foo.bar.baz", "Message from RabbitMQ");
-	}
+@RestController
+@RequestMapping(value = "/api/v1")
+public class MessageController {
+	 private RabbitMqService rabbitMqService;
+	    @Autowired
+	    public MessageController(RabbitMqService rabbitMqSender) {
+	        this.rabbitMqService = rabbitMqSender;
+	    }
+	    @Value("${app.message}")
+	    private String message;
+	    @PostMapping(value = "product")
+	    public String publishProductDetails(@RequestBody Product product) {
+	        rabbitMqService.send(product);
+	        return message;
+	    }
 }
