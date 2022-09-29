@@ -1,32 +1,27 @@
 package com.hcl.ecommerce.service;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.dto.UserDto;
-import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.UserRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
-	private MailSenderService mailSenderService;
+//	@Autowired
+//	private MailSenderService mailSenderService;
 	
 	
 	@Override

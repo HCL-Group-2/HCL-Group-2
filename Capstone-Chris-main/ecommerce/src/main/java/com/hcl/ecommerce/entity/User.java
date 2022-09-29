@@ -5,21 +5,17 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.UserDto;
+import com.hcl.ecommerce.dto.CartItemDto;
+import com.hcl.ecommerce.dto.OrderDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +38,14 @@ public class User {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		email = dto.getEmail();
+		cartItems = new ArrayList<>();
+		for(CartItemDto cid : dto.getCartItems()) {
+			cartItems.add(new CartItem(cid));
+		}
+		orders = new ArrayList<>();
+		for(OrderDto o : dto.getOrders()) {
+			orders.add(new Order(o));
+		}
 	}
 	
 	@Id
@@ -58,22 +62,24 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	private List<CreditCard> creditCards = new ArrayList<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
+	private List<Order> orders;
 	
 	
 	public UserDto toDto() {
-		UserDto dto = new UserDto(id, firstName, lastName, email);
-		return dto;
+		List<CartItemDto> dtoListCart = new ArrayList<>();
+		for(CartItem c : cartItems) {
+			dtoListCart.add(c.toDto());
+		}
+		List<OrderDto> dtoListOrder = new ArrayList<>();
+		for(Order o : orders) {
+			dtoListOrder.add(o.toDto());
+		}
+		return new UserDto(id, firstName, lastName, email, dtoListCart, dtoListOrder);
 	}
-	
 
 	public Integer getId() {
 		return id;
@@ -106,15 +112,6 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-//	public List<CreditCard> getCreditCards() {
-//		return creditCards;
-//	}
-
-//	public void setCreditCards(List<CreditCard> creditCards) {
-//		this.creditCards = creditCards;
-//	}
 
 	public List<CartItem> getCartItems() {
 		return cartItems;

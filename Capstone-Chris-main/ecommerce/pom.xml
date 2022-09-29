@@ -47,6 +47,12 @@
             <version>1.6.9</version>
         </dependency>
         
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
+		</dependency>
+
         <!-- https://mvnrepository.com/artifact/com.stripe/stripe-java -->
 		<dependency>
 		    <groupId>com.stripe</groupId>
@@ -77,7 +83,6 @@
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
-		    <version>1.18.20</version>
 		</dependency>
 		
 		<dependency>
@@ -112,11 +117,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
-<!-- 		</dependency> -->
-		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -140,25 +140,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-<!--         <dependency> -->
-<!--             <groupId>com.okta.spring</groupId> -->
-<!--             <artifactId>okta-spring-boot-starter</artifactId> -->
-<!--             <version>${okta.version}</version> -->
-<!--         </dependency> -->
-        
-
-         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-       
-
-        
-<!--         <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-        </dependency> -->
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -197,9 +178,10 @@
 		    <plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-		    </plugin>
-			
-			<plugin>
+		    	</plugin>
+		    
+		    	<plugin>
+
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.7</version>
@@ -225,5 +207,4 @@
 		    </plugin>
 		</plugins>
 	</build>
-
 </project>

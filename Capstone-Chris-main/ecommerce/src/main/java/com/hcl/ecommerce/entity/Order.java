@@ -18,8 +18,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.hcl.ecommerce.dto.OrderDto;
+import com.hcl.ecommerce.dto.OrderItemDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,21 @@ import lombok.ToString;
 @ToString
 @Table(name = "orders")
 public class Order {
+	
+	public Order(OrderDto dto) {
+		id = dto.getId();
+		orderDate = dto.getOrderDate();
+		orderTotal = dto.getOrderTotal();
+		orderStatus = dto.getOrderStatus();
+		user = new User(dto.getUserDto());
+		shippingAddress = new ShippingAddress(dto.getShipDto());
+		orderItems = new ArrayList<>();
+		for(OrderItemDto o : dto.getOrderItemsDto()) {
+			orderItems.add(new OrderItem(o));
+		}
+		
+	}
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,14 +70,22 @@ public class Order {
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private ShippingAddress shippingAddress;
-//	
-//	@OneToOne(cascade = CascadeType.PERSIST)
-//	private Payment payment;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<OrderItem> orderItems = new ArrayList<>();
 
+	public OrderDto toDto() {
+		
+		List<OrderItemDto> dtoList = new ArrayList<>();
+		for(OrderItem oi : orderItems) {
+			dtoList.add(oi.toDto());
+		}
+		
+		return new OrderDto(id, orderDate, orderTotal, orderStatus, user.toDto(), shippingAddress.toDto(), dtoList);
+	}
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -109,14 +133,6 @@ public class Order {
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
-
-//	public Payment getPayment() {
-//		return payment;
-//	}
-//
-//	public void setPayment(Payment payment) {
-//		this.payment = payment;
-//	}
 
 	public List<OrderItem> getOrderItems() {
 		return orderItems;

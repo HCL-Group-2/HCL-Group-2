@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.User;
-import com.hcl.ecommerce.dto.UserLoginDto;
 import com.hcl.ecommerce.exception.AddEntityException;
 
 public interface UserService {

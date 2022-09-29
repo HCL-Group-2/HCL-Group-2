@@ -1,9 +1,8 @@
 package com.hcl.ecommerce.dto;
 
 import java.math.BigDecimal;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,22 +13,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CartItemDto {
+public class OrderDto {
 	
 	private Integer id;
 	
-	@NotNull
-	@Size(min = 0)
-	private int quantity;
+	private LocalDate orderDate;
 	
-	private BigDecimal subtotal;
+	private BigDecimal orderTotal;
 	
-	@NotNull
+	private String orderStatus;
+	
 	private UserDto userDto;
 	
-	@NotNull
-	private ProductDto productDto;
+	private ShipDto shipDto;
 	
-
+	private List<OrderItemDto> orderItemsDto;
 
 }

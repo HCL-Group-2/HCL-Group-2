@@ -28,31 +28,42 @@ import com.hcl.ecommerce.repository.UserRepository;
 @SpringBootTest
 public class CartItemServiceImplTest {
 	
+	@InjectMocks
+	CartItemServiceImpl cartItemServiceImpl;
+
+	@Mock
+	CartItemRepository cartItemRepository;
+	
+	@Mock
+	UserRepository userRepository;
+	
+	@Mock
+	ProductRepository productRepository;
+	
 	@Test
 	public void testAddCartItem() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 	
 	@Test
 	public void testGetCartItemById() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 	
 	@Test
 	public void testUpdateCartItem() throws Exception {
 		
-		
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testDeleteCartItem() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 
