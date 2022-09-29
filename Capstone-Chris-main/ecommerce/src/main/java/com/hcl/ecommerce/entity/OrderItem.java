@@ -35,7 +35,6 @@ public class OrderItem {
 		subtotal = dto.getSubtotal();
 		order = new Order(dto.getOrderDto());
 		product = new Product(dto.getProductDto());
-		
 	}
 	
 	@Id
