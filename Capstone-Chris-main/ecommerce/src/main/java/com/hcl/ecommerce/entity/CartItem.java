@@ -37,6 +37,13 @@ public class CartItem {
 		product = new Product(dto.getProductDto());
 	}
 	
+	public CartItem(int quantity, BigDecimal subtotal, User user, Product product) {
+		this.quantity = quantity;
+		this.subtotal = subtotal;
+		this.user = user;
+		this.product = product;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cart_item_id")
@@ -118,13 +125,6 @@ public class CartItem {
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public CartItem(int quantity, BigDecimal subtotal, User user, Product product) {
-		this.quantity = quantity;
-		this.subtotal = subtotal;
-		this.user = user;
 		this.product = product;
 	}
 

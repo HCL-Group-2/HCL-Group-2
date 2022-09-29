@@ -37,6 +37,14 @@ public class User {
 		email = dto.getEmail();
 	}
 	
+	public User(String firstName, String lastName, String email) {
+		this(null, firstName, lastName, email, null, null);
+	}
+
+	public User(Integer id, String firstName, String lastName, String email) {
+		this(id, firstName, lastName, email, null, null);
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -108,19 +116,6 @@ public class User {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
-	}
-
-	public User(String firstName, String lastName, String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
-
-	public User(Integer id, String firstName, String lastName, String email) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
 	}
 
 }

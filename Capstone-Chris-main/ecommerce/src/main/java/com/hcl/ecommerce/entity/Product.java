@@ -42,6 +42,15 @@ public class Product {
 		inventory = dto.getInventory();
 	}
 	
+	public Product(String name, String description, BigDecimal price, String image, String category, int inventory) {
+		this(null, name, description, price, image, category, inventory, null, null);
+	}
+
+	public Product(Integer id, String name, String description, BigDecimal price, String image, String category,
+			int inventory) {
+		this(id, name, description, price, image, category, inventory, null, null);
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="prod_id")
@@ -147,27 +156,5 @@ public class Product {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
-
-	public Product(String name, String description, BigDecimal price, String image, String category, int inventory) {
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.image = image;
-		this.category = category;
-		this.inventory = inventory;
-	}
-
-	public Product(Integer id, String name, String description, BigDecimal price, String image, String category,
-			int inventory) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.image = image;
-		this.category = category;
-		this.inventory = inventory;
-	}
-	
-	
 
 }
