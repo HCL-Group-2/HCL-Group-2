@@ -120,7 +120,12 @@ public class CartItem {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
+
+	public CartItem(int quantity, BigDecimal subtotal, User user, Product product) {
+		this.quantity = quantity;
+		this.subtotal = subtotal;
+		this.user = user;
+		this.product = product;
+	}
 
 }

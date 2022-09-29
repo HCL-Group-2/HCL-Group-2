@@ -147,6 +147,26 @@ public class Product {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
+
+	public Product(String name, String description, BigDecimal price, String image, String category, int inventory) {
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.image = image;
+		this.category = category;
+		this.inventory = inventory;
+	}
+
+	public Product(Integer id, String name, String description, BigDecimal price, String image, String category,
+			int inventory) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.image = image;
+		this.category = category;
+		this.inventory = inventory;
+	}
 	
 	
 

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -43,7 +45,15 @@ public class CartItemServiceImplTest {
 	@Test
 	public void testAddCartItem() throws Exception {
 		
-		assertTrue(true);
+//		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), new User(), new Product());
+//		
+//		when(userRepository.findByEmail(mockCa.getEmail())).thenReturn(null);
+//		
+//		when(userRepository.save(any(User.class))).thenReturn(mockUser);
+//		
+//		CartItem cartItem = cartItemServiceImpl.addCartItem(mockCartItem);
+//		
+//		verify(userRepository).save(mockUser);
 		
 	}
 	
