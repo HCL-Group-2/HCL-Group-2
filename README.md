@@ -1,6 +1,6 @@
 # HCL-Group-2
 
-Project Slides
+Project Slides:
 https://docs.google.com/presentation/d/1FCb3vkPRjQYAz98KbZnBJw9jyV5xEpspjBh4GICx2-k/edit?usp=sharing
 
 Jira link: https://hcl.atlassian.net/jira/software/projects/HG2/boards/2
