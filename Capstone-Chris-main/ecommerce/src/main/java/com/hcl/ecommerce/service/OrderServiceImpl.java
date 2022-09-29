@@ -72,6 +72,9 @@ public class OrderServiceImpl implements OrderService {
 		for (CartItem cartItem : cartItems) {
 			Product prod = getProductById(cartItem.getProduct().getId());
 			prod.setInventory(prod.getInventory() - cartItem.getQuantity());
+			if(prod.getInventory() < 100) {
+				System.out.println("Order more " + prod.getName());
+			}
 			productRepository.save(prod);
 			OrderItem orderItem = new OrderItem();
 			BeanUtils.copyProperties(cartItem, orderItem, "id");
