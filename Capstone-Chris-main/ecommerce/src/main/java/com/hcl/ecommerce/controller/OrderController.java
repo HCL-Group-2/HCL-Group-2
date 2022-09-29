@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.ecommerce.dto.OrderDto;
 import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
@@ -47,31 +48,32 @@ public class OrderController {
 	}
 	
 	@PostMapping("/order")
-	public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
+	public ResponseEntity<OrderDto> placeOrder(@RequestBody OrderDto orderDto) {
+		Order order = null;
 		try {
-			order = orderService.addOrder(order);
+			order = orderService.addOrder(new Order(orderDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<Order>(order, HttpStatus.CONFLICT);
+			return new ResponseEntity<OrderDto>((OrderDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
+		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/order/{id}")
-	public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
+	public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Integer id) {
 		Order order = orderService.getOrderById(id);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
+		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/order")
-	public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-		order = orderService.updateOrder(order);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
+	public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
+		Order order = orderService.updateOrder(new Order(orderDto));
+		return new ResponseEntity<OrderDto>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/order/{id}")
 	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Integer id) {
 		orderService.deleteOrder(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }
