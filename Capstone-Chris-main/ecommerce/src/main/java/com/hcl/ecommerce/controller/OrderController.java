@@ -1,9 +1,6 @@
 package com.hcl.ecommerce.controller;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,15 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hcl.ecommerce.dto.CreatePaymentResponse;
+import com.hcl.ecommerce.dto.OrderDto;
 import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 
 
 
@@ -35,11 +30,9 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-//	@Value("${stripe.api.key}") 
-//    private String stripeSecretKey;
 	
-	 @PostMapping("/payment-intent")
-	    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
+	@PostMapping("/payment-intent")
+	public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
 
 	        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfo);
 
@@ -50,31 +43,32 @@ public class OrderController {
 	}
 	
 	@PostMapping("/order")
-	public ResponseEntity<Order> placeOrder(@RequestBody Order order) {
+	public ResponseEntity<OrderDto> placeOrder(@RequestBody OrderDto orderDto) {
+		Order order = null;
 		try {
-			order = orderService.addOrder(order);
+			order = orderService.addOrder(new Order(orderDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<Order>(order, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((OrderDto) null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<Order>(order, HttpStatus.CREATED);
+		return new ResponseEntity<>(order.toDto(), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/order/{id}")
-	public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
+	public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Integer id) {
 		Order order = orderService.getOrderById(id);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
+		return new ResponseEntity<>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/order")
-	public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-		order = orderService.updateOrder(order);
-		return new ResponseEntity<Order>(order, HttpStatus.OK);
+	public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
+		Order order = orderService.updateOrder(new Order(orderDto));
+		return new ResponseEntity<>(order.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/order/{id}")
 	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Integer id) {
 		orderService.deleteOrder(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

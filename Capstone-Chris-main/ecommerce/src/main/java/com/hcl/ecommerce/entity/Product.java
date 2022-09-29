@@ -40,7 +40,6 @@ public class Product {
 		image = dto.getImage();
 		category = dto.getCategory();
 		inventory = dto.getInventory();
-		
 	}
 	
 	@Id
@@ -73,8 +72,8 @@ public class Product {
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	public ProductDto toDto() {
-		ProductDto dto = new ProductDto(id, name, description, price, image, category, inventory);
-		return dto;
+		return new ProductDto(id, name, description, price, image, category, inventory);
+		
 	}
 
 	public Integer getId() {

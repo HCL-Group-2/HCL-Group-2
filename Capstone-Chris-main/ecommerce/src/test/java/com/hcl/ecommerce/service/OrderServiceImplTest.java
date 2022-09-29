@@ -34,31 +34,49 @@ import com.hcl.ecommerce.repository.UserRepository;
 @SpringBootTest
 public class OrderServiceImplTest {
 	
+	@InjectMocks
+	OrderServiceImpl orderServiceImpl;
+
+	@Mock
+	OrderRepository orderRepository;
+	
+	@Mock
+	UserRepository userRepository;
+	
+	@Mock
+	ProductRepository productRepository;
+	
+	@Mock
+	CartItemRepository cartItemRepository;
+	
+	@Mock
+	MailSenderService mailSenderService;
+	
 	@Test
 	public void testAddOrder() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 	
 	@Test
 	public void testGetOrderById() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 	
 	@Test
 	public void testUpdateOrder() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 	
 	@Test
 	public void testDeleteOrder() throws Exception {
 		
-		
+		assertTrue(true);
 		
 	}
 
