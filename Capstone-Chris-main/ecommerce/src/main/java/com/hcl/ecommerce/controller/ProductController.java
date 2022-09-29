@@ -36,7 +36,7 @@ public class ProductController {
 		try {
 			product = productService.addProduct(new Product(productDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<ProductDto>((ProductDto) null, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((ProductDto) null, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(product.toDto(), HttpStatus.CREATED);
 	}
@@ -62,7 +62,7 @@ public class ProductController {
 	@GetMapping("/products")
 	public ResponseEntity<List<ProductDto>> getAllProducts() {
 		List<Product> list = productService.getAllProducts();
-		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		List<ProductDto> dtoList = new ArrayList<>();
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}
@@ -72,7 +72,7 @@ public class ProductController {
 	@GetMapping("/productsbyname")
 	public ResponseEntity<List<ProductDto>> getAllProductsByName(@RequestParam String name) {
 		List<Product> list = productService.getAllProductsByName(name);
-		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		List<ProductDto> dtoList = new ArrayList<>();
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}
@@ -82,7 +82,7 @@ public class ProductController {
 	@GetMapping("/productsbycategory")
 	public ResponseEntity<List<ProductDto>> getAllProductsByCategory(@RequestParam String category) {
 		List<Product> list = productService.getAllProductsByCategory(category);
-		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		List<ProductDto> dtoList = new ArrayList<>();
 		for(Product p : list) {
 			dtoList.add(p.toDto());
 		}

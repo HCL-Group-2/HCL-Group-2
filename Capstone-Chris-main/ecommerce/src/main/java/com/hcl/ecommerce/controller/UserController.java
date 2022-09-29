@@ -39,7 +39,7 @@ public class UserController {
 		try {
 			user = userService.addUser(new User(userDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<UserDto>((UserDto) null, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((UserDto) null, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(user.toDto(), HttpStatus.CREATED);
 	}
@@ -65,7 +65,7 @@ public class UserController {
 	@GetMapping("/users")
 	public ResponseEntity<List<UserDto>> getAllUsers() {
 		List<User> list = userService.getAllUsers();
-		List<UserDto> dtoList = new ArrayList<UserDto>();
+		List<UserDto> dtoList = new ArrayList<>();
 		for(User u : list) {
 			dtoList.add(u.toDto());
 		}
@@ -81,7 +81,7 @@ public class UserController {
 	@GetMapping("/user/{userid}/orders")    
 	public ResponseEntity<List<OrderDto>> getOrdersById(@PathVariable("userid") Integer userId){
 		List<Order> list = userService.getOrdersByUserId(userId);
-		List<OrderDto> dtoList = new ArrayList<OrderDto>();
+		List<OrderDto> dtoList = new ArrayList<>();
 		for(Order o : list) {
 			dtoList.add(o.toDto());
 		}

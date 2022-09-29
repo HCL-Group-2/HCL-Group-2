@@ -48,7 +48,7 @@ public class OrderController {
 		try {
 			order = orderService.addOrder(new Order(orderDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<OrderDto>((OrderDto) null, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((OrderDto) null, HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(order.toDto(), HttpStatus.CREATED);
 	}
