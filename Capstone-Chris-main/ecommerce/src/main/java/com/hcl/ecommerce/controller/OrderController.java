@@ -1,9 +1,6 @@
 package com.hcl.ecommerce.controller;
 
-import java.math.BigDecimal;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +17,8 @@ import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 
 
 
@@ -44,7 +39,7 @@ public class OrderController {
 
 	        String paymentStr = paymentIntent.toJson();
 
-	        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
+	        return new ResponseEntity<String>(paymentStr, HttpStatus.OK);
 	}
 	
 	@PostMapping("/order")

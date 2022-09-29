@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.CartItemDto;
-import com.hcl.ecommerce.dto.OrderDto;
 import com.hcl.ecommerce.dto.OrderItemDto;
 import com.hcl.ecommerce.dto.ProductDto;
 

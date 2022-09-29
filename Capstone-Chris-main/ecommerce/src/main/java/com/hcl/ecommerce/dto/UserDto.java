@@ -5,9 +5,6 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-import com.hcl.ecommerce.entity.CartItem;
-import com.hcl.ecommerce.entity.Order;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -5,16 +5,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -68,10 +62,6 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	private List<CreditCard> creditCards = new ArrayList<>();
-	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems;
 	
@@ -91,24 +81,6 @@ public class User {
 		UserDto dto = new UserDto(id, firstName, lastName, email, dtoListCart, dtoListOrder);
 		return dto;
 	}
-	
-	public List<CartItemDto> cartDto(){
-		List<CartItemDto> cartList = new ArrayList<CartItemDto>();
-		
-		
-		
-		return cartList;
-		
-	}
-	
-	public List<OrderDto> orderDto(){
-		List<OrderDto> orderList = new ArrayList<OrderDto>();
-		for(Order o : orders) {
-			orderList.add(o.toDto());
-		}
-		return orderList;
-	}
-	
 
 	public Integer getId() {
 		return id;
