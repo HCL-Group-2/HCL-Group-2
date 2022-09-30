@@ -44,15 +44,6 @@ public class ProductServiceImplTest {
 		
 		verify(productRepository).save(mockProduct);
 		
-//		assertNotNull(product);
-//		
-//		assertEquals("phone", product.getName());
-//		assertEquals("a phone", product.getDescription());
-//		assertEquals(new BigDecimal(999.0), product.getPrice());
-//		assertEquals("image url", product.getImage());
-//		assertEquals("phone", product.getCategory());
-//		assertEquals(300, product.getInventory());
-		
 	}
 	
 	@Test(expected = AddEntityException.class)
