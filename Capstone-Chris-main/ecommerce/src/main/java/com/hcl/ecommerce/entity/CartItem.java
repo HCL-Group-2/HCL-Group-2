@@ -78,11 +78,7 @@ public class CartItem {
 			return false;
 		}
 		
-		if ((this.user.getId() == item.getUser().getId()) && (this.product.getId() == item.getProduct().getId())) {
-			return true;
-		} else {
-			return false;
-		}
+		return ((this.user.getId() == item.getUser().getId()) && (this.product.getId() == item.getProduct().getId()));
 		
 	}
 	

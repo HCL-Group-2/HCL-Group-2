@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.hcl.ecommerce.dto.OrderItemDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,14 +25,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "order_items")
 public class OrderItem {
-	
-	public OrderItem(OrderItemDto dto) {
-		id = dto.getId();
-		quantity = dto.getQuantity();
-		subtotal = dto.getSubtotal();
-		order = new Order(dto.getOrderDto());
-		product = new Product(dto.getProductDto());
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +46,4 @@ public class OrderItem {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
-	public OrderItemDto toDto() {
-		return new OrderItemDto(id, quantity, subtotal, order.toDto(), product.toDto());
-	}
 }
