@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -49,6 +50,31 @@ public class CartItemServiceImplTest {
 		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
 		
 		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), user, product);
+		
+		when(userRepository.findById(1)).thenReturn(Optional.of(user));
+		
+		when(productRepository.findById(1)).thenReturn(Optional.of(product));
+		
+		when(cartItemRepository.findById(1)).thenReturn(Optional.of(mockCartItem));
+		
+		when(cartItemRepository.save(any(CartItem.class))).thenReturn(mockCartItem);
+		
+		CartItem cartItem = cartItemServiceImpl.addCartItem(mockCartItem);
+		
+		verify(cartItemRepository).save(mockCartItem);
+		
+	}
+	
+	@Test
+	public void testAddCartItemItemAlreadyExist() throws Exception {
+		
+		User user = new User(1, "larry", "miller", "larry@email.com", new ArrayList<CartItem>(), null);
+		
+		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		
+		CartItem mockCartItem = new CartItem(1, 1, new BigDecimal(999.0), user, product);
+		
+		user.getCartItems().add(mockCartItem);
 		
 		when(userRepository.findById(1)).thenReturn(Optional.of(user));
 		
