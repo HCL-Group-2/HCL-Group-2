@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hcl.ecommerce.dto.ProductDto;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +29,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "products")
-@JsonIgnoreProperties(value = { "cartItems", "orderItems" }, allowSetters = true)
 public class Product {
 	
 	public Product(ProductDto dto) {
@@ -40,6 +39,15 @@ public class Product {
 		image = dto.getImage();
 		category = dto.getCategory();
 		inventory = dto.getInventory();
+	}
+	
+	public Product(String name, String description, BigDecimal price, String image, String category, int inventory) {
+		this(null, name, description, price, image, category, inventory, null, null);
+	}
+
+	public Product(Integer id, String name, String description, BigDecimal price, String image, String category,
+			int inventory) {
+		this(id, name, description, price, image, category, inventory, null, null);
 	}
 	
 	@Id
@@ -66,88 +74,15 @@ public class Product {
 	private int inventory;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<CartItem> cartItems = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	public ProductDto toDto() {
 		return new ProductDto(id, name, description, price, image, category, inventory);
-		
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public int getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(int inventory) {
-		this.inventory = inventory;
-	}
-
-	public List<CartItem> getCartItems() {
-		return cartItems;
-	}
-
-	public void setCartItems(List<CartItem> cartItems) {
-		this.cartItems = cartItems;
-	}
-
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
 	}
 	
-	
-
 }
