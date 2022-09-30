@@ -2,9 +2,6 @@ package com.hcl.ecommerce.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hcl.ecommerce.entity.Product;
-import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.ProductRepository;
 
@@ -44,7 +40,7 @@ public class ProductServiceImplTest {
 		
 		when(productRepository.save(any(Product.class))).thenReturn(mockProduct);
 		
-		Product product = productServiceImpl.addProduct(mockProduct);
+		productServiceImpl.addProduct(mockProduct);
 		
 		verify(productRepository).save(mockProduct);
 		
@@ -77,7 +73,7 @@ public class ProductServiceImplTest {
 		
 		when(productRepository.findById(1)).thenReturn(Optional.of(mockProduct));
 		
-		Product product = productServiceImpl.getProductById(1);
+		productServiceImpl.getProductById(1);
 		
 		verify(productRepository).findById(1);
 		
@@ -92,7 +88,7 @@ public class ProductServiceImplTest {
 		
 		when(productRepository.save(any(Product.class))).thenReturn(mockProduct);
 		
-		Product product = productServiceImpl.updateProduct(mockProduct);
+		productServiceImpl.updateProduct(mockProduct);
 		
 		verify(productRepository).save(mockProduct);
 		

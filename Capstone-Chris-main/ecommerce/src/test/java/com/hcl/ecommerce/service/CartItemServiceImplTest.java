@@ -2,9 +2,6 @@ package com.hcl.ecommerce.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,7 +59,7 @@ public class CartItemServiceImplTest {
 		
 		when(cartItemRepository.save(any(CartItem.class))).thenReturn(mockCartItem);
 		
-		CartItem cartItem = cartItemServiceImpl.addCartItem(mockCartItem);
+		cartItemServiceImpl.addCartItem(mockCartItem);
 		
 		verify(cartItemRepository).save(mockCartItem);
 		
@@ -87,7 +84,7 @@ public class CartItemServiceImplTest {
 		
 		when(cartItemRepository.save(any(CartItem.class))).thenReturn(mockCartItem);
 		
-		CartItem cartItem = cartItemServiceImpl.addCartItem(mockCartItem);
+		cartItemServiceImpl.addCartItem(mockCartItem);
 		
 		verify(cartItemRepository).save(mockCartItem);
 		
@@ -130,7 +127,7 @@ public class CartItemServiceImplTest {
 		
 		when(cartItemRepository.findById(1)).thenReturn(Optional.of(mockCartItem));
 		
-		CartItem cartItem = cartItemServiceImpl.getCartItemById(1);
+		cartItemServiceImpl.getCartItemById(1);
 		
 		verify(cartItemRepository).findById(1);
 		
@@ -147,7 +144,7 @@ public class CartItemServiceImplTest {
 		
 		when(cartItemRepository.save(any(CartItem.class))).thenReturn(mockCartItem);
 		
-		CartItem cartItem = cartItemServiceImpl.updateCartItem(mockCartItem);
+		cartItemServiceImpl.updateCartItem(mockCartItem);
 		
 		verify(cartItemRepository).save(mockCartItem);
 		

@@ -1,10 +1,5 @@
 package com.hcl.ecommerce.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,7 +7,6 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +73,7 @@ public class OrderServiceImplTest {
 
 		when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
 
-		Order order = orderServiceImpl.addOrder(mockOrder);
+		orderServiceImpl.addOrder(mockOrder);
 
 		verify(orderRepository).save(mockOrder);
 		
@@ -108,14 +102,12 @@ public class OrderServiceImplTest {
 		
 		User user = new User(1, "larry", "miller", "larry@email.com");
 
-		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
-
 		Order mockOrder = new Order(1, LocalDate.now(), new BigDecimal(999.0), "In progress", user,
 				new ShippingAddress(1, "123 Test Address", null, "Frisco", "Texas", "75034"), null);
 
 		when(orderRepository.findById(1)).thenReturn(Optional.of(mockOrder));
 		
-		Order order = orderServiceImpl.getOrderById(1);
+		orderServiceImpl.getOrderById(1);
 		
 		verify(orderRepository).findById(1);
 
@@ -126,8 +118,6 @@ public class OrderServiceImplTest {
 		
 		User user = new User(1, "larry", "miller", "larry@email.com");
 
-		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
-
 		Order mockOrder = new Order(1, LocalDate.now(), new BigDecimal(999.0), "In progress", user,
 				new ShippingAddress(1, "123 Test Address", null, "Frisco", "Texas", "75034"), null);
 
@@ -135,7 +125,7 @@ public class OrderServiceImplTest {
 		
 		when(orderRepository.save(any(Order.class))).thenReturn(mockOrder);
 		
-		Order orderItem = orderServiceImpl.updateOrder(mockOrder);
+		orderServiceImpl.updateOrder(mockOrder);
 		
 		verify(orderRepository).save(mockOrder);
 

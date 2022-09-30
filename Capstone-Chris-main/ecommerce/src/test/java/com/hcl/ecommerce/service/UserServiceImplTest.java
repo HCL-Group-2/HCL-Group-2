@@ -2,15 +2,12 @@ package com.hcl.ecommerce.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -46,15 +43,9 @@ public class UserServiceImplTest {
 
 		when(userRepository.save(any(User.class))).thenReturn(mockUser);
 
-		User user = userServiceImpl.addUser(mockUser);
+		userServiceImpl.addUser(mockUser);
 
 		verify(userRepository).save(mockUser);
-
-//		assertNotNull(user);
-//		
-//		assertEquals("larry", user.getFirstName());
-//		assertEquals("miller", user.getLastName());
-//		assertEquals("larry@email.com", user.getEmail());
 
 	}
 	
@@ -76,15 +67,9 @@ public class UserServiceImplTest {
 
 		when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
 
-		User user = userServiceImpl.getUserById(1);
+		userServiceImpl.getUserById(1);
 
 		verify(userRepository).findById(1);
-
-//		assertNotNull(user);
-//		
-//		assertEquals("larry", user.getFirstName());
-//		assertEquals("miller", user.getLastName());
-//		assertEquals("larry@email.com", user.getEmail());
 
 	}
 
@@ -97,15 +82,9 @@ public class UserServiceImplTest {
 
 		when(userRepository.save(any(User.class))).thenReturn(mockUser);
 
-		User user = userServiceImpl.updateUser(mockUser);
+		userServiceImpl.updateUser(mockUser);
 
 		verify(userRepository).save(mockUser);
-
-//		assertNotNull(user);
-//		
-//		assertEquals("larry", user.getFirstName());
-//		assertEquals("miller", user.getLastName());
-//		assertEquals("larry@email.com", user.getEmail());
 
 	}
 
