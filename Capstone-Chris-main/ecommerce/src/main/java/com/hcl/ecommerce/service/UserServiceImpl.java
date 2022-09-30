@@ -1,10 +1,9 @@
 package com.hcl.ecommerce.service;
 
-//import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
-
-//	@Autowired
-//	private MailSenderService mailSenderService;
-	
 	
 	@Override
 	public synchronized User addUser(User user) throws AddEntityException {
@@ -30,12 +25,6 @@ public class UserServiceImpl implements UserService {
 			throw new AddEntityException("A User with the Email: " + user.getEmail() + " already exists in the database");
 		}
 		userRepository.save(user);
-//		mailSenderService.sendEmail(user.getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(user.getEmail());
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
 		return user;
 	}
 
@@ -81,7 +70,7 @@ public class UserServiceImpl implements UserService {
 			return userOptional.get().getOrders();
 		}
 		else {
-			return null;
+			return new ArrayList<Order>();
 		}
 
 	}

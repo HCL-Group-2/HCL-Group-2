@@ -1,6 +1,5 @@
 package com.hcl.ecommerce.service;
 
-//import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-//import javax.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +44,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	ProductRepository productRepository;
-
-//	@Autowired
-//	private MailSenderService mailSenderService;
 	
 	@Value("${stripe.key.secret}")
 	public static void setStripeKey(String secretKey) {
@@ -84,12 +78,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderDate(LocalDate.now());
 		order.setOrderStatus("In Progress");
 		cartItemRepository.deleteAll(cartItems);
-//		mailSenderService.sendEmail(user.getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
 		return orderRepository.save(order);
 	}
 
