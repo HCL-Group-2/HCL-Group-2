@@ -47,7 +47,17 @@ public class CartItemControllerTest {
 	public void testAddCartItem() throws Exception {
 
 		String mockCartItemJson = 
-				"{\"quantity\":1,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
+				"{"
+					+ "\"quantity\":1,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1"
+					+ "}"
+				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
 		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
@@ -73,7 +83,29 @@ public class CartItemControllerTest {
 	@Test
 	public void testGetCartItemById() throws Exception {
 
-		String mockCartItemJson = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
+		String mockCartItemJson = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"quantity\":1,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":\"Test Product\","
+						+ "\"description\":\"A test product.\","
+						+ "\"price\":50.0,"
+						+ "\"image\":\"Test Image\","
+						+ "\"category\":\"Test Category\","
+						+ "\"inventory\":300"
+					+ "}"
+				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
 		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
@@ -87,7 +119,29 @@ public class CartItemControllerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-		String expected = "{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}";
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"quantity\":1,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":\"Test Product\","
+						+ "\"description\":\"A test product.\","
+						+ "\"price\":50.0,"
+						+ "\"image\":\"Test Image\","
+						+ "\"category\":\"Test Category\","
+						+ "\"inventory\":300"
+					+ "}"
+				+ "}";
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -99,7 +153,19 @@ public class CartItemControllerTest {
 	public void testUpdateCartItem() throws Exception {
 
 		String mockCartItemJson = 
-				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1},\"product\":{\"id\":1}}";
+				"{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1"
+					+ "}"
+				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
 		CartItem mockCartItem = mapper.readValue(mockCartItemJson, CartItem.class);
@@ -114,7 +180,29 @@ public class CartItemControllerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-		String expected = "{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":null,\"image\":null,\"category\":null,\"inventory\":0}}";
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":null,"
+						+ "\"lastName\":null,"
+						+ "\"email\":null"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":null,"
+						+ "\"description\":null,"
+						+ "\"price\":null,"
+						+ "\"image\":null,"
+						+ "\"category\":null,"
+						+ "\"inventory\":0"
+					+ "}"
+				+ "}";
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -126,7 +214,28 @@ public class CartItemControllerTest {
 	public void testDeleteCartItem() throws Exception {
 
 		String mockCartItemJson = 
-				"{\"id\":1,\"quantity\":2,\"subtotal\":50.0,\"user\":{\"id\":1,\"firstName\":null,\"lastName\":null,\"email\":null},\"product\":{\"id\":1,\"name\":null,\"description\":null,\"price\":null,\"image\":null,\"category\":null,\"inventory\":0}}";
+				"{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":null,"
+						+ "\"lastName\":null,"
+						+ "\"email\":null"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":null,"
+						+ "\"description\":null,"
+						+ "\"price\":null,"
+						+ "\"image\":null,"
+						+ "\"category\":null,"
+						+ "\"inventory\":0"
+					+ "}"
+				+ "}";
 
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders

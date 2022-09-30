@@ -47,7 +47,22 @@ public class OrderContollerTest {
 	public void testAddOrder() throws Exception {
 
 		String mockOrderJson = 
-				"{\"user\":{\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"shippingAddress\": {\"address1\":\"123 Test Address A\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},}";
+				"{"
+					+ "\"user\":"
+					+ "{"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"address1\":\"123 Test Address A\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "}"
+				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
         Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
@@ -73,7 +88,47 @@ public class OrderContollerTest {
 	@Test
 	public void testGetOrderById() throws Exception {
 
-		String mockOrderJson = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
+		String mockOrderJson = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderTotal\":50.0,"
+					+ "\"orderStatus\":\"In Progress\","
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"address1\":\"123 Test Address\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "},"
+					+ "\"orderItems\":"
+					+ "["
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"quantity\":1,"
+							+ "\"subtotal\":50.0,"
+							+ "\"product\":"
+							+ "{"
+								+ "\"id\":1,"
+								+ "\"name\":\"Test Product\","
+								+ "\"description\":\"A test product.\","
+								+ "\"price\":50.0,"
+								+ "\"image\":\"Test Image\","
+								+ "\"category\":\"Test Category\","
+								+ "\"inventory\":300"
+							+ "}"
+						+ "}"
+					+ "]"
+				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
         Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
@@ -87,7 +142,47 @@ public class OrderContollerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-		String expected = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"01-24\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderTotal\":50.0,"
+					+ "\"orderStatus\":\"In Progress\","
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"address1\":\"123 Test Address\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "},"
+					+ "\"orderItems\":"
+					+ "["
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"quantity\":1,"
+							+ "\"subtotal\":50.0,"
+							+ "\"product\":"
+							+ "{"
+								+ "\"id\":1,"
+								+ "\"name\":\"Test Product\","
+								+ "\"description\":\"A test product.\","
+								+ "\"price\":50.0,"
+								+ "\"image\":\"Test Image\","
+								+ "\"category\":\"Test Category\","
+								+ "\"inventory\":300"
+							+ "}"
+						+ "}"
+					+ "]"
+				+ "}";
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -99,8 +194,46 @@ public class OrderContollerTest {
 	public void testUpdateOrder() throws Exception {
 
 		String mockOrderJson = 
-				"{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"01-24\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
-
+				"{"
+					+ "\"id\":1,"
+					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderTotal\":50.0,"
+					+ "\"orderStatus\":\"Processing\","
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\","
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"address1\":\"123 Test Address\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "},"
+					+ "\"orderItems\":"
+					+ "["
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"quantity\":1,"
+							+ "\"subtotal\":50.0,"
+							+ "\"product\":"
+							+ "{"
+								+ "\"id\":1,"
+								+ "\"name\":\"Test Product\","
+								+ "\"description\":\"A test product.\","
+								+ "\"price\":50.0,"
+								+ "\"image\":\"Test Image\","
+								+ "\"category\":\"Test Category\","
+								+ "\"inventory\":300"
+							+ "}"
+						+ "}"
+					+ "]"
+				+ "}";
 		ObjectMapper mapper = mapperBuilder.build();
         Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
 
@@ -114,7 +247,47 @@ public class OrderContollerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-		String expected = "{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"01-24\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderTotal\":50.0,"
+					+ "\"orderStatus\":\"Processing\","
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"address1\":\"123 Test Address\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "},"
+					+ "\"orderItems\":"
+					+ "["
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"quantity\":1,"
+							+ "\"subtotal\":50.0,"
+							+ "\"product\":"
+							+ "{"
+								+ "\"id\":1,"
+								+ "\"name\":\"Test Product\","
+								+ "\"description\":\"A test product.\","
+								+ "\"price\":50.0,"
+								+ "\"image\":\"Test Image\","
+								+ "\"category\":\"Test Category\","
+								+ "\"inventory\":300"
+							+ "}"
+						+ "}"
+					+ "]"
+				+ "}";
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
@@ -126,7 +299,46 @@ public class OrderContollerTest {
 	public void testDeleteOrder() throws Exception {
 
 		String mockOrderJson = 
-				"{\"id\":1,\"orderDate\":\"2022-01-01\",\"orderTotal\":50.0,\"orderStatus\":\"Processing\",\"user\":{\"id\":1,\"firstName\":\"Test\",\"lastName\":\"User\",\"email\":\"testuser@gmail.com\",\"password\":\"test\"},\"shippingAddress\":{\"id\":1,\"address1\":\"123 Test Address\",\"address2\":null,\"city\":\"Frisco\",\"state\":\"Texas\",\"zipCode\":\"75034\"},\"payment\":{\"id\":1,\"name\":null,\"creditCardNumber\":\"123412341234\",\"expirationDate\":\"01-24\"},\"orderItems\":[{\"id\":1,\"quantity\":1,\"subtotal\":50.0,\"product\":{\"id\":1,\"name\":\"Test Product\",\"description\":\"A test product.\",\"price\":50.0,\"image\":\"Test Image\",\"category\":\"Test Category\",\"inventory\":300}}]}";
+				"{"
+					+ "\"id\":1,"
+					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderTotal\":50.0,"
+					+ "\"orderStatus\":\"Processing\","
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":\"Test\","
+						+ "\"lastName\":\"User\","
+						+ "\"email\":\"testuser@gmail.com\""
+					+ "},"
+					+ "\"shippingAddress\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"address1\":\"123 Test Address\","
+						+ "\"address2\":null,"
+						+ "\"city\":\"Frisco\","
+						+ "\"state\":\"Texas\","
+						+ "\"zipCode\":\"75034\""
+					+ "},"
+					+ "\"orderItems\":"
+					+ "["
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"quantity\":1,"
+							+ "\"subtotal\":50.0,"
+							+ "\"product\":"
+							+ "{"
+								+ "\"id\":1,"
+								+ "\"name\":\"Test Product\","
+								+ "\"description\":\"A test product.\","
+								+ "\"price\":50.0,"
+								+ "\"image\":\"Test Image\","
+								+ "\"category\":\"Test Category\","
+								+ "\"inventory\":300"
+							+ "}"
+						+ "}"
+					+ "]"
+				+ "}";
 
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
