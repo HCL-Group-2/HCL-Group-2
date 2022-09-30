@@ -91,7 +91,7 @@ public class OrderContollerTest {
 		String mockOrderJson = 
 				"{"
 					+ "\"id\":1,"
-					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderDate\":[2022,1,1],"
 					+ "\"orderTotal\":50.0,"
 					+ "\"orderStatus\":\"In Progress\","
 					+ "\"user\":"
@@ -145,7 +145,7 @@ public class OrderContollerTest {
 		String expected = 
 				"{"
 					+ "\"id\":1,"
-					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderDate\":[2022,1,1],"
 					+ "\"orderTotal\":50.0,"
 					+ "\"orderStatus\":\"In Progress\","
 					+ "\"user\":"
@@ -163,25 +163,7 @@ public class OrderContollerTest {
 						+ "\"city\":\"Frisco\","
 						+ "\"state\":\"Texas\","
 						+ "\"zipCode\":\"75034\""
-					+ "},"
-					+ "\"orderItems\":"
-					+ "["
-						+ "{"
-							+ "\"id\":1,"
-							+ "\"quantity\":1,"
-							+ "\"subtotal\":50.0,"
-							+ "\"product\":"
-							+ "{"
-								+ "\"id\":1,"
-								+ "\"name\":\"Test Product\","
-								+ "\"description\":\"A test product.\","
-								+ "\"price\":50.0,"
-								+ "\"image\":\"Test Image\","
-								+ "\"category\":\"Test Category\","
-								+ "\"inventory\":300"
-							+ "}"
-						+ "}"
-					+ "]"
+					+ "}"
 				+ "}";
 
 		//Assert that response is what was expected
@@ -196,7 +178,7 @@ public class OrderContollerTest {
 		String mockOrderJson = 
 				"{"
 					+ "\"id\":1,"
-					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderDate\":[2022,1,1],"
 					+ "\"orderTotal\":50.0,"
 					+ "\"orderStatus\":\"In Progress\","
 					+ "\"user\":"
@@ -204,7 +186,7 @@ public class OrderContollerTest {
 						+ "\"id\":1,"
 						+ "\"firstName\":\"Test\","
 						+ "\"lastName\":\"User\","
-						+ "\"email\":\"testuser@gmail.com\","
+						+ "\"email\":\"testuser@gmail.com\""
 					+ "},"
 					+ "\"shippingAddress\":"
 					+ "{"
@@ -250,7 +232,7 @@ public class OrderContollerTest {
 		String expected = 
 				"{"
 					+ "\"id\":1,"
-					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderDate\":[2022,1,1],"
 					+ "\"orderTotal\":50.0,"
 					+ "\"orderStatus\":\"In Progress\","
 					+ "\"user\":"
@@ -268,25 +250,7 @@ public class OrderContollerTest {
 						+ "\"city\":\"Frisco\","
 						+ "\"state\":\"Texas\","
 						+ "\"zipCode\":\"75034\""
-					+ "},"
-					+ "\"orderItems\":"
-					+ "["
-						+ "{"
-							+ "\"id\":1,"
-							+ "\"quantity\":1,"
-							+ "\"subtotal\":50.0,"
-							+ "\"product\":"
-							+ "{"
-								+ "\"id\":1,"
-								+ "\"name\":\"Test Product\","
-								+ "\"description\":\"A test product.\","
-								+ "\"price\":50.0,"
-								+ "\"image\":\"Test Image\","
-								+ "\"category\":\"Test Category\","
-								+ "\"inventory\":300"
-							+ "}"
-						+ "}"
-					+ "]"
+					+ "}"
 				+ "}";
 
 		//Assert that response is what was expected
@@ -301,7 +265,7 @@ public class OrderContollerTest {
 		String mockOrderJson = 
 				"{"
 					+ "\"id\":1,"
-					+ "\"orderDate\":\"2022-01-01\","
+					+ "\"orderDate\":[2022,1,1],"
 					+ "\"orderTotal\":50.0,"
 					+ "\"orderStatus\":\"In Progress\","
 					+ "\"user\":"
@@ -350,7 +314,7 @@ public class OrderContollerTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		//Assert that the return status is 204 No Content
-		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 		assertTrue(true);
 
 	}
