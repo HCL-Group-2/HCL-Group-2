@@ -25,6 +25,7 @@ import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
 import com.hcl.ecommerce.repository.OrderRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
@@ -78,6 +79,24 @@ public class OrderServiceImplTest {
 		Order order = orderServiceImpl.addOrder(mockOrder);
 
 		verify(orderRepository).save(mockOrder);
+		
+		when(userRepository.findById(1)).thenReturn(Optional.empty());
+		
+		orderServiceImpl.addOrder(mockOrder);
+
+	}
+	
+	@Test(expected = AddEntityException.class)
+	public void testAddOrderUserDoesNotExist() throws Exception {
+
+		User user = new User(1, "larry", "miller", "larry@email.com");
+
+		Order mockOrder = new Order(1, LocalDate.now(), new BigDecimal(999.0), "In progress", user,
+				new ShippingAddress(1, "123 Test Address", null, "Frisco", "Texas", "75034"), null);
+		
+		when(userRepository.findById(1)).thenReturn(Optional.empty());
+		
+		orderServiceImpl.addOrder(mockOrder);
 
 	}
 

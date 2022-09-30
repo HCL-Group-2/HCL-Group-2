@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.CartItemRepository;
 import com.hcl.ecommerce.repository.ProductRepository;
 import com.hcl.ecommerce.repository.UserRepository;
@@ -60,6 +61,36 @@ public class CartItemServiceImplTest {
 		CartItem cartItem = cartItemServiceImpl.addCartItem(mockCartItem);
 		
 		verify(cartItemRepository).save(mockCartItem);
+		
+	}
+	
+	@Test(expected = AddEntityException.class)
+	public void testAddCartItemUserDoesNotExist() throws Exception {
+		
+		User user = new User(1, "larry", "miller", "larry@email.com");
+		
+		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		
+		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), user, product);
+		
+		when(userRepository.findById(1)).thenReturn(Optional.empty());
+		
+		cartItemServiceImpl.addCartItem(mockCartItem);
+		
+	}
+	
+	@Test(expected = AddEntityException.class)
+	public void testAddCartItemProductDoesNotExist() throws Exception {
+		
+		User user = new User(1, "larry", "miller", "larry@email.com");
+		
+		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		
+		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), user, product);
+		
+		when(productRepository.findById(1)).thenReturn(Optional.empty());
+		
+		cartItemServiceImpl.addCartItem(mockCartItem);
 		
 	}
 	

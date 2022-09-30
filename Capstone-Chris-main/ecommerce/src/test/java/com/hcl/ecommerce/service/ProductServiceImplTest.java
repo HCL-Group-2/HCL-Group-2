@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hcl.ecommerce.entity.Product;
+import com.hcl.ecommerce.entity.User;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.ProductRepository;
 
 @RunWith(SpringRunner.class)
@@ -51,6 +53,17 @@ public class ProductServiceImplTest {
 //		assertEquals("image url", product.getImage());
 //		assertEquals("phone", product.getCategory());
 //		assertEquals(300, product.getInventory());
+		
+	}
+	
+	@Test(expected = AddEntityException.class)
+	public void testAddProductProductAlreadyExist() throws Exception {
+		
+		Product mockProduct = new Product("phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		
+		when(productRepository.findByName(mockProduct.getName())).thenReturn(mockProduct);
+
+		productServiceImpl.addProduct(mockProduct);
 		
 	}
 	

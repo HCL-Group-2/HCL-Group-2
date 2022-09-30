@@ -63,9 +63,6 @@ public class OrderServiceImpl implements OrderService {
 			throw new AddEntityException("The user doesn't exists");
 		}
 		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
-		if (cartItems.isEmpty()) {
-			throw new AddEntityException("There aren't any cart items");
-		}
 		List<OrderItem> orderItems = new ArrayList<>();
 		BigDecimal total = new BigDecimal("0.00");
 		for (CartItem cartItem : cartItems) {
