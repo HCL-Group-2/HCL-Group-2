@@ -43,15 +43,15 @@ public class CartItemServiceImplTest {
 	@Test
 	public void testAddCartItem() throws Exception {
 		
-		User mockUser = new User(1, "larry", "miller", "larry@email.com");
+		User user = new User(1, "larry", "miller", "larry@email.com");
 		
-		Product mockProduct = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
 		
-		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), mockUser, mockProduct);
+		CartItem mockCartItem = new CartItem(1, new BigDecimal(999.0), user, product);
 		
-		when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
+		when(userRepository.findById(1)).thenReturn(Optional.of(user));
 		
-		when(productRepository.findById(1)).thenReturn(Optional.of(mockProduct));
+		when(productRepository.findById(1)).thenReturn(Optional.of(product));
 		
 		when(cartItemRepository.findById(1)).thenReturn(Optional.of(mockCartItem));
 		

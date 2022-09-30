@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.ProductDto;
 
@@ -29,7 +30,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "products")
-@JsonIgnoreProperties(value = { "cartItems", "orderItems" }, allowSetters = true)
 public class Product {
 	
 	public Product(ProductDto dto) {
@@ -75,9 +75,11 @@ public class Product {
 	private int inventory;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<CartItem> cartItems = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	public ProductDto toDto() {

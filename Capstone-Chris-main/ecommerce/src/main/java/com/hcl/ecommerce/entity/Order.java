@@ -46,7 +46,6 @@ public class Order {
 		orderItems = new ArrayList<>();
 	}
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
@@ -131,7 +130,5 @@ public class Order {
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
-	
-	
 
 }

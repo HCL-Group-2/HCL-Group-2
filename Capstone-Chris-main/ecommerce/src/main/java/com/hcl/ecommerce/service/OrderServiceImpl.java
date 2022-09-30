@@ -51,11 +51,11 @@ public class OrderServiceImpl implements OrderService {
 //	@Autowired
 //	private MailSenderService mailSenderService;
 
-	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
-
-		// initialize Stripe API with secret key
-		Stripe.apiKey = secretKey;
-	}
+//	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
+//
+//		// initialize Stripe API with secret key
+//		Stripe.apiKey = secretKey;
+//	}
 
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hcl.ecommerce.dto.UserDto;
 
@@ -27,7 +28,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
-@JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
 public class User {
 
 	public User(UserDto dto) {
@@ -60,9 +60,11 @@ public class User {
 	private String email;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<CartItem> cartItems;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Order> orders;
 	
 	
