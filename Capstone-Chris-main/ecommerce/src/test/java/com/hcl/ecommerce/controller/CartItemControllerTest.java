@@ -3,6 +3,8 @@ package com.hcl.ecommerce.controller;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,6 +23,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.service.CartItemService;
@@ -244,7 +247,92 @@ public class CartItemControllerTest {
 
 		//Assert that the return status is 204 No Content
 		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+	}
+	
+	@Test
+	public void testGetAllCartItemsByUserId() throws Exception {
+		String mockCartListJson =
+				"["
+				+ "{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":null,"
+						+ "\"lastName\":null,"
+						+ "\"email\":null"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":null,"
+						+ "\"description\":null,"
+						+ "\"price\":null,"
+						+ "\"image\":null,"
+						+ "\"category\":null,"
+						+ "\"inventory\":0"
+					+ "}"
+					+ "},"
+					+ "{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":null,"
+						+ "\"lastName\":null,"
+						+ "\"email\":null"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":null,"
+						+ "\"description\":null,"
+						+ "\"price\":null,"
+						+ "\"image\":null,"
+						+ "\"category\":null,"
+						+ "\"inventory\":0"
+					+ "}"
+					+ "},"
+					+ "{"
+					+ "\"id\":1,"
+					+ "\"quantity\":2,"
+					+ "\"subtotal\":50.0,"
+					+ "\"user\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"firstName\":null,"
+						+ "\"lastName\":null,"
+						+ "\"email\":null"
+					+ "},"
+					+ "\"product\":"
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"name\":null,"
+						+ "\"description\":null,"
+						+ "\"price\":null,"
+						+ "\"image\":null,"
+						+ "\"category\":null,"
+						+ "\"inventory\":0"
+					+ "}"
+				+ "}"
+			+ "]";
+		
+		ObjectMapper mapper = mapperBuilder.build();
+		List<CartItem> mockCartList = mapper.readValue(mockCartListJson, new TypeReference<List<CartItem>>() {});
+		
+		int userId = 1;
+		
+		Mockito.when(cartItemService.getAllCartItemsByUserId(userId)).thenReturn(mockCartList);
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/cartitems/" + userId).accept(MediaType.APPLICATION_JSON);
 
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		assertEquals(mockCartListJson, result.getResponse().getContentAsString());
 	}
 
 }

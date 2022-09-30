@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.UserService;
@@ -214,6 +215,92 @@ public class UserControllerTest {
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		assertEquals(mockUserListJson, result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	public void testGetOrdersById() throws Exception{
+		String mockOrderListJson = 
+				"["
+					+ "{"
+						+ "\"id\":1,"
+						+ "\"orderDate\":[2022,1,1],"
+						+ "\"orderTotal\":50.0,"
+						+ "\"orderStatus\":\"In Progress\","
+						+ "\"user\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"firstName\":\"Test\","
+							+ "\"lastName\":\"User\","
+							+ "\"email\":\"testuser@gmail.com\""
+						+ "},"
+						+ "\"shippingAddress\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"address1\":\"123 Test Address\","
+							+ "\"address2\":null,"
+							+ "\"city\":\"Frisco\","
+							+ "\"state\":\"Texas\","
+							+ "\"zipCode\":\"75034\""
+						+ "}"
+					+ "},"
+					+ "{"
+						+ "\"id\":2,"
+						+ "\"orderDate\":[2022,1,1],"
+						+ "\"orderTotal\":50.0,"
+						+ "\"orderStatus\":\"In Progress\","
+						+ "\"user\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"firstName\":\"Test\","
+							+ "\"lastName\":\"User\","
+							+ "\"email\":\"testuser@gmail.com\""
+						+ "},"
+						+ "\"shippingAddress\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"address1\":\"123 Test Address\","
+							+ "\"address2\":null,"
+							+ "\"city\":\"Frisco\","
+							+ "\"state\":\"Texas\","
+							+ "\"zipCode\":\"75034\""
+						+ "}"
+					+ "},"
+					+ "{"
+						+ "\"id\":3,"
+						+ "\"orderDate\":[2022,1,1],"
+						+ "\"orderTotal\":50.0,"
+						+ "\"orderStatus\":\"In Progress\","
+						+ "\"user\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"firstName\":\"Test\","
+							+ "\"lastName\":\"User\","
+							+ "\"email\":\"testuser@gmail.com\""
+						+ "},"
+						+ "\"shippingAddress\":"
+						+ "{"
+							+ "\"id\":1,"
+							+ "\"address1\":\"123 Test Address\","
+							+ "\"address2\":null,"
+							+ "\"city\":\"Frisco\","
+							+ "\"state\":\"Texas\","
+							+ "\"zipCode\":\"75034\""
+						+ "}"
+					+ "}"
+				+ "]";
+		
+		ObjectMapper mapper = mapperBuilder.build();
+		List<Order> mockOrderList = mapper.readValue(mockOrderListJson, new TypeReference<List<Order>>() {});
+		
+		int userId = 1;
+		
+		Mockito.when(userService.getOrdersByUserId(userId)).thenReturn(mockOrderList);
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/user/" + userId + "/orders").accept(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		assertEquals(mockOrderListJson, result.getResponse().getContentAsString());
 	}
 
 }
