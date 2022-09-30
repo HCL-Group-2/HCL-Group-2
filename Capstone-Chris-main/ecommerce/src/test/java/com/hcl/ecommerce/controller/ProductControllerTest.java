@@ -1,7 +1,6 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Test;
@@ -73,7 +72,6 @@ public class ProductControllerTest {
 
 		//Assert that the return status is CREATED
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-		assertTrue(true);
 
 	}
 
@@ -116,7 +114,6 @@ public class ProductControllerTest {
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
-		assertTrue(true);
 
 	}
 
@@ -160,8 +157,6 @@ public class ProductControllerTest {
 
 		//Assert that response is what was expected
 		assertEquals(expected, result.getResponse().getContentAsString());
-		assertTrue(true);
-
 	}
 
 	@Test
@@ -189,8 +184,7 @@ public class ProductControllerTest {
 
 		//Assert that the return status is 204 No Content
 		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
-		assertTrue(true);
-
+		
 	}
 
 }

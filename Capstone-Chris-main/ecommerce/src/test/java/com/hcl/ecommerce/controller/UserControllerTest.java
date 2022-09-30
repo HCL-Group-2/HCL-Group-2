@@ -1,7 +1,6 @@
 package com.hcl.ecommerce.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Test;
@@ -45,30 +44,130 @@ public class UserControllerTest {
 	
 	@Test
 	public void testAddUser() throws Exception {
-		
-		assertTrue(true);
-		
+
+		String mockUserJson = 
+				"{"
+					+ "\"firstName\":\"Test\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
+
+		Mockito.when(userService.addUser(any(User.class))).thenReturn(mockUser);
+
+		//Create a post request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/user/")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		MockHttpServletResponse response = result.getResponse();
+
+		//Assert that the return status is CREATED
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+
 	}
-	
+
 	@Test
 	public void testGetUserById() throws Exception {
-		
-		assertTrue(true);
-		
+
+		String mockUserJson = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"firstName\":\"Test\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
+
+        Mockito.when(userService.getUserById(1)).thenReturn(mockUser);
+
+		//Create a request
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.get("/user/1")
+				.accept(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"firstName\":\"Test\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
+
 	}
-	
+
 	@Test
 	public void testUpdateUser() throws Exception {
-		
-		assertTrue(true);
-		
+
+		String mockUserJson = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"firstName\":\"Test Updated\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+		ObjectMapper mapper = mapperBuilder.build();
+        User mockUser = mapper.readValue(mockUserJson, User.class);
+
+        Mockito.when(userService.updateUser(any(User.class))).thenReturn(mockUser);
+
+        //Create a put request with an accept header for application\json
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.put("/user/")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		String expected = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"firstName\":\"Test Updated\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+		//Assert that response is what was expected
+		assertEquals(expected, result.getResponse().getContentAsString());
+
 	}
-	
+
 	@Test
 	public void testDeleteUser() throws Exception {
-		
-		assertTrue(true);
-		
+
+		String mockUserJson = 
+				"{"
+					+ "\"id\":1,"
+					+ "\"firstName\":\"Test Updated\","
+					+ "\"lastName\":\"User\","
+					+ "\"email\":\"testuser@gmail.com\""
+				+ "}";
+
+
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.delete("/user/1")
+				.accept(MediaType.APPLICATION_JSON).content(mockUserJson)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+
+		//Assert that the return status is 204 No Content
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+
 	}
 
 }
