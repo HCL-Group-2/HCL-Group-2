@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.hcl.ecommerce.dto.OrderItemDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
