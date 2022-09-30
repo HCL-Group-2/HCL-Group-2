@@ -54,8 +54,6 @@ import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
-import { NavComponent } from './nav/nav.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -103,8 +101,6 @@ import { AuthInterceptor } from './auth.interceptor';
     OrderComponent,
     SearchComponent,
     LoginComponent,
-    NavComponent,
-    WelcomeComponent,
     ProductMangementComponent,
     OrdersManagementComponent,
     AddProductComponent,

@@ -12,7 +12,6 @@ import { LoginComponent } from './login/login.component';
 import { OrderComponent } from './order/order.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
@@ -25,7 +24,6 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
-  { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
