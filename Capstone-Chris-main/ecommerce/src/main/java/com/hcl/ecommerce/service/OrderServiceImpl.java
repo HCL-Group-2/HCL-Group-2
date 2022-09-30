@@ -51,11 +51,8 @@ public class OrderServiceImpl implements OrderService {
 //	@Autowired
 //	private MailSenderService mailSenderService;
 
-	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
-
-		// initialize Stripe API with secret key
-		Stripe.apiKey = secretKey;
-	}
+	@Value("${stripe.key.secret}")
+	private String stripeSecret;
 
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
@@ -131,7 +128,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PaymentIntent createPaymentIntent(PaymentInfoDTO paymentInfo) throws StripeException {
-
+		
+		Stripe.apiKey = stripeSecret;
+		
 		List<String> paymentMethodTypes = new ArrayList<>();
 		paymentMethodTypes.add("card");
 
