@@ -210,7 +210,7 @@ public class UserControllerTest {
 		Mockito.when(userService.getAllUsers()).thenReturn(mockUserList);
 		
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.get("/products").accept(MediaType.APPLICATION_JSON);
+				.get("/users").accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		assertEquals(mockUserListJson, result.getResponse().getContentAsString());
