@@ -22,8 +22,11 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcl.ecommerce.dto.PaymentInfoDTO;
 import com.hcl.ecommerce.entity.Order;
+import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.service.OrderService;
+import com.stripe.model.PaymentIntent;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,7 +46,7 @@ public class OrderContollerTest {
 	OrderController orderController;
 	
 	@Test
-	public void testAddOrder() throws Exception {
+	public void testPlaceOrder() throws Exception {
 
 		String mockOrderJson = 
 				"{"
@@ -80,7 +83,12 @@ public class OrderContollerTest {
 
 		//Assert that the return status is CREATED
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-
+		
+		Mockito.when(orderService.addOrder(any(Order.class))).thenThrow(AddEntityException.class);
+		result = mockMvc.perform(requestBuilder).andReturn();
+		response = result.getResponse();
+		
+		assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
 	}
 
 	@Test
@@ -256,5 +264,30 @@ public class OrderContollerTest {
 
 		//Assert that the return status is 204 No Content
 		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
+	}
+	
+	@Test
+	public void testCreatePaymentIntent() throws Exception {
+		String paymentJson =
+				"{"
+					+ "\"amount\":\"451\","
+					+ "\"currency\":\"usd\","
+					+ "\"receiptEmail\":\"testpayment@gmail.com\""
+				+ "}";
+		
+		ObjectMapper mapper = mapperBuilder.build();
+        PaymentInfoDTO mockDto = mapper.readValue(paymentJson, PaymentInfoDTO.class);
+        PaymentIntent paymentIntent = new PaymentIntent();
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/payment-intent/")
+				.accept(MediaType.APPLICATION_JSON).content(paymentJson)
+				.contentType(MediaType.APPLICATION_JSON);
+		Mockito.when(orderService.createPaymentIntent(mockDto)).thenReturn(paymentIntent);
+		
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		MockHttpServletResponse response = result.getResponse();
+		
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 }

@@ -33,12 +33,8 @@ public class OrderController {
 	
 	@PostMapping("/payment-intent")
 	public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
-
 	        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfo);
-
-
 	        String paymentStr = paymentIntent.toJson();
-
 	        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
 	}
 	
