@@ -1,5 +1,7 @@
 package com.hcl.ecommerce.service;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -156,5 +159,16 @@ public class CartItemServiceImplTest {
 		verify(cartItemRepository).deleteById(1);
 		
 	}
+	
+    @Test
+    public void testGetAllCartItemsByUserId() {
+    	
+    	CartItem mockCartItem = new CartItem(1, 1, new BigDecimal(999.0), new User(), new Product());
+    	
+        when(cartItemRepository.getAllCartItemsByUserId(1)).thenReturn(Arrays.asList(mockCartItem));
+        
+        assertThat(cartItemServiceImpl.getAllCartItemsByUserId(1).get(0), is(mockCartItem));
+        
+    }
 
 }

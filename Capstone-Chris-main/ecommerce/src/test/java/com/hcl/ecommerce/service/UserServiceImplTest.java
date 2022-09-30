@@ -1,11 +1,17 @@
 package com.hcl.ecommerce.service;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -15,6 +21,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.hcl.ecommerce.entity.Order;
+import com.hcl.ecommerce.entity.ShippingAddress;
 import com.hcl.ecommerce.entity.User;
 import com.hcl.ecommerce.exception.AddEntityException;
 import com.hcl.ecommerce.repository.UserRepository;
@@ -108,6 +116,44 @@ public class UserServiceImplTest {
 
 		verify(userRepository).deleteById(1);
 
+	}
+	
+    @Test
+    public void testGetAllUsers() {
+    	
+    	User mockUser = new User(1, "larry", "miller", "larry@email.com");
+    	
+        when(userRepository.getAllUsers()).thenReturn(Arrays.asList(mockUser));
+        
+        assertThat(userServiceImpl.getAllUsers().get(0), is(mockUser));
+        
+    }
+    
+	@Test
+	public void testGetUserByEmail() {
+
+		User mockUser = new User("larry", "miller", "larry@email.com");
+
+		when(userRepository.findByEmail("larry@email.com")).thenReturn(mockUser);
+
+		assertThat(userServiceImpl.getUserByEmail("larry@email.com"), is(mockUser));
+		
+	}
+	
+	@Test
+	public void testGetOrdersByUserId() {
+
+		User user = new User(1, "larry", "miller", "larry@email.com");
+		
+		Order order = new Order(1, LocalDate.now(), new BigDecimal(999.0), "In progress", user,
+				new ShippingAddress(1, "123 Test Address", null, "Frisco", "Texas", "75034"), null);
+		
+		user.setOrders(Arrays.asList(order));
+
+		when(userRepository.findById(1)).thenReturn(Optional.of(user));
+
+		assertThat(userServiceImpl.getOrdersByUserId(1).get(0), is(order));
+		
 	}
 
 }
