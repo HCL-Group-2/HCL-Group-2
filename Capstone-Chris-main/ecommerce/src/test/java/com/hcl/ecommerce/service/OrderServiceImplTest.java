@@ -58,7 +58,8 @@ public class OrderServiceImplTest {
 
 		CartItem cartItem = new CartItem(1, 1, new BigDecimal(999.0), user, product);
 
-		List<CartItem> cartItems = new ArrayList<>(List.of(cartItem));
+		List<CartItem> cartItems = new ArrayList<>();
+		cartItems.add(cartItem);
 		user.setCartItems(cartItems);
 
 		Order mockOrder = new Order(1, LocalDate.now(), new BigDecimal(999.0), "In progress", user,
