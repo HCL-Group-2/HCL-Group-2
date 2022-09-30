@@ -1,4 +1,3 @@
-
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -47,6 +46,7 @@ export class HomeComponent implements OnInit {
     private _oktaAuthStateService: OktaAuthStateService
   ) {
     console.log('at customer home page constructor');
+ 
   }
 
 
@@ -57,9 +57,11 @@ export class HomeComponent implements OnInit {
     let userId = +this.storage.getItem('userId')!;
     console.log('userId from session storage ' + userId);
     this.getSearchBool();
-    console.log(this.search);
+    console.log( 'this.search ' + this.search);
 
     this.getUser(userId);
+
+
 
   
     if (this.storage.getItem('search') == 'true') {
@@ -77,26 +79,30 @@ export class HomeComponent implements OnInit {
 
     }
     else {
-
+      console.log('getSearchProducts()');
       this.getSearchProducts();
     }
-
 
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
-      
+      //console.log('_oktaAuthStateService.authState$ ' + JSON.stringify(this._oktaAuthStateService.authState$));
      this._oktaAuthStateService.authState$.subscribe(data =>{
       //console.log('raw email ' + data.idToken?.claims.email);
       //console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
+    //  console.log('_oktaAuthStateService.authState$.data ' + JSON.stringify(data));
+
+     // console.log('_oktaAuthStateService.authState$.data.idToken?.claims ' + JSON.stringify(data.idToken?.claims));
+
       this.email = data.idToken?.claims.email!;
       //console.log('this.email ' +   this.email );
     });
     //console.log('this.email outside ' +   this.email );
-
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
     });
+
+
   }
 
   getUser(userId: number) {
@@ -153,12 +159,12 @@ export class HomeComponent implements OnInit {
   }
 
   getSearchProducts() { 
-    if(this.searchText !== null){
+
       this.productService.getProductsBySearch(this.searchText).subscribe(data => {
         this.searchProducts = data;
       }
       );
-    } 
+  
   }
 
   getProductsByCategory(category: string) {
@@ -167,9 +173,7 @@ export class HomeComponent implements OnInit {
     }
     );
   }
-
-
-
+  
 }
 @Component({
   selector: 'cartDialog-dialog',
