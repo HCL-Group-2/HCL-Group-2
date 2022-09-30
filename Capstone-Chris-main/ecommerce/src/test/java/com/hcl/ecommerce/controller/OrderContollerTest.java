@@ -107,25 +107,7 @@ public class OrderContollerTest {
 						+ "\"city\":\"Frisco\","
 						+ "\"state\":\"Texas\","
 						+ "\"zipCode\":\"75034\""
-					+ "},"
-					+ "\"orderItems\":"
-					+ "["
-						+ "{"
-							+ "\"id\":1,"
-							+ "\"quantity\":1,"
-							+ "\"subtotal\":50.0,"
-							+ "\"product\":"
-							+ "{"
-								+ "\"id\":1,"
-								+ "\"name\":\"Test Product\","
-								+ "\"description\":\"A test product.\","
-								+ "\"price\":50.0,"
-								+ "\"image\":\"Test Image\","
-								+ "\"category\":\"Test Category\","
-								+ "\"inventory\":300"
-							+ "}"
-						+ "}"
-					+ "]"
+					+ "}"
 				+ "}";
 
 		ObjectMapper mapper = mapperBuilder.build();
@@ -193,25 +175,7 @@ public class OrderContollerTest {
 						+ "\"city\":\"Frisco\","
 						+ "\"state\":\"Texas\","
 						+ "\"zipCode\":\"75034\""
-					+ "},"
-					+ "\"orderItems\":"
-					+ "["
-						+ "{"
-							+ "\"id\":1,"
-							+ "\"quantity\":1,"
-							+ "\"subtotal\":50.0,"
-							+ "\"product\":"
-							+ "{"
-								+ "\"id\":1,"
-								+ "\"name\":\"Test Product\","
-								+ "\"description\":\"A test product.\","
-								+ "\"price\":50.0,"
-								+ "\"image\":\"Test Image\","
-								+ "\"category\":\"Test Category\","
-								+ "\"inventory\":300"
-							+ "}"
-						+ "}"
-					+ "]"
+					+ "}"
 				+ "}";
 		ObjectMapper mapper = mapperBuilder.build();
         Order mockOrder = mapper.readValue(mockOrderJson, Order.class);
@@ -279,27 +243,8 @@ public class OrderContollerTest {
 						+ "\"city\":\"Frisco\","
 						+ "\"state\":\"Texas\","
 						+ "\"zipCode\":\"75034\""
-					+ "},"
-					+ "\"orderItems\":"
-					+ "["
-						+ "{"
-							+ "\"id\":1,"
-							+ "\"quantity\":1,"
-							+ "\"subtotal\":50.0,"
-							+ "\"product\":"
-							+ "{"
-								+ "\"id\":1,"
-								+ "\"name\":\"Test Product\","
-								+ "\"description\":\"A test product.\","
-								+ "\"price\":50.0,"
-								+ "\"image\":\"Test Image\","
-								+ "\"category\":\"Test Category\","
-								+ "\"inventory\":300"
-							+ "}"
-						+ "}"
-					+ "]"
+					+ "}"
 				+ "}";
-
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
 				.delete("/order/1")
@@ -311,7 +256,5 @@ public class OrderContollerTest {
 
 		//Assert that the return status is 204 No Content
 		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
-
 	}
-
 }
