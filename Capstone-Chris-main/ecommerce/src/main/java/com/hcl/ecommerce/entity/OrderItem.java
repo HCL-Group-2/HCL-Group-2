@@ -27,14 +27,6 @@ import lombok.Setter;
 @Table(name = "order_items")
 public class OrderItem {
 	
-	public OrderItem(OrderItemDto dto) {
-		id = dto.getId();
-		quantity = dto.getQuantity();
-		subtotal = dto.getSubtotal();
-		order = new Order(dto.getOrderDto());
-		product = new Product(dto.getProductDto());
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_item_id")
@@ -55,7 +47,4 @@ public class OrderItem {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
-	public OrderItemDto toDto() {
-		return new OrderItemDto(id, quantity, subtotal, order.toDto(), product.toDto());
-	}
 }
