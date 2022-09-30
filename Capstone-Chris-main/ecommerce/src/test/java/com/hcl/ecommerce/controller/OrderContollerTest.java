@@ -310,7 +310,7 @@ public class OrderContollerTest {
 		MockHttpServletResponse response = result.getResponse();
 
 		//Assert that the return status is 204 No Content
-		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertEquals(HttpStatus.NO_CONTENT.value(), response.getStatus());
 
 	}
 
