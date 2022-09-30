@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 
 	
 	@Value("${stripe.key.secret}")
-	public void setStripeKey(String secretKey) {
+	public static void setStripeKey(String secretKey) {
 		Stripe.apiKey = secretKey;
 	}
 
