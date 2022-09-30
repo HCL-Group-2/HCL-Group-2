@@ -139,7 +139,9 @@ public class CartItemServiceImplTest {
 	@Test
 	public void testUpdateCartItem() throws Exception {
 		
-		CartItem mockCartItem = new CartItem(1, 1, new BigDecimal(999.0), new User(), new Product());
+		Product product = new Product(1, "phone", "a phone", new BigDecimal(999.0), "image url", "phone", 300);
+		
+		CartItem mockCartItem = new CartItem(1, 1, new BigDecimal(999.0), new User(), product);
 		
 		when(cartItemRepository.findById(1)).thenReturn(Optional.of(mockCartItem));
 		
