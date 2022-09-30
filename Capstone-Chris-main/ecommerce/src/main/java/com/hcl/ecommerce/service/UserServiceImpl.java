@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 			return userOptional.get().getOrders();
 		}
 		else {
-			return new ArrayList<Order>();
+			return new ArrayList<>();
 		}
 
 	}
