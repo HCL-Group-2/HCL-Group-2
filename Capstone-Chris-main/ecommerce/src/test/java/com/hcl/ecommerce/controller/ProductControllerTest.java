@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcl.ecommerce.entity.Product;
 import com.hcl.ecommerce.service.ProductService;
+import com.hcl.ecommerce.exception.AddEntityException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -72,7 +73,13 @@ public class ProductControllerTest {
 
 		//Assert that the return status is CREATED
 		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-
+		
+		//test that it handles the exception thrown when inserting a duplicate product
+		Mockito.when(productService.addProduct(any(Product.class))).thenThrow(AddEntityException.class);
+		
+		result = mockMvc.perform(requestBuilder).andReturn();
+		response = result.getResponse();
+		assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
 	}
 
 	@Test
