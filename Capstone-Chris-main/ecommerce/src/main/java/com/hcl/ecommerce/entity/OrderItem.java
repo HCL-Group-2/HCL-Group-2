@@ -37,6 +37,10 @@ public class OrderItem {
 		product = new Product(dto.getProductDto());
 	}
 	
+	public OrderItem() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_item_id")
