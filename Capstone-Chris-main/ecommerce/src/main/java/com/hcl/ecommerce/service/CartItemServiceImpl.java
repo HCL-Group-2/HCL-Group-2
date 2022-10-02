@@ -37,7 +37,7 @@ public class CartItemServiceImpl implements CartItemService {
 		if (product == null) {
 			throw new AddEntityException("The product doesn't exists");
 		}
-		if (user.getCartItems().contains(cartItem)) {
+		if (user.getCartItems() != null && user.getCartItems().contains(cartItem)) {
 			List<CartItem> items = user.getCartItems();
 			Integer cartItemId = items.get(items.indexOf(cartItem)).getId();
 			CartItem item = getCartItemById(cartItemId);
@@ -67,7 +67,7 @@ public class CartItemServiceImpl implements CartItemService {
 	public CartItem updateCartItem(CartItem cartItem) {
 		CartItem item = getCartItemById(cartItem.getId());
 		item.setQuantity(cartItem.getQuantity());
-		item.setSubtotal(cartItem.getSubtotal());
+		item.setSubtotal(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
 		return cartItemRepository.save(item);
 	}
 	

@@ -33,12 +33,8 @@ public class OrderController {
 	
 	@PostMapping("/payment-intent")
 	public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
-
 	        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfo);
-
-
 	        String paymentStr = paymentIntent.toJson();
-
 	        return new ResponseEntity<>(paymentStr, HttpStatus.OK);
 	}
 	
@@ -68,7 +64,7 @@ public class OrderController {
 	@DeleteMapping("/order/{id}")
 	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Integer id) {
 		orderService.deleteOrder(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

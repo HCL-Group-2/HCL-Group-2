@@ -1,6 +1,5 @@
 package com.hcl.ecommerce.service;
 
-//import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-//import javax.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +44,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	ProductRepository productRepository;
-
-//	@Autowired
-//	private MailSenderService mailSenderService;
-
-	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
-
-		// initialize Stripe API with secret key
+	
+	@Value("${stripe.key.secret}")
+	public static void setStripeKey(String secretKey) {
 		Stripe.apiKey = secretKey;
 	}
 
@@ -64,9 +57,6 @@ public class OrderServiceImpl implements OrderService {
 			throw new AddEntityException("The user doesn't exists");
 		}
 		List<CartItem> cartItems = cartItemRepository.getAllCartItemsByUserId(user.getId());
-		if (cartItems.isEmpty()) {
-			throw new AddEntityException("There aren't any cart items");
-		}
 		List<OrderItem> orderItems = new ArrayList<>();
 		BigDecimal total = new BigDecimal("0.00");
 		for (CartItem cartItem : cartItems) {
@@ -85,12 +75,6 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderDate(LocalDate.now());
 		order.setOrderStatus("In Progress");
 		cartItemRepository.deleteAll(cartItems);
-//		mailSenderService.sendEmail(user.getEmail());
-//		try {
-//			mailSenderService.sendEmailWithAttachment(user.getEmail(), order);
-//		} catch (MessagingException e) {
-//		} catch (IOException e) {
-//		}
 		return orderRepository.save(order);
 	}
 
@@ -131,7 +115,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PaymentIntent createPaymentIntent(PaymentInfoDTO paymentInfo) throws StripeException {
-
+		
 		List<String> paymentMethodTypes = new ArrayList<>();
 		paymentMethodTypes.add("card");
 

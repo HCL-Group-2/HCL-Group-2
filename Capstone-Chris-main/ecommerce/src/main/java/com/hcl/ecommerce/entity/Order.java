@@ -25,14 +25,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Table(name = "orders")
 public class Order {
 	
@@ -45,7 +43,6 @@ public class Order {
 		shippingAddress = new ShippingAddress(dto.getShipDto());
 		orderItems = new ArrayList<>();
 	}
-	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,67 +68,7 @@ public class Order {
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	public OrderDto toDto() {
-		
 		return new OrderDto(id, orderDate, orderTotal, orderStatus, user.toDto(), shippingAddress.toDto());
 	}
-	
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public BigDecimal getOrderTotal() {
-		return orderTotal;
-	}
-
-	public void setOrderTotal(BigDecimal orderTotal) {
-		this.orderTotal = orderTotal;
-	}
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
-	}
-
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
-
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
-	
-	
 
 }
