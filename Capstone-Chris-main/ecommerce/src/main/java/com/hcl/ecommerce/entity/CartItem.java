@@ -18,14 +18,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Table(name = "cart_items")
 public class CartItem {
 	
@@ -35,6 +33,13 @@ public class CartItem {
 		subtotal = dto.getSubtotal();
 		user = new User(dto.getUserDto());
 		product = new Product(dto.getProductDto());
+	}
+	
+	public CartItem(int quantity, BigDecimal subtotal, User user, Product product) {
+		this.quantity = quantity;
+		this.subtotal = subtotal;
+		this.user = user;
+		this.product = product;
 	}
 	
 	@Id
@@ -73,54 +78,8 @@ public class CartItem {
 			return false;
 		}
 		
-		if ((this.user.getId() == item.getUser().getId()) && (this.product.getId() == item.getProduct().getId())) {
-			return true;
-		} else {
-			return false;
-		}
+		return ((this.user.getId() == item.getUser().getId()) && (this.product.getId() == item.getProduct().getId()));
 		
 	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
 	
-	
-
 }
