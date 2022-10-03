@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { CartComponent } from './cart/cart.component';
-
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 
 import { HeaderComponent } from './header/header.component';
@@ -17,15 +16,18 @@ import { OrdersManagementComponent } from './admin/orders-management/orders-mana
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
-import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
+import { EditUserComponent } from './admin/edit-user/edit-user.component'
+import { ProductDetailsComponent} from './product-details/product-details.component'
 
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
+
+  // { path: 'home/productDetails/:productId', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
+  { path: 'home/productDetails', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'admin', component: AdminComponent },
@@ -39,8 +41,8 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
-  { path: "", redirectTo: "/login", pathMatch: "full" }
-  
+  { path: "", redirectTo: "/login", pathMatch: "full" },
+
 
 ];
 

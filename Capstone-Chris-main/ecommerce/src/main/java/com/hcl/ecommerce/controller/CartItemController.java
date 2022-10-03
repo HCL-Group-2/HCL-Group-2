@@ -36,37 +36,37 @@ public class CartItemController {
 		try {
 			cartItem = cartItemService.addCartItem(new CartItem(cartItemDto));
 		} catch (AddEntityException e) {
-			return new ResponseEntity<CartItemDto>((CartItemDto)null, HttpStatus.CONFLICT);
+			return new ResponseEntity<>((CartItemDto)null, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<CartItemDto>(cartItem.toDto() , HttpStatus.CREATED);
+		return new ResponseEntity<>(cartItem.toDto() , HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/cartitem/{id}")
 	public ResponseEntity<CartItemDto> getCartItemById(@PathVariable("id") Integer id) {
 		CartItem cartItem = cartItemService.getCartItemById(id);
-		return new ResponseEntity<CartItemDto>(cartItem.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(cartItem.toDto(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/cartitem")
 	public ResponseEntity<CartItemDto> updateCartItem(@RequestBody CartItemDto cartItemDto) {
 		CartItem cartItem = cartItemService.updateCartItem(new CartItem(cartItemDto));
-		return new ResponseEntity<CartItemDto>(cartItem.toDto(), HttpStatus.OK);
+		return new ResponseEntity<>(cartItem.toDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/cartitem/{id}")
 	public ResponseEntity<Void> deleteCartItem(@PathVariable("id") Integer id) {
 		cartItemService.deleteCartItem(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/cartitems/{userid}")
 	public ResponseEntity<List<CartItemDto>> getAllCartItemsByUserId(@PathVariable("userid") Integer userid) {
 		List<CartItem> tempList = cartItemService.getAllCartItemsByUserId(userid);
-		List<CartItemDto> list = new ArrayList<CartItemDto>();
+		List<CartItemDto> list = new ArrayList<>();
 		for(CartItem a : tempList) {
 			list.add(a.toDto());
 		}
-		return new ResponseEntity<List<CartItemDto>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 }

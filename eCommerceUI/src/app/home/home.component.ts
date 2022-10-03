@@ -125,6 +125,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  goProductDetails(product: Product) {
+    this.storage.setItem('productId', product.id?.toString()!);
+    console.log(' goProductDetails(productId: number) product: ' + JSON.stringify(product));
+    this.router.navigateByUrl('home/productDetails', { state:product });
+
+    // this.router.navigate(['home/productDetails',product]);
+  }
+  
   enableAddCart(event: any) {
     if (event.option.value > 0) {
       this.turnOnAddToCart = true;
@@ -193,4 +201,3 @@ export class CartDialog {
   }
 
 }
-

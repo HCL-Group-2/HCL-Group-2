@@ -32,11 +32,18 @@
                     ${{p.price}}
                   </div>
                 </div>
+
+
                 <!-- Product actions-->
                 <form [formGroup]="cartQuantityForm">
-                  <div class="text-center"><button class="btn btn-outline-dark mt-auto" value="p.id"
-                      (click)="openCartDialog($event, p.id!)"
-                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart</button></div>
+                  <div class="text-center">
+                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="goProductDetails(p!)">
+                      View
+                    </button>
+                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="openCartDialog($event, p.id!)"
+                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart
+                    </button>
+                  </div>
                   <mat-form-field appearance="outline">
                     <mat-label>Select a quantity</mat-label>
                     <mat-select formControlName="quantity">
@@ -72,11 +79,19 @@
                     ${{p.price}}
                   </div>
                 </div>
-                <!-- Product actions quantity-->
+                <!-- Product actions-->
                 <form [formGroup]="cartQuantityForm">
-                  <div class="text-center"><button class="btn btn-outline-dark mt-auto" value="p.id"
-                      (click)="openCartDialog($event, p.id!)"
-                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">Add to cart</button></div>
+                  <div class="text-center">
+                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="goProductDetails(p!)">
+                      View
+                    </button>
+
+                    <button class="btn btn-outline-dark mt-auto" value="p.id" (click)="openCartDialog($event, p.id!)"
+                      [disabled]="cartQuantityForm.get('quantity')?.hasError('required')">
+                      Add to cart
+                    </button>
+                  </div>
+
                   <mat-form-field appearance="outline">
                     <mat-label>Select a quantity</mat-label>
                     <mat-select formControlName="quantity">

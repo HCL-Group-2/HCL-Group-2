@@ -1,24 +1,17 @@
 package com.hcl.ecommerce.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hcl.ecommerce.dto.UserDto;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +27,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "users")
-@JsonIgnoreProperties(value = { "addresses", "creditCards", "cartItems", "orders", "roles" }, allowSetters = true)
 public class User {
 
 	public User(UserDto dto) {
@@ -42,6 +34,14 @@ public class User {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		email = dto.getEmail();
+	}
+	
+	public User(String firstName, String lastName, String email) {
+		this(null, firstName, lastName, email, null, null);
+	}
+
+	public User(Integer id, String firstName, String lastName, String email) {
+		this(id, firstName, lastName, email, null, null);
 	}
 	
 	@Id
@@ -58,79 +58,16 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	private List<CreditCard> creditCards = new ArrayList<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<CartItem> cartItems;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CartItem> cartItems = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Order> orders = new ArrayList<>();
-	
+	@JsonIgnore
+	private List<Order> orders;
 	
 	public UserDto toDto() {
-		UserDto dto = new UserDto(id, firstName, lastName, email);
-		return dto;
+		return new UserDto(id, firstName, lastName, email);
 	}
-	
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-//	public List<CreditCard> getCreditCards() {
-//		return creditCards;
-//	}
-
-//	public void setCreditCards(List<CreditCard> creditCards) {
-//		this.creditCards = creditCards;
-//	}
-
-	public List<CartItem> getCartItems() {
-		return cartItems;
-	}
-
-	public void setCartItems(List<CartItem> cartItems) {
-		this.cartItems = cartItems;
-	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
 
 }

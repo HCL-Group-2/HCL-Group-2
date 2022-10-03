@@ -1,0 +1,63 @@
+<div class="product-details-container">
+    <div class="product-details-content">
+      <div class="image-section">
+        <img src={{product.image}}>
+      </div>
+
+        <div class="product-specs-section">
+          <p class="product-name">
+
+          <h2>{{product.name}}</h2>
+
+          <div class="rating">
+  
+            <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+            <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+            <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+            <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+          
+          </div>
+
+          <p class="product-price">
+          
+          <h3>${{product.price}}</h3>
+           
+          <p class="product-description">
+
+            <h4>{{product.description}}</h4>
+
+          <div class="btn-add-cart" >
+            <button class="btn-add-cart" (click)="openAtcDialog($event)"
+            [disabled]="cartQuantityForm.get('quantity')?.hasError('required')" >Add To Cart
+          </button>
+          </div>
+
+          <form [formGroup]="cartQuantityForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <mat-select formControlName="quantity">
+              <mat-option value="1"> 1 </mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+              <mat-option value="8">8</mat-option>
+              <mat-option value="9">9</mat-option>
+              <mat-option value="10">10</mat-option>
+            </mat-select>
+            <mat-error *ngIf="cartQuantityForm.get('quantity')?.hasError('required')">Quantity is required
+            </mat-error>
+          </mat-form-field>
+        </form>
+
+    </div>
+</div>
+ <!-- Footer-->
+ <footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+  </div>
+</footer>

@@ -18,23 +18,31 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.hcl.ecommerce.dto.OrderDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Table(name = "orders")
 public class Order {
+	
+	public Order(OrderDto dto) {
+		id = dto.getId();
+		orderDate = dto.getOrderDate();
+		orderTotal = dto.getOrderTotal();
+		orderStatus = dto.getOrderStatus();
+		user = new User(dto.getUserDto());
+		shippingAddress = new ShippingAddress(dto.getShipDto());
+		orderItems = new ArrayList<>();
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,78 +62,13 @@ public class Order {
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private ShippingAddress shippingAddress;
-//	
-//	@OneToOne(cascade = CascadeType.PERSIST)
-//	private Payment payment;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<OrderItem> orderItems = new ArrayList<>();
 
-	public Integer getId() {
-		return id;
+	public OrderDto toDto() {
+		return new OrderDto(id, orderDate, orderTotal, orderStatus, user.toDto(), shippingAddress.toDto());
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public BigDecimal getOrderTotal() {
-		return orderTotal;
-	}
-
-	public void setOrderTotal(BigDecimal orderTotal) {
-		this.orderTotal = orderTotal;
-	}
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
-	}
-
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
-
-//	public Payment getPayment() {
-//		return payment;
-//	}
-//
-//	public void setPayment(Payment payment) {
-//		this.payment = payment;
-//	}
-
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
-	
-	
 
 }
