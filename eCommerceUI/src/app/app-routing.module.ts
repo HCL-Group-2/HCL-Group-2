@@ -4,14 +4,13 @@ import { AdminComponent } from './admin/admin.component';
 import { AppComponent } from './app.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './cart/checkout/checkout.component';
-import { StripeComponent } from './cart/checkout/stripe/stripe.component';
+
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { OrderComponent } from './order/order.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
@@ -25,7 +24,6 @@ import { ProductDetailsComponent} from './product-details/product-details.compon
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
-  { path: 'welcome', component: WelcomeComponent },
   { path: 'register', component: RegisterComponent },
 
   // { path: 'home/productDetails/:productId', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
