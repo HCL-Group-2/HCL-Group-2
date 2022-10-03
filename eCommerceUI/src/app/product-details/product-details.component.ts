@@ -24,6 +24,8 @@ export class ProductDetailsComponent implements OnInit {
   selectedQuantity: number = 0;
   selectedProduct !: CartItems;
   userId: number = -1;
+  productLoaded: Promise<boolean> | undefined;
+
   
   turnOnAddToCart: boolean = false;
 
@@ -42,7 +44,7 @@ export class ProductDetailsComponent implements OnInit {
    ngOnInit(): void {
     this.getProduct();
     this.userId = Number(this.storage.getItem('userId'));
-    console.log(this.product);
+    console.log(this.product?.image);
     
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
@@ -89,6 +91,7 @@ export class ProductDetailsComponent implements OnInit {
       this.product= data;
       console.log("Occupying product with "+this.storage.getItem('productId'));
       console.log(this.product);
+      this.productLoaded = Promise.resolve(true);
       
     }); 
   }

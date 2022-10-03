@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   public isAuthenticated$!: Observable<boolean>;
   public name$!: Observable<string>;
   storage: Storage =sessionStorage;
+  lStorage: Storage = localStorage;
 
   loggedIn = false;
 
@@ -56,6 +57,8 @@ export class LoginComponent implements OnInit {
   }
 
   public async oktaLogout(): Promise<void> {
+    this.storage.clear();
+    this.lStorage.clear();
     await this._oktaAuth.signOut();
   }
 
@@ -101,6 +104,7 @@ export class LoginComponent implements OnInit {
     this.userService.clear();
     console.log('before session storage clear ' + this.storage);
     this.storage.clear();
+    this.lStorage.clear();
     console.log('after session storage clear ' + this.storage);
 
     window.location.reload();

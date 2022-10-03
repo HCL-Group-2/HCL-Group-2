@@ -58,8 +58,7 @@ export class HomeComponent implements OnInit {
     console.log('userId from session storage ' + userId);
     this.getSearchBool();
     console.log( 'this.search ' + this.search);
-
-    this.getUser(userId);
+    this.getUser();
 
 
 
@@ -105,8 +104,8 @@ export class HomeComponent implements OnInit {
 
   }
 
-  getUser(userId: number) {
-    this.userService.getUser(userId).subscribe(data => {
+  getUser() {
+    this.userService.getUser(Number(this.storage.getItem('userId'))).subscribe(data => {
       this.user = data;
     });
   }
