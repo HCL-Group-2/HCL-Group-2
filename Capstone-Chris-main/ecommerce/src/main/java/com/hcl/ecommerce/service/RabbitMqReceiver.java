@@ -16,6 +16,6 @@ public class RabbitMqReceiver implements RabbitListenerConfigurer {
     }
     @RabbitListener(queues = "${spring.rabbitmq.queue}")
     public void receivedMessage(Product product) {
-        logger.info("User Details Received is.. " + product);
+        logger.info("Product Details Received are " + product);
     }
 }

@@ -32,16 +32,13 @@ public class EcommerceApplication {
 	//RabbitMq Messages
 	@Value("${spring.rabbitmq.host}")
     String host;
-    @Value("${spring.rabbitmq.username}")
-    String username;
-    @Value("${spring.rabbitmq.password}")
-    String password;
+    @Value("${spring.rabbitmq.product}")
+    String product;
     
 	@Bean
     CachingConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(host);
-        cachingConnectionFactory.setUsername(username);
-        cachingConnectionFactory.setPassword(password);
+        cachingConnectionFactory.setUsername(product);
         return cachingConnectionFactory;
     }
     @Bean

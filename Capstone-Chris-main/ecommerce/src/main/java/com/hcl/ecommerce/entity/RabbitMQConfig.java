@@ -27,13 +27,10 @@ public class RabbitMQConfig {
     private String exchange;
 
     @Value("${spring.rabbitmq.routingkey}")
-    private String routingKey;
+    private String routingkey;
 
-    @Value("${spring.rabbitmq.username}")
-    private String username;
-
-    @Value("${spring.rabbitmq.password}")
-    private String password;
+    @Value("${spring.rabbitmq.product}")
+    private String product;
 
     @Value("${spring.rabbitmq.host}")
     private String host;
@@ -47,33 +44,32 @@ public class RabbitMQConfig {
     FanoutExchange myExchange() {
         return ExchangeBuilder.directExchange(exchange).durable(true).build();
     }
+    
+//    @Bean
+//    Binding binding() {
+//        return BindingBuilder
+//                .bind(queue())
+//                .to(myExchange())
+//                .with(routingkey)
+//                .noargs();
+//    }
 
     @Bean
-    Binding binding() {
-        return BindingBuilder
-                .bind(queue())
-                .to(myExchange())
-                .with(routingKey)
-                .noargs();
-    }
-
-    @Bean
-    public ConnectionFactory connectionFactory() {
+    public ConnectionFactory connectionFactory2() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(host);
-        cachingConnectionFactory.setUsername(username);
-        cachingConnectionFactory.setPassword(password);
+        cachingConnectionFactory.setUsername(product);
         return cachingConnectionFactory;
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
+    public Jackson2JsonMessageConverter jsonMessageConverter2() {
         return new Jackson2JsonMessageConverter();
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate rabbitTemplate2(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.setMessageConverter(jsonMessageConverter2());
         return rabbitTemplate;
     }
 }
