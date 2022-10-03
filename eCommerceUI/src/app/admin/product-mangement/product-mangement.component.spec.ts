@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ProductMangementComponent } from './product-mangement.component';
 
@@ -8,7 +10,12 @@ describe('ProductMangementComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductMangementComponent ]
+      declarations: [ ProductMangementComponent ],
+      imports: [
+      //  RouterTestingModule,
+        HttpClientModule,
+        MatDialogModule
+    ]
     })
     .compileComponents();
 

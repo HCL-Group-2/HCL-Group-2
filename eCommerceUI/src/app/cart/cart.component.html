@@ -29,7 +29,7 @@
             </li> -->
         </div>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="checkoutPage()">checkout</button>
+            <button mat-raised-button color="primary" [disabled]="itemsInCartCount == 0" (click)="checkoutPage()">checkout</button>
             <span class="flex-spacer"></span>
         </mat-card-actions>
     </div>

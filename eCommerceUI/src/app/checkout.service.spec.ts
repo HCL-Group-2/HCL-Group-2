@@ -1,12 +1,15 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { CheckoutService } from './checkout.service';
 
-describe('CheckOut', () => {
+describe('CheckOutService', () => {
   let service: CheckoutService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [ HttpClientModule ]
+    });
     service = TestBed.inject(CheckoutService);
   });
 

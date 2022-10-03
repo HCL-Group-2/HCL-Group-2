@@ -18,7 +18,8 @@ export class CartComponent implements OnInit {
   //https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
   // user !: User;
   itemsInCart !: Array<CartItems2>;
-  itemsInCart2 !: Array<CartItems2>;
+  itemsInCartCount = 0;
+  //itemsInCart2 !: Array<CartItems2>;
 
   userIdFromUser !: number;
   storage: Storage = sessionStorage;
@@ -40,6 +41,8 @@ export class CartComponent implements OnInit {
 
     this.cartService.getCartItems(userId).subscribe(data => {
       this.itemsInCart = data;
+      this.itemsInCartCount = data.length;
+      console.log('this.itemsInCartCount ' + this.itemsInCartCount);
   
     }
 

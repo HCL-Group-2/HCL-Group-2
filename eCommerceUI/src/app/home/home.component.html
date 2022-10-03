@@ -4,7 +4,6 @@
     Hello {{name}}!
   </h2>
 
-
   <body>
     <!-- Header-->
     <header class="bg-dark py-5">
@@ -33,6 +32,7 @@
                     ${{p.price}}
                   </div>
                 </div>
+
 
                 <!-- Product actions-->
                 <form [formGroup]="cartQuantityForm">
@@ -78,9 +78,7 @@
                     <!-- Product price-->
                     ${{p.price}}
                   </div>
-
                 </div>
-
                 <!-- Product actions-->
                 <form [formGroup]="cartQuantityForm">
                   <div class="text-center">
@@ -93,6 +91,7 @@
                       Add to cart
                     </button>
                   </div>
+
                   <mat-form-field appearance="outline">
                     <mat-label>Select a quantity</mat-label>
                     <mat-select formControlName="quantity">

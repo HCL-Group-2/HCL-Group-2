@@ -67,6 +67,7 @@ export class CheckoutComponent implements OnInit {
     let userId = +this.session.getItem('userId')!;
 
     this.getCartItems(userId);
+    console.log('stripe card elements mount ' + JSON.stringify(this.cardElement.mount));
 
 
 
@@ -167,7 +168,7 @@ export class CheckoutComponent implements OnInit {
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
 
     // call
-
+ 
     this.checkOutService.createPaymentIntent(this.paymentItent2).subscribe(
       (paymentIntentResponse) => {
         this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
@@ -187,6 +188,8 @@ export class CheckoutComponent implements OnInit {
             },
           }, { handleActions: false })
       });
+      console.log('stripe card elements in payment group' + JSON.stringify(this.checkoutForm.get('payment')?.value));
+
 
 
     this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
@@ -203,6 +206,7 @@ export class CheckoutComponent implements OnInit {
         window.location.reload();
       });
     });
+
 
   }
 
