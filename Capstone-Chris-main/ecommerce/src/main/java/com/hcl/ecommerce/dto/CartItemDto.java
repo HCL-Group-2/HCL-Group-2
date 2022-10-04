@@ -34,10 +34,6 @@ public class CartItemDto {
 	@JsonProperty("product")
 	private ProductDto productDto;
 
-	public CartItemDto(Integer id2, int quantity2, BigDecimal subtotal2, UserDto dto, ProductDto dto2) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Integer getId() {
 		return id;
 	}
