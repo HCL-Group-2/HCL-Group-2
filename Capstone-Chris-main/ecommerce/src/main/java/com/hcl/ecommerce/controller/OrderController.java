@@ -21,8 +21,6 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 
 
-
-
 @CrossOrigin(origins="https://ostrichmart.azurewebsites.net")
 @RestController
 public class OrderController {
