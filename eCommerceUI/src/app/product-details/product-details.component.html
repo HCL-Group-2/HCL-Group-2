@@ -1,5 +1,6 @@
 <div class="product-details-container">
-    <div class="product-details-content">
+    
+    <div class="product-details-content" *ngIf="productLoaded | async">
       <div class="image-section">
         <img src={{product.image}}>
       </div>

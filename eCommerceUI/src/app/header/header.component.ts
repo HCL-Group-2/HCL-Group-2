@@ -91,12 +91,14 @@ export class HeaderComponent implements OnInit {
         console.log('trying to get user Id from session storage');
         let userId = +this.storage.getItem('userId')!;
         console.log('user id from session storage ' + userId);
+        
 
         if (userId === 0) {
           console.log('user Id was not in the database in the first place, but it will be obtain from the database again');
           this.userService.getUserByEmail(this.oktaUser.email).subscribe(data => {
             console.log('getting the id from database ' + data.id.toString());
             this.storage.setItem('userId', data.id.toString());
+            window.location.reload();
           }
           );
         }

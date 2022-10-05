@@ -113,14 +113,11 @@
                             <!-- a Stripe element will be inserted here -->
                         </div>
                     </div>
-
-
-
-
+                
                     <hr class="mb-4">
 
                     <mat-card-actions>
-                        <button mat-raised-button color="warn" (click)="checkout($event)">Pay</button>
+                        <button mat-raised-button color="warn" [disabled]="!checkoutForm.valid" (click)="checkout($event)">Pay</button>
                         <span class="flex-spacer"></span>
                     </mat-card-actions>
                 </form>
