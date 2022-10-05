@@ -28,7 +28,6 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	
 	@PostMapping("/payment-intent")
 	public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfoDTO paymentInfo) throws StripeException {
 	        PaymentIntent paymentIntent = orderService.createPaymentIntent(paymentInfo);

@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -47,6 +49,11 @@ public class OrderServiceImplTest {
 	@Mock
 	CartItemRepository cartItemRepository;
 
+	@BeforeEach
+	public void setUp() {
+	    MockitoAnnotations.initMocks(this);
+	}
+	
 	@Test
 	public void testAddOrder() throws Exception {
 

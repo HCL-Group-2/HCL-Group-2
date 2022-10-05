@@ -44,7 +44,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 	
-	public OrderServiceImpl(@Value("${stripe.key.secret}") String secretKey) {
+	@Value("${stripe.key.secret}")
+	public static void setStripeKey(String secretKey) {
 		Stripe.apiKey = secretKey;
 	}
 	
