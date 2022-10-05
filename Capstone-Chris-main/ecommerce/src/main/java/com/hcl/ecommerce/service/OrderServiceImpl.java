@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 
 import com.hcl.ecommerce.dto.PaymentInfoDTO;
+import com.hcl.ecommerce.dto.StripeDTO;
 import com.hcl.ecommerce.entity.CartItem;
 import com.hcl.ecommerce.entity.Order;
 import com.hcl.ecommerce.entity.OrderItem;
@@ -45,10 +46,16 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@Value("${stripe.key.secret}")
-	public static void setStripeKey(String secretKey) {
-		Stripe.apiKey = secretKey;
-	}
+	@Autowired
+	StripeDTO stripeDTO;
+	
+//	@Value("${stripe.key.secret}")
+//	public static void setStripeKey(String secretKey) {
+//		Stripe.apiKey = secretKey;
+//	}
+	
+	//StripeDTO stripedto = new StripeDTO();
+	
 
 	@Override
 	public synchronized Order addOrder(Order order) throws AddEntityException {
@@ -119,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public PaymentIntent createPaymentIntent(PaymentInfoDTO paymentInfo) throws StripeException {
 		
+		Stripe.apiKey = stripeDTO.getSecretKey();
 		List<String> paymentMethodTypes = new ArrayList<>();
 		paymentMethodTypes.add("card");
 
