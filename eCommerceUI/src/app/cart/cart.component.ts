@@ -16,11 +16,8 @@ import { UserService } from '../user.service';
 })
 export class CartComponent implements OnInit {
   //https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
-  // user !: User;
   itemsInCart !: Array<CartItems2>;
   itemsInCartCount = 0;
-  //itemsInCart2 !: Array<CartItems2>;
-
   userIdFromUser !: number;
   storage: Storage = sessionStorage;
 
@@ -28,34 +25,27 @@ export class CartComponent implements OnInit {
     private router: Router, private userService: UserService, 
     private cartService: CartService, public cartDialog2: MatDialog,) { }
 
-
   ngOnInit(): void {
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     let userId = +this.storage.getItem('userId')!;
     this.getCartItems(userId);
     console.log(userId);
-
   }
 
   getCartItems(userId: number) {
-
     this.cartService.getCartItems(userId).subscribe(data => {
       this.itemsInCart = data;
       this.itemsInCartCount = data.length;
       console.log('this.itemsInCartCount ' + this.itemsInCartCount);
-  
     }
-
     );
   }
   
   deleteCartItem(event: any,cartId: number){
-
     console.log('trying to get cart id in the delete cart function ' + cartId);
     if(cartId !== undefined){
       this.cartService.deleteCartItem(cartId).subscribe();
-      
-      
+
       const dialogRef = this.cartDialog2.open(CartDialog2, {
         data: {
           name: ' in the CartDialog2 placeholder',  
@@ -68,19 +58,14 @@ export class CartComponent implements OnInit {
           window.location.reload();
         });
       });
-
     }
-
   }
 
-  
   checkoutPage(){
- 
     this.router.navigate(['/checkout']);
   }
-
-
 }
+
 @Component({
   selector: 'cartDialog-dialog2',
   templateUrl: 'cartDialog-dialog2.html',
@@ -89,16 +74,9 @@ export class CartDialog2 {
   constructor( public dialogRef: MatDialogRef<CartDialog2>, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
       dialogRef.disableClose = true;
-
      }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
-
-
-
-
-

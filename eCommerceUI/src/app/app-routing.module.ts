@@ -9,8 +9,6 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { OrderComponent } from './order/order.component';
-import { RegisterComponent } from './register/register.component';
-import { UserComponent } from './user/user.component';
 import { ProductMangementComponent } from './admin/product-mangement/product-mangement.component';
 import { OrdersManagementComponent } from './admin/orders-management/orders-management.component';
 import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
@@ -23,22 +21,18 @@ import { ProductDetailsComponent} from './product-details/product-details.compon
 
 const routes: Routes = [
 
-  { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-
-  // { path: 'home/productDetails/:productId', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [OktaAuthGuard]  },
   { path: 'productDetails', component: ProductDetailsComponent, canActivate: [OktaAuthGuard] },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'admin/editUser/:userId', component: EditUserComponent },
-  { path: 'admin/productManagement', component: ProductMangementComponent  },
-  { path: 'admin/productManagement/addProduct', component: AddProductComponent },
-  { path: 'admin/productManagement/editProduct/:productId', component: EditProductComponent },
-  { path: 'admin/orderManagement', component:  OrdersManagementComponent },
-  { path: 'account', component: UserComponent },
-  { path: 'order', component: OrderComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'cart', component: CartComponent,  canActivate: [OktaAuthGuard]  },
+  { path: 'checkout', component: CheckoutComponent,  canActivate: [OktaAuthGuard]  },
+  { path: 'admin', component: AdminComponent,  canActivate: [OktaAuthGuard]  },
+  { path: 'admin/editUser/:userId', component: EditUserComponent, canActivate: [OktaAuthGuard]  },
+  { path: 'admin/productManagement', component: ProductMangementComponent, canActivate: [OktaAuthGuard]   },
+  { path: 'admin/productManagement/addProduct', component: AddProductComponent, canActivate: [OktaAuthGuard]  },
+  { path: 'admin/productManagement/editProduct/:productId', component: EditProductComponent, canActivate: [OktaAuthGuard]  },
+  { path: 'admin/orderManagement', component:  OrdersManagementComponent, canActivate: [OktaAuthGuard]  },
+  { path: 'order', component: OrderComponent,  canActivate: [OktaAuthGuard]  },
+  { path: 'checkout', component: CheckoutComponent,  canActivate: [OktaAuthGuard]  },
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
   { path: "", redirectTo: "/login", pathMatch: "full" },

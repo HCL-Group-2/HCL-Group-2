@@ -1,13 +1,10 @@
 import { Product } from "./Product";
 import { User } from "./User";
 
-
 export class CartItems {
-
      quantity !: number;
      user !: UserCart;
      product !: ProductCart;
-
 }
 
 export class UserCart {
@@ -24,5 +21,4 @@ export class CartItems2 {
      subtotal ?: number;
      user !: User;
      product !: Product;
-
 }

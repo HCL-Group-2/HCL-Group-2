@@ -11,10 +11,8 @@ import { OrderService } from '../order.service';
 export class OrderComponent{
 
   order !: Order;
-
   allOrders !: Array<Order>;
   name = 'Order Status';
-
   storage: Storage =sessionStorage;
 
   constructor(private route: ActivatedRoute,
@@ -24,7 +22,6 @@ export class OrderComponent{
     ngOnInit(): void {
       let userId = +this.storage.getItem('userId')!;
       this.getUserOrders(userId);
-
     }
 
     getUserOrders(userId: number) {
@@ -34,7 +31,4 @@ export class OrderComponent{
     }
 
   public status = ["Ordered","In Progress","Shipping","Arriving","Delivered"];
-
-
 }
-

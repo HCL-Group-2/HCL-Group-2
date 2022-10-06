@@ -30,7 +30,6 @@ export class EditUserComponent implements OnInit {
       email: new FormControl('', Validators.required),
       password: new FormControl('')
     });
-
   }
 
   ngOnInit(): void {
@@ -49,14 +48,10 @@ export class EditUserComponent implements OnInit {
     console.log('id in form ' + this.userEditForm.get('id')?.value);
 
     let userFirstName = this.userEditForm.get('firstName')?.value;
-    console.log('first name ' + userFirstName);
     let userLastName = this.userEditForm.get('lastName')?.value;
-    console.log('first name' + userLastName);
     let userEmail = this.userEditForm.get('email')?.value;
     console.log('email' + userEmail);
     let userPassword = this.userEditForm.get('password')?.value;
-    console.log('password' + userPassword);
-
 
     this.editUser = {
       "id": this.userId,
@@ -81,7 +76,6 @@ export class EditUserComponent implements OnInit {
       this.router.navigate(['admin']);
       // window.location.reload();
     });
-
   }
 
 
@@ -99,7 +93,6 @@ export class UserEditDialog {
   }
 
   onNoClick(): void {
-
     this.dialogRef.close();
   }
 }

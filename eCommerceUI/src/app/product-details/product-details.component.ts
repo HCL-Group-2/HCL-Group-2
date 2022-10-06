@@ -8,15 +8,12 @@ import { CartItems } from '../model/CartItems';
 import { CartService } from '../cart.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-
-
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-
   product !: Product;
   storage: Storage = sessionStorage;
   cartQuantityForm: FormGroup = new FormGroup([]);
@@ -25,8 +22,6 @@ export class ProductDetailsComponent implements OnInit {
   selectedProduct !: CartItems;
   userId: number = -1;
   productLoaded: Promise<boolean> | undefined;
-
-  
   turnOnAddToCart: boolean = false;
 
    constructor(  private router: Router,
@@ -36,10 +31,7 @@ export class ProductDetailsComponent implements OnInit {
       private formBuilder: FormBuilder,
       public atcDialog: MatDialog) { 
 
-     // this.product = this.route.snapshot.params['product'];
      console.log('passing product object test ' +  JSON.stringify(this.router.getCurrentNavigation()?.extras.state));
-
-     // console.log('product ' + JSON.stringify(this.product));
    }
    ngOnInit(): void {
     this.getProduct();
@@ -84,18 +76,14 @@ export class ProductDetailsComponent implements OnInit {
     return undefined;
   }
 
-
-
   getProduct(){
     this.productService.getProductById(Number(this.storage.getItem('productId'))).subscribe(data => {
       this.product= data;
       console.log("Occupying product with "+this.storage.getItem('productId'));
       console.log(this.product);
-      this.productLoaded = Promise.resolve(true);
-      
+      this.productLoaded = Promise.resolve(true);   
     }); 
   }
-  
 }
 
 @Component({
@@ -106,13 +94,9 @@ export class AtcDialog {
   constructor(public dialogRef: MatDialogRef<AtcDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
     dialogRef.disableClose = true;
-
   }
 
   onNoClick(): void {
     this.dialogRef.close();
-   // window.location.reload();
-
   }
-
 }

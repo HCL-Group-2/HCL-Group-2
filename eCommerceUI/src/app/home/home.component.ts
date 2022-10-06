@@ -34,8 +34,12 @@ export class HomeComponent implements OnInit {
   search: boolean = true;
   searchText: string = '';
 
+  isLoggedinFromOkta = false;
+
   //Use this.storage.getKey('userId;) to retrive the userId of the logged in user
   storage: Storage = sessionStorage;
+  localStorage: Storage = localStorage;
+
 
   constructor(private route: ActivatedRoute,
     private router: Router, private userService: UserService,
@@ -46,7 +50,7 @@ export class HomeComponent implements OnInit {
     private _oktaAuthStateService: OktaAuthStateService
   ) {
     console.log('at customer home page constructor');
- 
+
   }
 
 
@@ -56,13 +60,13 @@ export class HomeComponent implements OnInit {
     // getting the user id from login user hardcoding (cannot figure out how to get the user id from login user yet)
     let userId = +this.storage.getItem('userId')!;
     console.log('userId from session storage ' + userId);
+
+
+
     this.getSearchBool();
-    console.log( 'this.search ' + this.search);
+    console.log('this.search ' + this.search);
     this.getUser();
 
-
-
-  
     if (this.storage.getItem('search') == 'true') {
       if (this.storage.getItem('category') == 'toys') {
         this.getProductsByCategory('toys');
@@ -72,10 +76,8 @@ export class HomeComponent implements OnInit {
         this.getProductsByCategory('electronics');
       }
       else {
-
         this.getProducts();
       }
-
     }
     else {
       console.log('getSearchProducts()');
@@ -85,23 +87,14 @@ export class HomeComponent implements OnInit {
     this.name$ = this._oktaAuthStateService.authState$.pipe(
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
-      //console.log('_oktaAuthStateService.authState$ ' + JSON.stringify(this._oktaAuthStateService.authState$));
-     this._oktaAuthStateService.authState$.subscribe(data =>{
-      //console.log('raw email ' + data.idToken?.claims.email);
-      //console.log('raw authorizeUrl ' + data.idToken?.authorizeUrl);
-    //  console.log('_oktaAuthStateService.authState$.data ' + JSON.stringify(data));
 
-     // console.log('_oktaAuthStateService.authState$.data.idToken?.claims ' + JSON.stringify(data.idToken?.claims));
-
+    this._oktaAuthStateService.authState$.subscribe(data => {
       this.email = data.idToken?.claims.email!;
-      //console.log('this.email ' +   this.email );
     });
-    //console.log('this.email outside ' +   this.email );
+
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
     });
-
-
   }
 
   getUser() {
@@ -127,10 +120,9 @@ export class HomeComponent implements OnInit {
   goProductDetails(product: Product) {
     this.storage.setItem('productId', product.id?.toString()!);
     console.log(' goProductDetails(productId: number) product: ' + JSON.stringify(product));
-    this.router.navigateByUrl('productDetails', { state:product });
-
+    this.router.navigateByUrl('productDetails', { state: product });
   }
-  
+
   enableAddCart(event: any) {
     if (event.option.value > 0) {
       this.turnOnAddToCart = true;
@@ -140,7 +132,6 @@ export class HomeComponent implements OnInit {
   openCartDialog(event: any, productID: number) {
     if (productID != undefined) {
       console.log('product id selected ' + productID);
-    
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value;
@@ -154,7 +145,7 @@ export class HomeComponent implements OnInit {
             name: ' in the cart placeholder',
           }, disableClose: true
         });
-    
+
         dialogRef.afterClosed().subscribe(() => {
           console.log('edit product dialog box is closed.');
           window.location.reload();
@@ -164,23 +155,19 @@ export class HomeComponent implements OnInit {
     return undefined;
   }
 
-  getSearchProducts() { 
-
-      this.productService.getProductsBySearch(this.searchText).subscribe(data => {
-        this.searchProducts = data;
-      }
-      );
-  
+  getSearchProducts() {
+    this.productService.getProductsBySearch(this.searchText).subscribe(data => {
+      this.searchProducts = data;
+    });
   }
 
   getProductsByCategory(category: string) {
     this.productService.getProductByCategory(category).subscribe(data => {
       this.products = data;
-    }
-    );
+    });
   }
-  
 }
+
 @Component({
   selector: 'cartDialog-dialog',
   templateUrl: 'cartDialog-dialog.html',
@@ -189,13 +176,10 @@ export class CartDialog {
   constructor(public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
     dialogRef.disableClose = true;
-
   }
 
   onNoClick(): void {
     this.dialogRef.close();
-   // window.location.reload();
-
+    // window.location.reload();
   }
-
 }
