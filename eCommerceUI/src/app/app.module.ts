@@ -75,17 +75,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
    redirectUri: window.location.origin + '/login/callback'
  });
 
-//0oa6k6s96mW1KnQGt5d7
-
-
-//const oktaAuth = new OktaAuth({
- // issuer: "https://dev-34530608.okta.com/oauth2/default",
- // clientId: '0oa6k6s96mW1KnQGt5d7',
- // redirectUri: window.location.origin + '/login/callback'
-//});
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
