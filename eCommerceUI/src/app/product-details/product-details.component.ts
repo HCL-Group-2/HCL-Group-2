@@ -44,7 +44,7 @@ export class ProductDetailsComponent implements OnInit {
    ngOnInit(): void {
     this.getProduct();
     this.userId = Number(this.storage.getItem('userId'));
-    console.log(this.product?.image);
+    console.log('productDetail image from ngInit(): ' + this.product?.image);
     
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
