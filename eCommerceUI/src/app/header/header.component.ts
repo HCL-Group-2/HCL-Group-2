@@ -63,13 +63,6 @@ export class HeaderComponent implements OnInit {
           "email": oktaUserEmail,
         };
 
-        // this.oktaUser = {
-        //   "firstName": 'Ollie6',
-        //   "lastName": 'O6',
-        //   "email": 'ollie6.ostrich6@hcl.com',
-        //   "password": "xxxxx"
-        // };
-
 
         console.log('oktaUser obj ' + JSON.stringify(this.oktaUser));
         // check if okta email is in the database, then we can add 

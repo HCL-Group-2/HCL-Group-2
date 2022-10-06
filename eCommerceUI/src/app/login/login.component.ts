@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
       console.log('loggin in userEntity() in login component' + this.loggedIn);
+
     }
     );
   }

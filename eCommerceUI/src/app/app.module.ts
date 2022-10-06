@@ -50,16 +50,13 @@ import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
-import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CheckoutComponent } from './cart/checkout/checkout.component';
 
-import { SearchComponent } from './search/search.component';
 import { Router } from '@angular/router';
 import myAppConfig from './config/my-app-config';
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -95,12 +92,9 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     HeaderComponent,
     CartComponent,
     HomeComponent,
-    RegisterComponent,
     CheckoutComponent,
     AdminComponent,
-    UserComponent,
     OrderComponent,
-    SearchComponent,
     LoginComponent,
     ProductMangementComponent,
     OrdersManagementComponent,
