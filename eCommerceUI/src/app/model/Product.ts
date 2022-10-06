@@ -1,5 +1,4 @@
-export class Product{
-    
+export class Product{ 
     id ?: number;
     name !: string;
     description !: string;
@@ -7,5 +6,4 @@ export class Product{
     image !: string;
     category !: string;
     inventory !:number;
-
 }

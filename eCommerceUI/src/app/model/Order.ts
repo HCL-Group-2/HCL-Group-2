@@ -15,4 +15,3 @@ export class Order{
     product !: Product;
 
 }
-

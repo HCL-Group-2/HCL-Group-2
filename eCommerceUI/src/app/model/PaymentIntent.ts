@@ -1,7 +1,6 @@
 export class PaymentIntent{
     orderTotal !: number;
     email !: String;
-
   }
 
   export class PaymentIntent2{

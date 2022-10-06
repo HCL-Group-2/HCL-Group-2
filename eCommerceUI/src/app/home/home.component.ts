@@ -76,10 +76,8 @@ export class HomeComponent implements OnInit {
         this.getProductsByCategory('electronics');
       }
       else {
-
         this.getProducts();
       }
-
     }
     else {
       console.log('getSearchProducts()');
@@ -90,17 +88,13 @@ export class HomeComponent implements OnInit {
       filter((authState: AuthState) => !!authState && !!authState.isAuthenticated),
       map((authState: AuthState) => authState.idToken?.claims.name ?? ''));
 
-  
     this._oktaAuthStateService.authState$.subscribe(data => {
-
       this.email = data.idToken?.claims.email!;
     });
-    //console.log('this.email outside ' +   this.email );
+
     this.cartQuantityForm = this.formBuilder.group({
       quantity: ['', [Validators.required]]
     });
-
-
   }
 
   getUser() {
@@ -127,7 +121,6 @@ export class HomeComponent implements OnInit {
     this.storage.setItem('productId', product.id?.toString()!);
     console.log(' goProductDetails(productId: number) product: ' + JSON.stringify(product));
     this.router.navigateByUrl('productDetails', { state: product });
-
   }
 
   enableAddCart(event: any) {
@@ -139,7 +132,6 @@ export class HomeComponent implements OnInit {
   openCartDialog(event: any, productID: number) {
     if (productID != undefined) {
       console.log('product id selected ' + productID);
-
       console.log('selected item quantity ' + this.selectedQuantity);
 
       let itemCount = this.cartQuantityForm.get('quantity')?.value;
@@ -164,22 +156,18 @@ export class HomeComponent implements OnInit {
   }
 
   getSearchProducts() {
-
     this.productService.getProductsBySearch(this.searchText).subscribe(data => {
       this.searchProducts = data;
-    }
-    );
-
+    });
   }
 
   getProductsByCategory(category: string) {
     this.productService.getProductByCategory(category).subscribe(data => {
       this.products = data;
-    }
-    );
+    });
   }
-
 }
+
 @Component({
   selector: 'cartDialog-dialog',
   templateUrl: 'cartDialog-dialog.html',
@@ -188,13 +176,10 @@ export class CartDialog {
   constructor(public dialogRef: MatDialogRef<CartDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { name: string }) {
     dialogRef.disableClose = true;
-
   }
 
   onNoClick(): void {
     this.dialogRef.close();
     // window.location.reload();
-
   }
-
 }

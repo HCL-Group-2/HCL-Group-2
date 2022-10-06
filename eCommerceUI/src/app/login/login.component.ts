@@ -26,9 +26,6 @@ export class LoginComponent implements OnInit {
   public name$!: Observable<string>;
   storage: Storage = sessionStorage;
   lStorage: Storage = localStorage;
-
-  loggedIn = false;
-
   user = new User();
   response: any;
   msg = '';
@@ -42,7 +39,6 @@ export class LoginComponent implements OnInit {
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
-
     this.getUserDetails();
     console.log("Inside of login.")
   }
@@ -64,5 +60,4 @@ export class LoginComponent implements OnInit {
     this.lStorage.clear();
     await this._oktaAuth.signOut();
   }
-
 }

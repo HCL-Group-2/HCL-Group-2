@@ -19,19 +19,15 @@ export class ProductMangementComponent implements OnInit {
    public productAddDialog: MatDialog) { }
 
   ngOnInit(): void {
- 
     this.getProducts();
-
-
   }
 
   getProducts() {
     this.productService.getProducts().subscribe(data => {
       this.products = data;
-    }
-
-    );
+    });
   }
+
   goToAddProductForm() {
     console.log('goToAddProductForm()');
     this.router.navigate(['admin/productManagement/addProduct']);
@@ -41,11 +37,4 @@ export class ProductMangementComponent implements OnInit {
     console.log('goToEditProductForm() productId: ' + productId);
     this.router.navigate(['admin/productManagement/editProduct',productId]);
   }
-  
-
- 
-
 }
-
-
-

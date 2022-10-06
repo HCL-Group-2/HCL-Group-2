@@ -26,9 +26,6 @@ export class HeaderComponent implements OnInit {
   oktaUser !: OktaUser;
   isLoggedinFromOkta = false;
 
-
-
-
   constructor(private route: ActivatedRoute,
     private router: Router, private cartService: CartService,
     private fb: FormBuilder, private _oktaStateService: OktaAuthStateService,
@@ -36,7 +33,6 @@ export class HeaderComponent implements OnInit {
     private userService: UserService) { }
 
   async ngOnInit(): Promise<void> {
-
     this.isAuthenticated$ = this._oktaStateService.authState$.pipe(
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
@@ -63,10 +59,8 @@ export class HeaderComponent implements OnInit {
           "email": oktaUserEmail,
         };
 
-
         console.log('oktaUser obj ' + JSON.stringify(this.oktaUser));
         // check if okta email is in the database, then we can add 
-
         this.userService.getUserByEmail(this.oktaUser.email).subscribe(data => {
           if (data) {
             console.log('oh yes.... user email is in the database ' + data.email);
@@ -85,7 +79,6 @@ export class HeaderComponent implements OnInit {
         let userId = +this.storage.getItem('userId')!;
         console.log('user id from session storage ' + userId);
         
-
         if (userId === 0) {
           console.log('user Id was not in the database in the first place, but it will be obtain from the database again');
           this.userService.getUserByEmail(this.oktaUser.email).subscribe(data => {
@@ -109,22 +102,18 @@ export class HeaderComponent implements OnInit {
         } else if (oktaUserRole === 'admin') {
           console.log('admin loggin in okta');
           this.isAdmin = true;
-
-
         }
-
       }
-
     });
     console.log('this.isLoggedinFromOkta outside ' + this.isLoggedinFromOkta);
-
   }
+
   goToHomePage() {
     this.router.navigate(['/home']);
     this.storage.setItem('search', 'true');
     this.storage.setItem('category', 'home');
-
   }
+
   goToCart() {
     // https://dev.to/isamrish/how-to-display-observable-of-an-object-in-angular-22em
     this.router.navigate(['/cart']);
@@ -189,7 +178,4 @@ export class HeaderComponent implements OnInit {
     this.userService.clear();
     this.goToLogin();
   }
-
-
 }
-

@@ -21,7 +21,6 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
     this.productAddForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -29,7 +28,6 @@ export class AddProductComponent implements OnInit {
       image: ['', [Validators.required]],
       category: ['', [Validators.required]],
       inventory: ['', [Validators.required]]
-
     });
   }
 
@@ -70,12 +68,9 @@ export class AddProductComponent implements OnInit {
       this.router.navigate(['admin/productManagement']);
      // window.location.reload();
     } );
-
   }
-
-  
-
 }
+
 @Component({
   selector: 'product-add-dialog',
   templateUrl: 'product-add-dialog.html',
@@ -89,7 +84,6 @@ export class ProductAddDialog {
   }
 
   onNoClick(): void {
- 
     this.dialogRef.close();
   }
 }

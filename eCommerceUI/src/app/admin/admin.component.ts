@@ -16,9 +16,7 @@ export class AdminComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-
     this.getUsersOnAdmin();
-
   }
 
   getUsersOnAdmin(){
@@ -32,6 +30,4 @@ export class AdminComponent implements OnInit {
     console.log(' goToEditUserForm userId: ' + userId);
     this.router.navigate(['admin/editUser/',userId]);
   }
-  
-
 }
