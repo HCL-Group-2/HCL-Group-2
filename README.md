@@ -10,7 +10,7 @@ SonarCloud link: https://sonarcloud.io/project/overview?id=HCL-Group-2_HCL-Group
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2) 
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=HCL-Group-2_HCL-Group-2&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=HCL-Group-2_HCL-Group-2)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=hcl-group-2_HCL-Group-2&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=hcl-group-2_HCL-Group-2)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=HCL-Group-2_HCL-Group-2&metric=coverage)](https://sonarcloud.io/summary/new_code?id=HCL-Group-2_HCL-Group-2)
 
