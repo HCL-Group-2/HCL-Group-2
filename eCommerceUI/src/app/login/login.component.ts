@@ -62,56 +62,13 @@ export class LoginComponent implements OnInit {
     await this._oktaAuth.signOut();
   }
 
-  public loginUser() {
-    let loginRequest : any = {
-      "email": this.user.email,
-      "password": this.user.password
-    }
-
-    this.http.post<any>(this.baseURL + 'login', loginRequest).subscribe((response: any) => {
-      this.loggedIn = true;
-      this.userService.setLoggedIn("true");
-      this.storage.setItem('userEmail', (this.user.email));
-      this.userEntity();
-      this._router.navigate(['/home']).then(() => {
-        window.location.reload();
-      });
-     
-    },
-    (error) => {
-      console.log(error);
-      this.msg = "Bad credentials! Please re-enter email and password.";
-    })
-   // window.location.reload(); trying to get the new header to show depending on the user role
-  }
-
   public userEntity(){
     this.userService.getUserByEmail(this.user.email).subscribe(data =>{
       this.storage.setItem('userId', data.id as unknown as string);
       this.storage.setItem('firstName', data.firstName);
       this.storage.setItem('lastName', data.lastName);
       console.log('loggin in userEntity() in login component' + this.loggedIn);
-      // hardcoded role : backend may change
-      //this.storage.setItem('userRole', 'Admin');
-
-
     }
     );
   }
-
-  public logout() {
-    this.loggedIn = false;
-    this.userService.clear();
-    console.log('before session storage clear ' + this.storage);
-    this.storage.clear();
-    this.lStorage.clear();
-    console.log('after session storage clear ' + this.storage);
-
-    window.location.reload();
-  }
-
-  public isLoggedIn() { 
-    return this.userService.getLoggedIn() === "true";
-  }
-
 }
