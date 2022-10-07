@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/model/User';
+import { OktaUser, User } from 'src/app/model/User';
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class EditUserComponent implements OnInit {
 
   userId !: number;
   userEditForm !: FormGroup
-  editUser !: User;
+  editUser !: OktaUser;
 
   constructor(private router: Router, private route: ActivatedRoute,
     private userService: UserService,
@@ -27,8 +27,7 @@ export class EditUserComponent implements OnInit {
       id: new FormControl({ value: this.userId, disabled: true }),
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('')
+      email: new FormControl('', Validators.required)
     });
   }
 
@@ -38,8 +37,7 @@ export class EditUserComponent implements OnInit {
         id: data.id,
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
-        password: data.password
+        email: data.email
       })
     })
   }
@@ -51,14 +49,12 @@ export class EditUserComponent implements OnInit {
     let userLastName = this.userEditForm.get('lastName')?.value;
     let userEmail = this.userEditForm.get('email')?.value;
     console.log('email' + userEmail);
-    let userPassword = this.userEditForm.get('password')?.value;
 
     this.editUser = {
       "id": this.userId,
       "firstName": userFirstName,
       "lastName": userLastName,
-      "email": userEmail,
-      "password": userPassword
+      "email": userEmail
     };
 
     console.log('edit user: ' + JSON.stringify(this.editUser));
