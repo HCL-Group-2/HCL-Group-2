@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: OktaUser): Observable<OktaUser> {
     return this.http.put<User>(this.baseURL + 'user', user);
   }
 
