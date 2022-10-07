@@ -73,6 +73,11 @@ public class OrderServiceImpl implements OrderService {
 		cartItemRepository.deleteAll(cartItems);
 		return orderRepository.save(order);
 	}
+	
+	@Override
+	public List<Order> getAllOrders(){
+		return orderRepository.getAllOrders();
+	}
 
 	@Override
 	public Order getOrderById(Integer orderId) {

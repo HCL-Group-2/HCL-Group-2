@@ -1,5 +1,8 @@
 package com.hcl.ecommerce.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +51,15 @@ public class OrderController {
 		}
 		return new ResponseEntity<>(order.toDto(), HttpStatus.CREATED);
 	}
-	
+	@GetMapping("/orders")
+	public ResponseEntity<List<OrderDto>> getAllOrders() {
+		List<Order> list = orderService.getAllOrders();
+		List<OrderDto> dtoList = new ArrayList<>();
+		for(Order o : list) {
+			dtoList.add(o.toDto());
+		}
+		return new ResponseEntity<>(dtoList, HttpStatus.OK);
+	}
 	@GetMapping("/order/{id}")
 	public ResponseEntity<OrderDto> getOrderById(@PathVariable("id") Integer id) {
 		Order order = orderService.getOrderById(id);
