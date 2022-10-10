@@ -67,7 +67,7 @@ export class CheckoutComponent implements OnInit {
     let userId = +this.session.getItem('userId')!;
 
     this.getCartItems(userId);
-    console.log('stripe card elements mount ' + JSON.stringify(this.cardElement.mount));
+    console.log('stripe card elements mount ' + JSON.stringify(this.cardElement));
 
 
 
