@@ -25,5 +25,4 @@ public class ProductDto {
 	private String category;
 	
 	private int inventory;
-	
 }
