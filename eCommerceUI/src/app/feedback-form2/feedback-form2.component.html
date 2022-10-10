@@ -1,0 +1,126 @@
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Product Feedback</h1>
+      </div>
+    </div>
+  </header>
+
+  <h4>Select Ostrich Mart Product</h4>
+  <form [formGroup]="Products" >
+    <mat-form-field appearance="outline">
+      <mat-label>Select a Product</mat-label>
+      <mat-select formControlName="prod">
+        <mat-option *ngFor="let p of products" >
+          {{p.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>  
+
+  <h4>Compared to other products in your day-to-day life, what percentage of your time is spent using this product?</h4>
+  <form [formGroup]="Q1Form" >
+    <mat-form-field appearance="outline"  >
+      <mat-label  >Select a Percentage</mat-label>
+      <mat-select formControlName="q1">
+        <mat-option value="0%"> 0 </mat-option>
+        <mat-option value="25%">25</mat-option>
+        <mat-option value="50%">50</mat-option>
+        <mat-option value="75%">75</mat-option>
+        <mat-option value="100%">100</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>  
+  
+  <h4>On scale of 1 to 10 with 10 being the highest, how likely are you to recommend the product to a friend or colleague?</h4>
+  <form [formGroup]="Q2Form" >
+    <mat-form-field appearance="outline"  >
+      <mat-label  >Select a Rating</mat-label>
+      <mat-select formControlName="q2">
+        <mat-option value="0">0 </mat-option>
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+        <mat-option value="4">4</mat-option>
+        <mat-option value="5">5</mat-option>
+        <mat-option value="6">6</mat-option>
+        <mat-option value="7">7</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="9">9</mat-option>
+        <mat-option value="10">10</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>    
+
+  <h4>How would you rate the value for money of the product on a scale of 1 to 10 with 10 being the highest?</h4>
+  <form [formGroup]="Q3Form" >
+    <mat-form-field appearance="outline"  >
+      <mat-label  >Select a Rating</mat-label>
+      <mat-select formControlName="q3">
+        <mat-option value="0">0 </mat-option>
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+        <mat-option value="4">4</mat-option>
+        <mat-option value="5">5</mat-option>
+        <mat-option value="6">6</mat-option>
+        <mat-option value="7">7</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="9">9</mat-option>
+        <mat-option value="10">10</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>    
+
+  <h4>How easy is our product to use on a scale of 1 to 10 with 10 being the highest?</h4>
+  <form [formGroup]="Q4Form" >
+    <mat-form-field appearance="outline"  >
+      <mat-label  >Select a Rating</mat-label>
+      <mat-select formControlName="q4">
+        <mat-option value="0">0 </mat-option>
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+        <mat-option value="4">4</mat-option>
+        <mat-option value="5">5</mat-option>
+        <mat-option value="6">6</mat-option>
+        <mat-option value="7">7</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="9">9</mat-option>
+        <mat-option value="10">10</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>  
+
+  <h4>How disappointed would you feel if you could no longer use the product?</h4>
+  <form [formGroup]="Q5Form" >
+    <mat-form-field appearance="outline"  >
+      <mat-label  >Select a Rating</mat-label>
+      <mat-select formControlName="q5">
+        <mat-option value="0">0 </mat-option>
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+        <mat-option value="4">4</mat-option>
+        <mat-option value="5">5</mat-option>
+        <mat-option value="6">6</mat-option>
+        <mat-option value="7">7</mat-option>
+        <mat-option value="8">8</mat-option>
+        <mat-option value="9">9</mat-option>
+        <mat-option value="10">10</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>  
+
+  <div>
+    <button type="submit" (click)="submitFeedbackForm()">Submit Feedback</button>
+    <button type="button" (click)="clearForm()">Clear Form</button>
+  </div>  
+
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+      </div>
+    </footer>
+    <router-outlet></router-outlet>

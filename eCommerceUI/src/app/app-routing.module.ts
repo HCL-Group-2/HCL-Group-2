@@ -20,6 +20,8 @@ import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
 import { AddProductComponent } from './admin/product-mangement/add-product/add-product.component';
 import { EditProductComponent } from './admin/product-mangement/edit-product/edit-product.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
+import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
+import { FeedbackForm2Component } from './feedback-form2/feedback-form2.component';
 
 
 
@@ -43,7 +45,9 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'login/callback', component: OktaCallbackComponent },
   { path: 'login', component: LoginComponent },
-  { path: "", redirectTo: "/login", pathMatch: "full" }
+  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "websitefeedback", component: FeedbackFormComponent },
+  { path: "productfeedback", component: FeedbackForm2Component }
   
 
 ];

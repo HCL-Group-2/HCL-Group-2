@@ -168,7 +168,13 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  goToWebsiteFeedbackForm() {
+    this.router.navigate(['../websitefeedback/']);
+  }
 
+  goToProductFeedbackForm() {
+    this.router.navigate(['../productfeedback/']);
+  }
 
 }
 @Component({

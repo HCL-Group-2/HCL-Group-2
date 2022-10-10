@@ -1,0 +1,48 @@
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Website Feedback</h1>
+    </div>
+  </div>
+</header>
+
+<div class="container mt-5 mb-5">
+  <form [formGroup]="feedbackForm" >
+      <div class="row">
+        <div class="col-lg-6 mt-2 mb-2">
+          <input type="text" class="form-control" placeholder="Enter First Name" formControlName="first_name" >
+        </div>
+        <div class="col-lg-6 mt-2 mb-2">
+          <input type="text" class="form-control" placeholder="Enter Last Name" formControlName="last_name">
+        </div>
+        <div class="col-lg-12 mt-2 mb-2">
+          <input type="text" class="form-control" placeholder="Enter Email" formControlName="email">
+        </div>
+
+        <mat-form-field appearance = "outline">
+          <textarea matInput placeholder = "Suggestions" formControlName="suggestions"> </textarea>
+        </mat-form-field>
+
+        <div>
+          <button type="submit" (click)="submitFeedbackForm()">Submit Feedback</button>
+          <button type="button" (click)="clearForm()">Clear Form</button>
+        </div>  
+
+      </div>
+    </form>
+</div>
+  
+  <!-- Form Data -->
+<!--  <section>
+    <hr>
+    <h1>Developers area</h1>
+    <pre>{{ feedbackForm.value | json }}</pre>
+  </section> -->
+
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+    </div>
+  </footer>
+  <router-outlet></router-outlet>
