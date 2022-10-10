@@ -67,7 +67,7 @@ export class CheckoutComponent implements OnInit {
     let userId = +this.session.getItem('userId')!;
 
     this.getCartItems(userId);
-    console.log('stripe card elements mount ' + JSON.stringify(this.cardElement.mount));
+    console.log('stripe card element: ' + JSON.stringify(this.cardElement));
 
 
 
@@ -168,9 +168,10 @@ export class CheckoutComponent implements OnInit {
     console.log('orderCheckout ' + JSON.stringify(this.orderCheckOut));
 
     // call
- 
+
     this.checkOutService.createPaymentIntent(this.paymentItent2).subscribe(
       (paymentIntentResponse) => {
+        console.log("174: Card Element: " + JSON.stringify(this.cardElement));
         this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
           {
             payment_method: {
@@ -186,13 +187,22 @@ export class CheckoutComponent implements OnInit {
                 }
               }
             },
-          }, { handleActions: false })
-      });
-      console.log('stripe card elements in payment group' + JSON.stringify(this.checkoutForm.get('payment')?.value));
+          }, { handleActions: false }).then((result: { error: { message: any; }; paymentIntent: { status: string; }; }) => {
+            if (result.error) {
+              console.log(result.error.message);
+            } else {
+              if (result.paymentIntent.status === 'succeeded') {
+                this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
+              }
+            }
+          })
+      }
+    );
+    console.log('stripe card elements in payment group' + JSON.stringify(this.checkoutForm.get('payment')?.value));
 
 
 
-    this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
+    //this.checkOutService.addOneCheckout(this.orderCheckOut).subscribe();
 
     const dialogRef = this.checkoutDialog.open(CheckoutDialog, {
       data: {
